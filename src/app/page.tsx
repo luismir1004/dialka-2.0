@@ -235,33 +235,37 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── MÉTRICAS CON CONTADOR ANIMADO, HOVER AVANZADO Y BORDES ILUMINADOS ── */}
-      <section className="bg-white border-b border-slate-200 py-12 md:py-16">
+      {/* ── MÉTRICAS COMPACTAS: CUADRÍCULA 2x2 EN MÓVIL Y 4 COLUMNAS EN ESCRITORIO ── */}
+      <section className="bg-white border-b border-slate-200 py-6 sm:py-10 md:py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 lg:gap-6">
             {METRICS.map(({ value, label, sublabel, icon: Icon }, idx) => (
-              <RevealOnScroll key={label} delay={idx * 100}>
-                <div className="group relative bg-white border border-slate-200/90 hover:border-[#991b1b]/60 rounded-2xl p-6 shadow-xs hover:shadow-xl hover:shadow-red-950/8 transition-all duration-300 hover:-translate-y-1.5 overflow-hidden">
+              <RevealOnScroll key={label} delay={idx * 75}>
+                <div className="group relative bg-white border border-slate-200/80 hover:border-[#991b1b]/50 rounded-xl sm:rounded-2xl p-3 sm:p-4 lg:p-5 shadow-2xs hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 overflow-hidden flex flex-col justify-between h-full">
                   {/* Glowing top line accent on hover */}
-                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#991b1b]/0 to-transparent group-hover:via-[#991b1b] transition-all duration-500" />
+                  <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[#991b1b]/0 to-transparent group-hover:via-[#991b1b] transition-all duration-300" />
 
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 rounded-xl bg-red-50 border border-red-100 group-hover:bg-[#991b1b] group-hover:scale-105 flex items-center justify-center transition-all duration-300 shadow-2xs">
-                      <Icon size={22} className="text-[#991b1b] group-hover:text-white transition-colors" />
+                  {/* Cabecera compacta: Icono minimalista y etiqueta */}
+                  <div className="flex items-center justify-between mb-2 sm:mb-3">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-red-50 border border-red-100 group-hover:bg-[#991b1b] flex items-center justify-center transition-all duration-200 shadow-2xs shrink-0">
+                      <Icon size={16} className="text-[#991b1b] group-hover:text-white transition-colors sm:w-[18px] sm:h-[18px]" />
                     </div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 group-hover:text-[#991b1b] transition-colors">
+                    <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-slate-400 group-hover:text-[#991b1b] transition-colors">
                       Oficial
                     </span>
                   </div>
 
-                  <div className="text-3xl lg:text-4xl font-black text-slate-900 tracking-tight mb-1 group-hover:text-[#991b1b] transition-colors">
-                    <AnimatedCounter value={value} />
-                  </div>
-                  <div className="text-sm font-bold text-slate-800 mb-1">
-                    {label}
-                  </div>
-                  <div className="text-xs text-slate-500 font-medium">
-                    {sublabel}
+                  {/* Número de impacto y textos descriptivos */}
+                  <div>
+                    <div className="text-2xl sm:text-3xl font-bold text-[#991b1b] tracking-tight mb-0.5 group-hover:text-[#7f1d1d] transition-colors">
+                      <AnimatedCounter value={value} />
+                    </div>
+                    <div className="text-xs sm:text-sm font-bold text-slate-900 leading-snug">
+                      {label}
+                    </div>
+                    <div className="text-[10px] sm:text-xs text-slate-500 font-medium mt-0.5 line-clamp-1">
+                      {sublabel}
+                    </div>
                   </div>
                 </div>
               </RevealOnScroll>
