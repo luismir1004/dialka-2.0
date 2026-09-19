@@ -134,16 +134,9 @@ export function MobileMenu({
         </button>
       </div>
 
-      {/* ── FASE 2: LISTADO ORDENADO DE LAS 7 PANTALLAS PRINCIPALES (text-lg font-medium) ── */}
-      <div className="p-5 sm:p-6 overflow-y-auto flex-1 space-y-3">
-        <div className="flex items-center justify-between text-xs font-black uppercase tracking-wider text-slate-400 px-1 mb-1">
-          <span>Secciones Principales</span>
-          <span className="text-[11px] font-bold text-red-700 bg-red-50 px-2.5 py-0.5 rounded-full border border-red-200/60">
-            7 Pantallas
-          </span>
-        </div>
-
-        <nav className="space-y-2" aria-label="Navegación por pantallas principales">
+      {/* ── NAVEGACIÓN COMERCIAL LIMPIA: LAS 7 PANTALLAS PRINCIPALES ── */}
+      <div className="px-4 sm:px-6 py-3 sm:py-4 overflow-y-auto flex-1 space-y-1.5">
+        <nav className="space-y-1.5" aria-label="Navegación principal">
           {MAIN_SCREENS.map((screen) => {
             const isActive =
               screen.href === "/"
@@ -156,24 +149,24 @@ export function MobileMenu({
                 key={screen.href}
                 href={screen.href}
                 onClick={onClose}
-                className={`flex items-center justify-between min-h-[58px] p-3.5 rounded-2xl transition-all active:scale-[0.98] group ${
+                className={`flex items-center justify-between min-h-[52px] p-3 rounded-xl transition-all active:scale-[0.98] group ${
                   isActive
-                    ? "bg-red-50/90 text-[#991b1b] border-l-4 border-[#991b1b] shadow-2xs"
+                    ? "bg-red-50/90 text-[#991b1b] border-l-4 border-[#991b1b] shadow-2xs font-bold"
                     : "text-slate-800 hover:bg-slate-50 hover:text-[#991b1b] border-l-4 border-transparent"
                 }`}
               >
-                <div className="flex items-center gap-3.5 min-w-0">
+                <div className="flex items-center gap-3 min-w-0">
                   <div
-                    className={`w-11 h-11 rounded-xl flex items-center justify-center transition-colors shrink-0 ${
+                    className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors shrink-0 ${
                       isActive
                         ? "bg-[#991b1b] text-white shadow-2xs"
                         : "bg-slate-100 text-slate-600 group-hover:bg-red-50 group-hover:text-[#991b1b]"
                     }`}
                   >
-                    <IconComp size={22} />
+                    <IconComp size={20} />
                   </div>
                   <div className="min-w-0">
-                    <div className="text-lg font-medium leading-snug truncate">
+                    <div className="text-base sm:text-lg font-medium leading-tight truncate">
                       {screen.label}
                     </div>
                     <p className="text-xs text-slate-500 font-normal truncate mt-0.5">
@@ -183,7 +176,7 @@ export function MobileMenu({
                 </div>
 
                 <ArrowRight
-                  size={18}
+                  size={16}
                   className={`shrink-0 transition-transform ${
                     isActive
                       ? "text-[#991b1b] translate-x-0.5"
