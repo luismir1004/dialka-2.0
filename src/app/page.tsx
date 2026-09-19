@@ -233,49 +233,49 @@ export default function HomePage() {
       </section>
 
       {/* ── ACCESOS RÁPIDOS CON STAGGERED SCROLL REVEAL ── */}
-      <section className="bg-white py-16 md:py-24 border-b border-slate-200">
+      <section className="bg-white py-10 sm:py-16 md:py-20 border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <RevealOnScroll>
-            <div className="text-center max-w-2xl mx-auto mb-14">
-              <span className="inline-block text-xs font-bold uppercase tracking-widest text-[#991b1b] bg-red-50 border border-red-200/80 px-3 py-1 rounded-full mb-3">
+            <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
+              <span className="inline-block text-xs font-bold uppercase tracking-widest text-[#991b1b] bg-red-50 border border-red-200/80 px-3 py-1 rounded-full mb-2.5">
                 Áreas de Especialización
               </span>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-4">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight mb-2.5">
                 Soluciones Integrales de Pesaje
               </h2>
-              <p className="text-slate-600 text-base leading-relaxed">
+              <p className="text-slate-600 text-xs sm:text-sm md:text-base leading-relaxed">
                 Explore nuestras divisiones especializadas con soporte técnico certificado en todo el territorio venezolano.
               </p>
             </div>
           </RevealOnScroll>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {QUICK_ACCESS.map(({ label, desc, href, icon: Icon, tag }, idx) => (
               <RevealOnScroll key={href} delay={(idx % 3) * 100}>
                 <Link
                   href={href}
-                  className="card-hover group bg-white border border-slate-200 hover:border-red-300 rounded-2xl p-7 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between h-full"
+                  className="card-hover group bg-white border border-slate-200 hover:border-red-300 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between h-full"
                 >
                   <div>
-                    <div className="flex items-center justify-between mb-5">
-                      <div className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-100 group-hover:bg-red-50 group-hover:border-red-100 flex items-center justify-center transition-colors">
-                        <Icon size={22} className="text-slate-700 group-hover:text-[#991b1b] transition-colors" />
+                    <div className="flex items-center justify-between mb-3 sm:mb-4">
+                      <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-slate-50 border border-slate-100 group-hover:bg-red-50 group-hover:border-red-100 flex items-center justify-center transition-colors">
+                        <Icon size={20} className="text-slate-700 group-hover:text-[#991b1b] transition-colors" />
                       </div>
-                      <span className="text-[11px] font-semibold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full group-hover:bg-red-50 group-hover:text-[#991b1b] transition-colors">
+                      <span className="text-[10px] sm:text-[11px] font-semibold text-slate-500 bg-slate-100 px-2.5 py-0.5 sm:py-1 rounded-full group-hover:bg-red-50 group-hover:text-[#991b1b] transition-colors">
                         {tag}
                       </span>
                     </div>
-                    <h3 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-[#991b1b] transition-colors">
+                    <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-1.5 group-hover:text-[#991b1b] transition-colors">
                       {label}
                     </h3>
-                    <p className="text-slate-600 text-sm leading-relaxed mb-6">
+                    <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mb-4">
                       {desc}
                     </p>
                   </div>
 
-                  <div className="flex items-center gap-1.5 text-[#991b1b] text-sm font-bold pt-4 border-t border-slate-100 group-hover:gap-2.5 transition-all">
+                  <div className="flex items-center gap-1.5 text-[#991b1b] text-xs sm:text-sm font-bold pt-3 border-t border-slate-100 group-hover:gap-2.5 transition-all">
                     <span>Conocer más</span>
-                    <ArrowRight size={15} />
+                    <ArrowRight size={14} />
                   </div>
                 </Link>
               </RevealOnScroll>
@@ -285,21 +285,21 @@ export default function HomePage() {
       </section>
 
       {/* ── SIMULADOR DE PESAJE INTERACTIVO (DIAL Y DISPLAY VIVO) ── */}
-      <section className="bg-slate-950 py-16 md:py-24 border-b border-slate-850 text-white relative overflow-hidden">
+      <section className="bg-slate-950 py-10 sm:py-16 md:py-20 border-b border-slate-850 text-white relative overflow-hidden">
         {/* Ambient lighting effect */}
         <div className="absolute -top-40 -right-40 w-96 h-96 bg-red-900/20 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-slate-800/30 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <RevealOnScroll>
-            <div className="text-center max-w-2xl mx-auto mb-12">
-              <span className="inline-block text-xs font-bold uppercase tracking-widest text-red-400 bg-red-950/80 border border-red-500/30 px-3.5 py-1.5 rounded-full mb-3 shadow-xs">
+            <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
+              <span className="inline-block text-xs font-bold uppercase tracking-widest text-red-400 bg-red-950/80 border border-red-500/30 px-3 py-1 rounded-full mb-2.5 shadow-xs">
                 Tecnología e Interactividad Metrológica
               </span>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-4">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight mb-2.5">
                 Simulador de Pesaje en Vivo (0 a 80 Toneladas)
               </h2>
-              <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
+              <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
                 Interactúe con nuestro simulador de terminal industrial. Desplace el control numérico de toneladas para simular el pesaje vehicular y compruebe la respuesta en tiempo real del display digital LED, el dial con aguja viva y los estados de estabilización y sobrecarga.
               </p>
             </div>
@@ -331,34 +331,34 @@ export default function HomePage() {
       </RevealOnScroll>
 
       {/* ── CTA FINAL CORPORATIVO ── */}
-      <section className="bg-gradient-to-r from-[#7f1d1d] via-[#991b1b] to-[#7f1d1d] text-white py-16 md:py-20 relative overflow-hidden">
+      <section className="bg-gradient-to-r from-[#7f1d1d] via-[#991b1b] to-[#7f1d1d] text-white py-12 sm:py-16 relative overflow-hidden">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center relative z-10">
           <RevealOnScroll>
-            <span className="inline-block text-xs font-bold uppercase tracking-widest text-red-200 bg-red-950/40 border border-red-300/30 px-3.5 py-1.5 rounded-full mb-4">
+            <span className="inline-block text-xs font-bold uppercase tracking-widest text-red-200 bg-red-950/40 border border-red-300/30 px-3 py-1 rounded-full mb-3">
               Atención Técnica y Comercial
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4 tracking-tight">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white mb-3 tracking-tight">
               ¿Necesita asesoría o cotización en equipos de pesaje?
             </h2>
-            <p className="text-red-100 text-base sm:text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-red-100 text-xs sm:text-sm md:text-base mb-6 max-w-2xl mx-auto leading-relaxed">
               Nuestros ingenieros y especialistas en Caracas y Maracay están listos para asesorarle en venta, alquiler, calibración o desarrollo de software.
             </p>
-            <div className="flex flex-wrap justify-center items-center gap-4">
+            <div className="flex flex-wrap justify-center items-center gap-3">
               <a
                 href={`https://wa.me/${CONTACT.whatsapp}`}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2.5 bg-white hover:bg-slate-50 text-[#991b1b] font-bold px-7 py-3.5 rounded-xl shadow-md hover:shadow-lg transition-all text-sm sm:text-base"
+                className="inline-flex items-center gap-2 bg-white hover:bg-slate-50 text-[#991b1b] font-bold px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition-all text-xs sm:text-sm"
               >
-                <Phone size={17} className="text-[#991b1b]" />
+                <Phone size={15} className="text-[#991b1b]" />
                 <span>WhatsApp Directo</span>
               </a>
               <Link
                 href="/contacto"
-                className="inline-flex items-center gap-2 bg-red-950/50 hover:bg-red-950/70 border border-white/30 text-white font-semibold px-7 py-3.5 rounded-xl transition-all text-sm sm:text-base"
+                className="inline-flex items-center gap-1.5 bg-red-950/50 hover:bg-red-950/70 border border-white/30 text-white font-semibold px-6 py-3 rounded-xl transition-all text-xs sm:text-sm"
               >
                 <span>Ver Direcciones y Teléfonos</span>
-                <ArrowRight size={16} />
+                <ArrowRight size={14} />
               </Link>
             </div>
           </RevealOnScroll>

@@ -24,7 +24,7 @@ interface SocialProofSectionProps {
 }
 
 export function SocialProofSection({ whatsappNumber = CONTACT.whatsapp }: SocialProofSectionProps) {
-  const [activeTab, setActiveTab] = useState<"all" | "clients" | "brands">("all");
+  const [activeTab, setActiveTab] = useState<"all" | "clients" | "brands">("clients");
 
   // Helper para iconos por sector
   const getSectorIcon = (type: string) => {
@@ -49,39 +49,29 @@ export function SocialProofSection({ whatsappNumber = CONTACT.whatsapp }: Social
   const showBrands = activeTab === "all" || activeTab === "brands";
 
   return (
-    <section className="bg-gradient-to-b from-white via-slate-50/60 to-white py-16 md:py-24 border-b border-slate-200 overflow-hidden relative">
+    <section className="bg-gradient-to-b from-white via-slate-50/60 to-white py-10 sm:py-16 md:py-20 border-b border-slate-200 overflow-hidden relative">
       {/* Elemento decorativo de fondo */}
       <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:24px_24px] opacity-40 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Encabezado Corporativo */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 bg-red-50 border border-red-200/80 px-3.5 py-1.5 rounded-full text-[#991b1b] text-xs font-bold uppercase tracking-wider mb-4 shadow-2xs">
-            <Award size={14} className="text-[#991b1b]" />
-            <span>Social Proof & Respaldo Industrial</span>
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
+          <div className="inline-flex items-center gap-2 bg-red-50 border border-red-200/80 px-3 py-1 rounded-full text-[#991b1b] text-xs font-bold uppercase tracking-wider mb-2.5 shadow-2xs">
+            <Award size={13} className="text-[#991b1b]" />
+            <span>Social Proof &amp; Respaldo Industrial</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight mb-4">
-            Alianzas Oficiales y Clientes que Confían en Dialka
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight mb-2.5">
+            Empresas e Industrias que Confían en Dialka
           </h2>
-          <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-            Más de 20 años proveyendo tecnología de pesaje, calibraciones certificadas y mantenimiento metrológico a las principales industrias, aerolíneas y cadenas logísticas de Venezuela.
+          <p className="text-slate-600 text-xs sm:text-sm leading-relaxed max-w-2xl mx-auto">
+            Más de 25 años proveyendo tecnología de pesaje, calibraciones certificadas y mantenimiento metrológico a las principales industrias, aerolíneas y cadenas logísticas de Venezuela.
           </p>
 
           {/* Selector de Pestañas Interactivo */}
-          <div className="mt-8 inline-flex p-1 bg-slate-100/90 rounded-xl border border-slate-200/80 shadow-inner">
-            <button
-              onClick={() => setActiveTab("all")}
-              className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all duration-200 ${
-                activeTab === "all"
-                  ? "bg-white text-slate-900 shadow-xs border border-slate-200/60"
-                  : "text-slate-600 hover:text-slate-900"
-              }`}
-            >
-              Todos ({CLIENTS.length + BRANDS.length})
-            </button>
+          <div className="mt-5 inline-flex p-1 bg-slate-100/90 rounded-xl border border-slate-200/80 shadow-inner">
             <button
               onClick={() => setActiveTab("clients")}
-              className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all duration-200 ${
+              className={`px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all duration-200 ${
                 activeTab === "clients"
                   ? "bg-white text-[#991b1b] shadow-xs border border-slate-200/60"
                   : "text-slate-600 hover:text-slate-900"
@@ -91,13 +81,23 @@ export function SocialProofSection({ whatsappNumber = CONTACT.whatsapp }: Social
             </button>
             <button
               onClick={() => setActiveTab("brands")}
-              className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all duration-200 ${
+              className={`px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all duration-200 ${
                 activeTab === "brands"
                   ? "bg-white text-[#991b1b] shadow-xs border border-slate-200/60"
                   : "text-slate-600 hover:text-slate-900"
               }`}
             >
-              Marcas Representadas ({BRANDS.length})
+              Marcas ({BRANDS.length})
+            </button>
+            <button
+              onClick={() => setActiveTab("all")}
+              className={`px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all duration-200 ${
+                activeTab === "all"
+                  ? "bg-white text-slate-900 shadow-xs border border-slate-200/60"
+                  : "text-slate-600 hover:text-slate-900"
+              }`}
+            >
+              Todos ({CLIENTS.length + BRANDS.length})
             </button>
           </div>
         </div>

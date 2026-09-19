@@ -111,44 +111,44 @@ export function InteractiveServicesList({
       </div>
 
       {/* ── GRID DE TARJETAS DE SERVICIOS INTERACTIVOS ── */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
         {filteredServices.map((service, idx) => (
           <div
             key={service.id}
-            className="group relative bg-white border border-slate-200/90 hover:border-red-300 active:scale-[0.98] rounded-2xl p-6 sm:p-7 shadow-2xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between"
+            className="group relative bg-white border border-slate-200/90 hover:border-red-300 active:scale-[0.98] rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-2xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between"
           >
             <div>
               {/* Header de la tarjeta: Icono + Número + Tag */}
-              <div className="flex items-center justify-between gap-3 mb-5">
-                <div className="w-13 h-13 rounded-2xl bg-red-50/80 group-hover:bg-red-100/80 border border-red-100 flex items-center justify-center transition-colors shadow-2xs">
+              <div className="flex items-center justify-between gap-3 mb-3.5 sm:mb-5">
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-red-50/80 group-hover:bg-red-100/80 border border-red-100 flex items-center justify-center transition-colors shadow-2xs">
                   {getServiceIcon(service.id)}
                 </div>
                 <div className="text-right">
                   <span className="text-xs font-black text-slate-300 group-hover:text-red-300 transition-colors block leading-none mb-1">
                     0{idx + 1}
                   </span>
-                  <span className="inline-block text-[11px] font-bold uppercase tracking-wider text-[#991b1b] bg-red-50 border border-red-100/70 px-2.5 py-0.5 rounded-full">
+                  <span className="inline-block text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#991b1b] bg-red-50 border border-red-100/70 px-2 sm:px-2.5 py-0.5 rounded-full">
                     {service.tag}
                   </span>
                 </div>
               </div>
 
               {/* Título y descripción técnica */}
-              <h3 className="text-xl font-extrabold text-slate-900 group-hover:text-[#991b1b] transition-colors mb-3 leading-snug">
+              <h3 className="text-lg sm:text-xl font-extrabold text-slate-900 group-hover:text-[#991b1b] transition-colors mb-2 leading-snug">
                 {service.title}
               </h3>
-              <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mb-6">
+              <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-5">
                 {service.description}
               </p>
 
               {/* Lista de características técnicas */}
-              <div className="space-y-2.5 mb-6 pt-4 border-t border-slate-100">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+              <div className="space-y-2 mb-4 sm:mb-5 pt-3.5 border-t border-slate-100">
+                <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
                   Alcance Técnico:
                 </span>
                 {service.features.map((feat, fIdx) => (
-                  <div key={fIdx} className="flex items-start gap-2.5 text-xs text-slate-700">
-                    <CheckCircle2 size={15} className="text-[#991b1b] mt-0.5 shrink-0" />
+                  <div key={fIdx} className="flex items-start gap-2 text-xs text-slate-700">
+                    <CheckCircle2 size={14} className="text-[#991b1b] mt-0.5 shrink-0" />
                     <span className="leading-snug">{feat}</span>
                   </div>
                 ))}
