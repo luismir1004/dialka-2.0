@@ -7,14 +7,14 @@ export const COMPANY = {
   name: "Balanzas y Servicios Dialka, S.A.",
   slogan: "Soluciones de Pesaje para Venezuela y el Mundo",
   description:
-    "Más de 20 años siendo líderes en Venezuela en venta, alquiler y servicio técnico de equipos de pesaje industriales, comerciales y agropecuarios.",
+    "25 años siendo líderes en Venezuela en venta, alquiler y servicio técnico de equipos de pesaje industriales, comerciales y agropecuarios.",
   foundedYear: 2001,
   mission:
     "Ofrecer soluciones innovadoras de medición y pesaje, mejorando los sistemas del sector en Venezuela y el mundo.",
   vision:
     "Crear soluciones de pesaje innovadoras, garantizando confiabilidad, combinando equipos de alta precisión con conocimiento y talento humano.",
   metrics: [
-    { value: "+20", label: "Años en el mercado" },
+    { value: "25", label: "Años en el mercado" },
     { value: "5.000", label: "Proyectos concluidos" },
     { value: "307", label: "Desarrollos de software" },
     { value: "100%", label: "Satisfacción garantizada" },

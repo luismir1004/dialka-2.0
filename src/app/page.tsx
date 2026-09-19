@@ -25,11 +25,12 @@ import { ProjectsGallery } from "@/components/ProjectsGallery";
 import { LiveWeighingSimulator } from "@/components/LiveWeighingSimulator";
 import { SocialProofSection } from "@/components/SocialProofSection";
 import { AuthorizedBrands } from "@/components/AuthorizedBrands";
+import { HeroTextRotator } from "@/components/HeroTextRotator";
 
 export const metadata: Metadata = {
   title: "Inicio | Balanzas y Servicios Dialka",
   description:
-    "Más de 20 años siendo líderes en Venezuela en venta, alquiler y servicio técnico de equipos de pesaje industriales, comerciales y agropecuarios.",
+    "25 años siendo líderes en Venezuela en venta, alquiler y servicio técnico de equipos de pesaje industriales, comerciales y agropecuarios.",
 };
 
 const QUICK_ACCESS = [
@@ -38,14 +39,14 @@ const QUICK_ACCESS = [
     desc: "Calibración con masas patrón trazables, mantenimiento preventivo y correctivo en planta y talleres.",
     href: "/servicios",
     icon: Wrench,
-    tag: "Metrología",
+    tag: "Calibración",
   },
   {
-    label: "Aprobación SENCAMER",
-    desc: "Modelos certificados desde 30 kg hasta 6.000 kg para uso comercial legal obligatorio en Venezuela.",
+    label: "Homologación SENCAMER",
+    desc: "Acreditación y cumplimiento de normativas metrológicas legales venezolanas y control de calidad.",
     href: "/sencamer",
     icon: ShieldCheck,
-    tag: "Legal / Oficial",
+    tag: "Legal",
   },
   {
     label: "Nuestros Productos",
@@ -79,7 +80,7 @@ const QUICK_ACCESS = [
 
 const METRICS = [
   {
-    value: "+20",
+    value: "25",
     label: "Años de Trayectoria",
     sublabel: "Desde 2001 en Venezuela",
     icon: Award,
@@ -117,21 +118,38 @@ export default function HomePage() {
             {/* Columna Izquierda: Mensaje Central y CTAs */}
             <div className="lg:col-span-7">
               <RevealOnScroll delay={0}>
-                {/* Status Badge */}
+                {/* Status Badge Oficial con Antigüedad Exacta */}
                 <div className="inline-flex items-center gap-2 bg-red-50 border border-red-200/80 text-red-900 text-xs font-semibold px-3.5 sm:px-4 py-1.5 rounded-full mb-4 sm:mb-6 shadow-2xs max-w-full">
                   <span className="relative flex h-2 w-2 shrink-0">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-red-700"></span>
                   </span>
-                  <span className="truncate">Fundada en {COMPANY.foundedYear} · Más de 20 años de liderazgo metrológico</span>
+                  <span>Fundada en 2001 · 25 Años de Liderazgo Metrológico</span>
                 </div>
 
-                <h1 className="text-2xl xs:text-3xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.15] mb-4 sm:mb-6">
-                  Balanzas y Servicios{" "}
-                  <span className="text-[#991b1b]">Dialka</span>
-                </h1>
+                {/* Identidad Protagónica: Logotipo e Isotipo Oficial Dialka */}
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="relative h-11 sm:h-13 w-40 sm:w-48 flex items-center">
+                    <Image
+                      src="/images/logo-dialka.svg"
+                      alt="Balanzas y Servicios Dialka, S.A."
+                      width={200}
+                      height={50}
+                      priority
+                      className="h-10 sm:h-12 w-auto object-contain"
+                    />
+                  </div>
+                  <div className="h-7 w-px bg-slate-200 hidden sm:block" />
+                  <div className="hidden sm:flex flex-col text-[10px] font-bold text-slate-500 leading-tight">
+                    <span className="text-slate-900 font-extrabold tracking-wider">FABRICANTES Y METROLOGÍA</span>
+                    <span>DESDE 2001 EN VENEZUELA</span>
+                  </div>
+                </div>
 
-                <p className="text-sm sm:text-lg lg:text-xl text-slate-600 leading-relaxed mb-6 sm:mb-8 font-normal">
+                {/* Dinamismo Tipográfico Rotativo ("El Giro") */}
+                <HeroTextRotator />
+
+                <p className="text-sm sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-6 sm:mb-8 font-normal mt-3">
                   {COMPANY.description}
                 </p>
 

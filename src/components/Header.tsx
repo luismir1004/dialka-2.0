@@ -97,51 +97,37 @@ export function Header() {
       {/* ── TOP BAR INSTITUCIONAL (CARACAS, MARACAY, USA Y REDES) ── */}
       <div className="bg-[#991b1b] text-white text-xs py-2 border-b border-[#7f1d1d]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Vista Móvil (md:hidden): Caracas, Maracay y USA organizados con iconos claros y marcación directa */}
-          <div className="flex md:hidden items-center justify-between gap-1.5 text-[11px]">
-            <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
-              {/* Caracas */}
-              <a
-                href={`tel:${ccsPhone.replace(/\s+/g, "").replace(/[()]/g, "")}`}
-                className="inline-flex items-center gap-1 font-bold text-white hover:text-red-200 active:scale-95 transition-all py-0.5 px-2 rounded-md bg-black/20 shrink-0"
-                title={`Llamar a Caracas: ${ccsPhone}`}
-              >
-                <Phone size={10} className="text-red-300 shrink-0" />
-                <span>CCS: {ccsPhone}</span>
-              </a>
+          {/* Vista Móvil (md:hidden): Caracas, Maracay y USA visibles simultáneamente de forma ordenada y legible */}
+          <div className="flex md:hidden flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-[10px] sm:text-[11px] font-bold py-0.5">
+            {/* Caracas */}
+            <a
+              href={`tel:${ccsPhone.replace(/\s+/g, "").replace(/[()]/g, "")}`}
+              className="inline-flex items-center gap-1 text-white hover:text-red-200 active:scale-95 transition-all py-0.5 px-1.5 rounded-md bg-black/20 shrink-0"
+              title={`Llamar a Caracas: ${ccsPhone}`}
+            >
+              <Phone size={10} className="text-red-300 shrink-0" />
+              <span>CCS: {ccsPhone}</span>
+            </a>
 
-              <span className="text-red-300/40">|</span>
+            {/* Maracay */}
+            <a
+              href="tel:+582432343360"
+              className="inline-flex items-center gap-1 text-white hover:text-red-200 active:scale-95 transition-all py-0.5 px-1.5 rounded-md bg-black/20 shrink-0"
+              title="Llamar a Maracay: 0243-234.33.60 / 234.33.72"
+            >
+              <Phone size={10} className="text-red-300 shrink-0" />
+              <span>MCY: 0243-234.33.60</span>
+            </a>
 
-              {/* Maracay */}
-              <a
-                href="tel:+582432343360"
-                className="inline-flex items-center gap-1 font-bold text-white hover:text-red-200 active:scale-95 transition-all py-0.5 px-2 rounded-md bg-black/20 shrink-0"
-                title="Llamar a Maracay: 0243-234.33.60"
-              >
-                <Phone size={10} className="text-red-300 shrink-0" />
-                <span>MCY: 0243-234.33.60</span>
-              </a>
-
-              <span className="text-red-300/40">|</span>
-
-              {/* USA con bandera */}
-              <a
-                href={`tel:${usaPhone.replace(/\s+/g, "").replace(/[()]/g, "").replace(/-/g, "")}`}
-                className="inline-flex items-center gap-1 font-bold text-amber-200 hover:text-white active:scale-95 transition-all py-0.5 px-2 rounded-md bg-black/20 shrink-0"
-                title={`Llamar a Estados Unidos: ${usaPhone}`}
-              >
-                <span className="text-[11px]" role="img" aria-label="Bandera Estados Unidos">🇺🇸</span>
-                <span>USA: {usaPhone}</span>
-              </a>
-            </div>
-
-            <div className="inline-flex items-center gap-1 bg-black/25 px-2 py-0.5 rounded-full text-red-100 font-semibold text-[10px] border border-white/10 shrink-0">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
-              </span>
-              <span>Abierto</span>
-            </div>
+            {/* USA con bandera */}
+            <a
+              href={`tel:${usaPhone.replace(/\s+/g, "").replace(/[()]/g, "").replace(/-/g, "")}`}
+              className="inline-flex items-center gap-1 text-amber-200 hover:text-white active:scale-95 transition-all py-0.5 px-1.5 rounded-md bg-black/25 shrink-0"
+              title={`Llamar a Estados Unidos: ${usaPhone}`}
+            >
+              <span className="text-xs" role="img" aria-label="Bandera Estados Unidos">🇺🇸</span>
+              <span>USA: {usaPhone}</span>
+            </a>
           </div>
 
           {/* Vista Escritorio (hidden md:flex): Caracas, Maracay, USA con banderas e iconos */}
@@ -305,38 +291,68 @@ export function Header() {
         </div>
       </nav>
 
-      {/* ── PANEL DESPLEGABLE MÓVIL (FIXED INSET-0 TOP-[HEADERHEIGHT]) ── */}
+      {/* ── DRAWER MÓVIL MODERNO DESLIZANTE DESDE LA DERECHA (60 FPS) ── */}
+      {/* Backdrop con Blur Translúcido */}
+      <div
+        className={`fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm lg:hidden transition-opacity duration-300 ease-in-out ${
+          menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={() => setMenuOpen(false)}
+        aria-hidden="true"
+      />
+
+      {/* Panel Deslizante Lateral (Drawer) */}
       <div
         id="mobile-nav-panel"
-        className={`fixed inset-x-0 bottom-0 z-50 bg-white/98 backdrop-blur-md lg:hidden overflow-y-auto transition-all duration-200 ease-in-out flex flex-col justify-between border-t border-slate-200 shadow-2xl ${
-          menuOpen
-            ? "opacity-100 pointer-events-auto translate-y-0 visible"
-            : "opacity-0 pointer-events-none -translate-y-2 invisible"
+        className={`fixed top-0 right-0 bottom-0 z-50 w-[88vw] max-w-sm bg-white/95 backdrop-blur-xl border-l border-slate-200/90 shadow-2xl lg:hidden flex flex-col justify-between transition-transform duration-300 ease-out transform ${
+          menuOpen ? "translate-x-0" : "translate-x-full"
         }`}
-        style={{
-          top: `${headerHeight}px`,
-          height: `calc(100dvh - ${headerHeight}px)`,
-        }}
         role="dialog"
         aria-modal="true"
         aria-label="Menú de navegación móvil"
       >
-        <div className="p-4 sm:p-6 space-y-4">
-          {/* Estatus Operativo en Móvil */}
-          <div className="px-4 py-3 bg-emerald-50/90 border border-emerald-200 rounded-xl flex items-center justify-between text-xs text-emerald-900 shadow-2xs">
+        {/* Cabecera del Drawer: Logotipo + Botón Cerrar */}
+        <div className="p-4 sm:p-5 border-b border-slate-200/80 flex items-center justify-between bg-slate-50/80 shrink-0">
+          <Link href="/" onClick={() => setMenuOpen(false)} className="flex items-center gap-2">
+            <div className="relative h-9 w-36 flex items-center">
+              <Image
+                src="/images/logo-dialka.svg"
+                alt="Balanzas y Servicios Dialka, S.A."
+                width={200}
+                height={50}
+                priority
+                className="h-8 w-auto object-contain"
+              />
+            </div>
+          </Link>
+
+          <button
+            type="button"
+            onClick={() => setMenuOpen(false)}
+            className="min-h-[44px] min-w-[44px] w-11 h-11 rounded-xl bg-white border border-slate-200 text-slate-700 hover:text-[#991b1b] hover:border-red-300 active:scale-90 transition-all flex items-center justify-center cursor-pointer shadow-2xs"
+            aria-label="Cerrar menú"
+          >
+            <X size={22} className="text-[#991b1b]" />
+          </button>
+        </div>
+
+        {/* Contenido Desplazable del Drawer */}
+        <div className="p-4 sm:p-5 overflow-y-auto flex-1 space-y-4">
+          {/* Estatus Operativo en Vivo */}
+          <div className="px-3.5 py-2.5 bg-emerald-50/90 border border-emerald-200/80 rounded-xl flex items-center justify-between text-xs text-emerald-900 shadow-2xs">
             <span className="flex items-center gap-2 font-bold">
               <span className="relative flex h-2.5 w-2.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
               </span>
-              Sedes Abiertas Hoy (08:00–17:00)
+              Sedes Abiertas Hoy
             </span>
-            <span className="text-[11px] font-bold text-emerald-700 bg-white px-2.5 py-0.5 rounded-md border border-emerald-200 shadow-2xs">
-              Caracas / Maracay
+            <span className="text-[10px] font-extrabold text-emerald-800 bg-white px-2 py-0.5 rounded-md border border-emerald-200">
+              08:00–17:00
             </span>
           </div>
 
-          {/* Lista de Enlaces Táctiles con Iconos y min-h-[48px] */}
+          {/* Enlaces de Navegación con Tipografía Grande y Táctil (min-h-[52px]) */}
           <nav className="space-y-1.5" aria-label="Enlaces de navegación móvil">
             {NAV_LINKS.map((link) => {
               const isActive =
@@ -348,17 +364,17 @@ export function Header() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className={`flex items-center justify-between min-h-[48px] p-3.5 rounded-xl font-bold transition-all text-sm sm:text-base active:scale-[0.98] ${
+                  className={`flex items-center justify-between min-h-[52px] px-3.5 py-3 rounded-xl font-bold transition-all text-base sm:text-lg active:scale-[0.98] ${
                     isActive
-                      ? "bg-red-50 text-[#991b1b] border border-red-200 shadow-2xs"
-                      : "text-slate-700 hover:bg-slate-50 hover:text-[#991b1b] border border-transparent"
+                      ? "bg-red-50 text-[#991b1b] border-l-4 border-[#991b1b] shadow-2xs"
+                      : "text-slate-800 hover:bg-slate-50 hover:text-[#991b1b] border-l-4 border-transparent"
                   }`}
                 >
                   <div className="flex items-center gap-3">
                     <div
-                      className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors shrink-0 ${
+                      className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors shrink-0 ${
                         isActive
-                          ? "bg-[#991b1b] text-white"
+                          ? "bg-[#991b1b] text-white shadow-2xs"
                           : "bg-slate-100 text-slate-600"
                       }`}
                     >
@@ -367,7 +383,7 @@ export function Header() {
                     <span>{link.label}</span>
                   </div>
                   <ChevronRight
-                    size={16}
+                    size={18}
                     className={isActive ? "text-[#991b1b]" : "text-slate-400"}
                   />
                 </Link>
@@ -376,9 +392,9 @@ export function Header() {
           </nav>
         </div>
 
-        {/* Footer del Panel Móvil con Botones Táctiles de Acción y Contactos Directos */}
-        <div className="p-4 sm:p-6 border-t border-slate-200 bg-slate-50/90 space-y-2.5 shrink-0">
-          {/* Sedes Telefónicas Directas Táctiles (Caracas y Maracay) con min-h-[48px] */}
+        {/* Footer del Drawer con Contactos y WhatsApp Directo */}
+        <div className="p-4 sm:p-5 border-t border-slate-200 bg-slate-50/95 space-y-2.5 shrink-0">
+          {/* Sedes Telefónicas Caracas y Maracay */}
           <div className="grid grid-cols-2 gap-2">
             <a
               href={`tel:${ccsPhone.replace(/\s+/g, "").replace(/[()]/g, "")}`}
@@ -412,11 +428,11 @@ export function Header() {
           {/* Tarjeta Contacto USA Directa con Bandera */}
           <a
             href={`tel:${usaPhone.replace(/\s+/g, "").replace(/[()]/g, "").replace(/-/g, "")}`}
-            className="flex items-center justify-between min-h-[44px] px-3 py-2 rounded-xl bg-amber-50/80 border border-amber-200 hover:border-amber-300 active:scale-95 transition-all shadow-2xs group"
+            className="flex items-center justify-between min-h-[46px] px-3.5 py-2.5 rounded-xl bg-amber-50/90 border border-amber-200 hover:border-amber-300 active:scale-95 transition-all shadow-2xs group"
             title="Llamar a oficina Estados Unidos (+1 786 321-4890)"
           >
-            <div className="flex items-center gap-2">
-              <span className="text-base" role="img" aria-label="Bandera Estados Unidos">🇺🇸</span>
+            <div className="flex items-center gap-2.5">
+              <span className="text-lg" role="img" aria-label="Bandera Estados Unidos">🇺🇸</span>
               <div className="text-left">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-amber-900 block leading-none">
                   Oficina Estados Unidos
@@ -426,7 +442,7 @@ export function Header() {
                 </span>
               </div>
             </div>
-            <div className="flex items-center gap-1 text-[11px] font-bold text-[#991b1b] group-hover:translate-x-0.5 transition-transform">
+            <div className="flex items-center gap-1 text-xs font-bold text-[#991b1b] group-hover:translate-x-0.5 transition-transform">
               <span>Llamar</span>
               <ChevronRight size={14} />
             </div>
@@ -437,13 +453,13 @@ export function Header() {
             href={`https://wa.me/${CONTACT.whatsapp}`}
             target="_blank"
             rel="noreferrer"
-            className="w-full inline-flex items-center justify-center gap-2 min-h-[48px] bg-[#991b1b] hover:bg-[#7f1d1d] active:scale-95 text-white font-bold py-3.5 px-4 rounded-xl shadow-sm text-sm transition-all"
+            className="w-full inline-flex items-center justify-center gap-2 min-h-[48px] bg-[#991b1b] hover:bg-[#7f1d1d] active:scale-95 text-white font-bold py-3 px-4 rounded-xl shadow-sm text-sm transition-all"
           >
             <Phone size={16} />
             <span>Contactar vía WhatsApp</span>
           </a>
 
-          {/* Redes Sociales y RIF en el pie */}
+          {/* Redes Sociales y RIF */}
           <div className="pt-1 flex items-center justify-between text-[11px] text-slate-500 font-medium">
             <span>RIF: J-30814715-0</span>
             <a
