@@ -28,12 +28,12 @@ export interface ProductItem {
 }
 
 export const CATALOG_CATEGORIES = [
-  { id: "all", name: "Todas", icon: "✨" },
-  { id: "comerciales", name: "Comerciales", icon: "🛒" },
-  { id: "agropecuaria", name: "Agropecuaria", icon: "🌾" },
-  { id: "industriales", name: "Industriales", icon: "🏭" },
-  { id: "laboratorio", name: "Laboratorio", icon: "🧪" },
-  { id: "ganadera", name: "Ganadera", icon: "🐂" },
+  { id: "all", name: "Todas", icon: "✨", desc: "Todo el catálogo" },
+  { id: "comerciales", name: "Comerciales", icon: "🛒", desc: "Mostrador y tickets" },
+  { id: "agropecuaria", name: "Agropecuaria", icon: "🌾", desc: "Avícola y porcino" },
+  { id: "industriales", name: "Industriales", icon: "🏭", desc: "Plataformas y grúas" },
+  { id: "laboratorio", name: "Laboratorio", icon: "🧪", desc: "Analíticas y precisión" },
+  { id: "ganadera", name: "Ganadera", icon: "🐂", desc: "Bretes y barras" },
 ] as const;
 
 export const CATALOG_PRODUCTS: ProductItem[] = [
@@ -314,16 +314,16 @@ export function ProductsCatalog({
   };
 
   return (
-    <section className={`bg-slate-50/60 py-10 sm:py-16 md:py-20 border-b border-slate-200 ${className}`}>
+    <section className={`bg-gradient-to-b from-white via-slate-50/60 to-white py-10 sm:py-16 md:py-20 border-b border-slate-200 ${className}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Encabezado Opcional del Catálogo */}
+        {/* Encabezado Opcional de la Vitrina */}
         {showHeading && (
           <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
-            <div className="inline-flex items-center gap-2 bg-red-50 border border-red-200/80 px-3.5 py-1 rounded-full text-[#991b1b] text-xs font-bold uppercase tracking-wider mb-2.5 shadow-2xs">
+            <div className="inline-flex items-center gap-2 bg-red-50 border border-red-200/80 px-4 py-1.5 rounded-full text-[#991b1b] text-xs font-bold uppercase tracking-wider mb-3 shadow-2xs">
               <Package size={14} className="text-[#991b1b]" />
-              <span>Vitrina Comercial · Entrega Inmediata</span>
+              <span>Tienda Oficial · Vitrina de Equipos</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight mb-2">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight mb-2.5">
               {title || "Catálogo de Balanzas y Sistemas de Pesaje"}
             </h2>
             <p className="text-slate-600 text-xs sm:text-sm md:text-base leading-relaxed max-w-2xl mx-auto">
@@ -332,46 +332,53 @@ export function ProductsCatalog({
           </div>
         )}
 
-        {/* ── ENCABEZADO Y BARRA DE FILTROS SUPERIOR TIPO E-COMMERCE ── */}
-        <div className="bg-white border border-slate-200/90 rounded-2xl p-4 sm:p-6 mb-8 sm:mb-10 shadow-xs">
-          <div className="flex flex-col md:flex-row gap-3 sm:gap-4 items-stretch md:items-center justify-between mb-5">
-            {/* Buscador de productos */}
-            <div className="relative flex-1">
-              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                <Search size={18} />
-              </div>
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Buscar modelo o especificación (ej: 30kg, Brete, Apolo, Plataforma)..."
-                className="w-full bg-slate-50 hover:bg-white focus:bg-white border border-slate-200 focus:border-[#991b1b] rounded-xl pl-10 pr-10 py-2.5 sm:py-3 text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#991b1b]/10 transition-all shadow-2xs"
-              />
-              {searchQuery && (
-                <button
-                  type="button"
-                  onClick={() => setSearchQuery("")}
-                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-700 transition-colors"
-                  aria-label="Borrar búsqueda"
-                >
-                  <X size={16} />
-                </button>
-              )}
+        {/* ── FASE 1: BARRA DE BÚSQUEDA PROMINENTE ESTILO RETAIL ── */}
+        <div className="max-w-3xl mx-auto mb-6 sm:mb-8">
+          <div className="relative flex items-center bg-white rounded-2xl sm:rounded-full p-1.5 sm:p-2 border-2 border-red-500/25 shadow-lg shadow-red-950/5 focus-within:border-[#991b1b] focus-within:ring-4 focus-within:ring-red-500/10 transition-all duration-300">
+            <div className="pl-3 sm:pl-4 pr-2 text-[#991b1b] shrink-0">
+              <Search size={22} className="stroke-[2.5]" />
             </div>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="¿Qué balanza o equipo buscas hoy? (ej. 30kg, Brete, Camionera, Analítica)..."
+              className="w-full bg-transparent text-slate-900 placeholder:text-slate-400 text-xs sm:text-sm md:text-base font-medium focus:outline-none py-2 sm:py-2.5 pr-2"
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery("")}
+                className="p-1.5 mr-1 text-slate-400 hover:text-slate-700 transition-colors shrink-0"
+                aria-label="Borrar búsqueda"
+              >
+                <X size={18} />
+              </button>
+            )}
+            <div className="hidden sm:flex items-center gap-1.5 bg-[#991b1b] text-white text-xs font-bold px-4 py-2.5 rounded-full shadow-sm shrink-0">
+              <span>Buscar</span>
+            </div>
+          </div>
+        </div>
 
-            {/* Contador de equipos */}
-            <div className="flex items-center justify-between sm:justify-end gap-2 sm:gap-3 text-xs font-semibold text-slate-600 shrink-0">
-              <span className="inline-flex items-center gap-1.5 bg-slate-50 border border-slate-200 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-[11px] sm:text-xs">
-                <SlidersHorizontal size={13} className="text-[#991b1b]" />
-                <span>
-                  {filteredProducts.length} de {CATALOG_PRODUCTS.length} equipos
-                </span>
+        {/* ── FASE 1: CARRUSEL DE CATEGORÍAS VISUALES (CHIPS DESLIZANTES) ── */}
+        <div className="mb-8 sm:mb-10">
+          <div className="flex items-center justify-between mb-3 px-1">
+            <div className="flex items-center gap-2">
+              <SlidersHorizontal size={14} className="text-[#991b1b]" />
+              <span className="text-xs sm:text-sm font-bold text-slate-800 uppercase tracking-wider">
+                Líneas Especializadas:
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-semibold text-slate-500">
+                {filteredProducts.length} {filteredProducts.length === 1 ? "equipo" : "equipos"}
               </span>
               {(selectedCategory !== "all" || searchQuery !== "") && (
                 <button
                   type="button"
                   onClick={handleReset}
-                  className="inline-flex items-center gap-1 text-[#991b1b] hover:text-[#7f1d1d] font-bold px-2 py-1 text-xs hover:underline cursor-pointer"
+                  className="inline-flex items-center gap-1 text-[#991b1b] hover:text-[#7f1d1d] font-bold text-xs hover:underline cursor-pointer ml-2"
                 >
                   <RotateCcw size={12} />
                   <span>Restablecer</span>
@@ -380,115 +387,119 @@ export function ProductsCatalog({
             </div>
           </div>
 
-          {/* ── PESTAÑAS DE LAS 5 LÍNEAS PRINCIPALES (ESTILO E-COMMERCE) ── */}
-          <div>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 block mb-2.5">
-              Líneas de Pesaje:
-            </span>
-            <div className="flex flex-wrap gap-1.5 sm:gap-2">
-              {CATALOG_CATEGORIES.map((cat) => {
-                const isSelected = selectedCategory === cat.id;
-                const count =
-                  cat.id === "all"
-                    ? CATALOG_PRODUCTS.length
-                    : CATALOG_PRODUCTS.filter((p) => p.category === cat.id).length;
+          {/* Carrusel Deslizante Horizontal (Touch-Friendly sin Scrollbar Fea) */}
+          <div className="overflow-x-auto no-scrollbar scroll-smooth flex gap-2.5 sm:gap-3.5 pb-2 pt-1 -mx-4 px-4 sm:mx-0 sm:px-0 snap-x">
+            {CATALOG_CATEGORIES.map((cat) => {
+              const isSelected = selectedCategory === cat.id;
+              const count =
+                cat.id === "all"
+                  ? CATALOG_PRODUCTS.length
+                  : CATALOG_PRODUCTS.filter((p) => p.category === cat.id).length;
 
-                return (
-                  <button
-                    key={cat.id}
-                    type="button"
-                    onClick={() => setSelectedCategory(cat.id)}
-                    className={`inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl transition-all duration-200 cursor-pointer active:scale-95 ${
+              return (
+                <button
+                  key={cat.id}
+                  type="button"
+                  onClick={() => setSelectedCategory(cat.id)}
+                  className={`snap-start shrink-0 min-w-[140px] sm:min-w-[165px] p-2.5 sm:p-3 rounded-2xl transition-all duration-200 cursor-pointer flex items-center gap-2.5 sm:gap-3 border text-left ${
+                    isSelected
+                      ? "bg-gradient-to-r from-[#991b1b] to-[#b91c1c] text-white shadow-md shadow-red-900/25 border-transparent scale-[1.02]"
+                      : "bg-white hover:bg-slate-50 text-slate-700 hover:text-[#991b1b] border-slate-200/90 hover:border-red-300 shadow-2xs hover:shadow-sm"
+                  }`}
+                >
+                  <div
+                    className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center text-lg sm:text-xl shrink-0 transition-transform ${
                       isSelected
-                        ? "bg-[#991b1b] text-white shadow-xs shadow-red-900/20"
-                        : "bg-slate-50 hover:bg-white text-slate-700 hover:text-[#991b1b] border border-slate-200 hover:border-red-200 shadow-2xs"
+                        ? "bg-white/20 backdrop-blur-xs scale-105"
+                        : "bg-slate-100 group-hover:bg-red-50"
                     }`}
                   >
-                    <span>{cat.icon}</span>
-                    <span>{cat.name}</span>
+                    {cat.icon}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <span className="block font-extrabold text-xs sm:text-sm truncate">
+                      {cat.name}
+                    </span>
                     <span
-                      className={`text-[10px] sm:text-[11px] px-1.5 py-0.2 rounded-md ${
-                        isSelected
-                          ? "bg-white/20 text-white"
-                          : "bg-slate-200/70 text-slate-600"
+                      className={`block text-[10px] sm:text-[11px] truncate ${
+                        isSelected ? "text-white/80" : "text-slate-500"
                       }`}
                     >
-                      {count}
+                      {count} {count === 1 ? "modelo" : "modelos"}
                     </span>
-                  </button>
-                );
-              })}
-            </div>
+                  </div>
+                </button>
+              );
+            })}
           </div>
         </div>
 
-        {/* ── CUADRÍCULA DE PRODUCTOS RESPONSIVE (2 COLS EN MÓVIL, 3 EN TABLET, 4 EN ESCRITORIO) ── */}
+        {/* ── FASE 2: CUADRÍCULA DE TARJETAS ESTILO E-COMMERCE (GRID 2 COLS EN MÓVIL) ── */}
         {filteredProducts.length > 0 ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5 animate-fadeIn">
             {filteredProducts.map((product) => (
               <div
                 key={product.id}
-                className="group relative bg-white border border-slate-200/90 hover:border-red-400 rounded-2xl p-3 sm:p-4 shadow-sm hover:shadow-xl hover:shadow-slate-200/60 transition-all duration-300 transform hover:-translate-y-1 sm:hover:-translate-y-1.5 flex flex-col justify-between overflow-hidden"
+                className="group relative bg-white border border-slate-100 hover:border-red-200/90 rounded-2xl p-2.5 sm:p-3.5 shadow-xs hover:shadow-xl hover:shadow-slate-200/70 transition-all duration-300 flex flex-col justify-between overflow-hidden"
               >
-                {/* Borde sutil iluminado al hover */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-red-500/0 via-red-500/0 to-red-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-
                 <div>
-                  {/* Contenedor Fotográfico Limpio con aspect-[4/3] */}
-                  <div className="relative aspect-[4/3] w-full rounded-xl bg-slate-50 group-hover:bg-red-50/20 border border-slate-100 group-hover:border-red-100/60 overflow-hidden mb-2.5 sm:mb-3 transition-all duration-300 flex items-center justify-center">
+                  {/* Fotografía Protagonista Limpia con aspect-square */}
+                  <div className="relative aspect-square w-full rounded-xl bg-slate-50/90 group-hover:bg-red-50/20 p-2 border border-slate-100/80 overflow-hidden mb-2.5 sm:mb-3 flex items-center justify-center transition-colors duration-300">
                     <Image
                       src={product.image}
                       alt={product.name}
                       fill
                       sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                      className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                      className="object-cover rounded-lg group-hover:scale-105 transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-50 group-hover:opacity-30 transition-opacity" />
 
                     {/* Insignia Flotante de Categoría */}
                     <div className="absolute top-2 left-2">
-                      <span className="inline-flex items-center gap-1 bg-white/95 backdrop-blur-md text-[#991b1b] text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full shadow-xs border border-white/60">
+                      <span className="inline-flex items-center gap-1 bg-white/95 backdrop-blur-md text-[#991b1b] text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full shadow-2xs border border-white/60">
                         <span>{product.categoryIcon}</span>
-                        <span className="truncate">{product.categoryName}</span>
+                        <span className="truncate max-w-[70px] sm:max-w-none">{product.categoryName}</span>
                       </span>
                     </div>
 
                     {/* Badge de garantía / norma */}
                     <div className="absolute bottom-2 left-2 right-2">
-                      <span className="inline-block text-[9px] sm:text-[10px] font-bold text-white bg-black/60 backdrop-blur-xs px-2 py-0.5 rounded truncate max-w-full">
+                      <span className="inline-block text-[9px] sm:text-[10px] font-bold text-white bg-black/65 backdrop-blur-xs px-2 py-0.5 rounded truncate max-w-full">
                         {product.badge}
                       </span>
                     </div>
                   </div>
 
-                  {/* Nombre del Producto (Tipografía fuerte) */}
-                  <h3 className="font-extrabold text-slate-900 text-xs sm:text-sm group-hover:text-[#991b1b] transition-colors leading-snug line-clamp-2 mb-1">
+                  {/* Nombre del Producto (Firme y de alta legibilidad) */}
+                  <h3 className="font-bold text-slate-900 text-xs sm:text-sm group-hover:text-[#991b1b] transition-colors leading-snug line-clamp-2 min-h-[2rem] sm:min-h-[2.5rem] mb-1.5">
                     {product.name}
                   </h3>
 
-                  {/* Especificaciones técnicas de una línea */}
-                  <p className="text-[10px] sm:text-xs font-semibold text-[#991b1b] leading-tight line-clamp-1 mb-1">
-                    {product.specs}
-                  </p>
+                  {/* Especificaciones técnicas clave como etiqueta limpia */}
+                  <div className="mb-2">
+                    <span className="inline-flex items-center gap-1 bg-slate-100 group-hover:bg-red-50 text-slate-700 group-hover:text-[#991b1b] text-[10px] sm:text-[11px] font-semibold px-2 py-0.5 rounded-md leading-tight line-clamp-1 border border-slate-200/60 group-hover:border-red-100 transition-colors">
+                      {product.specs}
+                    </span>
+                  </div>
 
-                  {/* Reseña de aplicación */}
+                  {/* Reseña de aplicación comercial */}
                   <p className="text-[10px] sm:text-[11px] text-slate-500 leading-snug line-clamp-1 mb-3">
                     {product.highlight}
                   </p>
                 </div>
 
-                {/* Botón de Acción Directa estilo E-commerce */}
+                {/* Botón de Conversión Comercial (Llamativo y optimizado para clics) */}
                 <div className="pt-2 sm:pt-2.5 border-t border-slate-100">
                   <a
                     href={`https://wa.me/${whatsappNumber}?text=Hola%20Dialka,%20deseo%20cotizar%20el%20equipo:%20${encodeURIComponent(product.name)}%20(${encodeURIComponent(product.specs)})`}
                     target="_blank"
                     rel="noreferrer"
-                    className="w-full inline-flex items-center justify-center gap-1.5 bg-[#991b1b] hover:bg-[#7f1d1d] active:scale-[0.98] text-white font-bold py-2 sm:py-2.5 px-3 rounded-xl text-xs sm:text-sm transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer group/btn"
+                    className="w-full inline-flex items-center justify-center gap-1.5 bg-[#991b1b] hover:bg-[#7f1d1d] active:scale-[0.98] text-white font-bold py-2.5 px-3 rounded-xl text-xs sm:text-sm transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer group/btn"
                     title={`Cotizar ${product.name}`}
                   >
-                    <Phone size={13} className="transition-transform group-hover/btn:scale-110" />
-                    <span>Cotizar</span>
-                    <ArrowRight size={13} className="transition-transform group-hover/btn:translate-x-0.5" />
+                    <Phone size={13} className="transition-transform group-hover/btn:scale-110 shrink-0" />
+                    <span>Cotizar por WhatsApp</span>
+                    <ArrowRight size={13} className="transition-transform group-hover/btn:translate-x-0.5 shrink-0" />
                   </a>
                 </div>
               </div>
