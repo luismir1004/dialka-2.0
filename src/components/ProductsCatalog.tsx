@@ -33,6 +33,11 @@ import {
   Truck,
   Zap,
   Tag,
+  LayoutGrid,
+  ShoppingCart,
+  Wheat,
+  Factory,
+  Beef,
   type LucideIcon,
 } from "lucide-react";
 
@@ -50,13 +55,20 @@ export interface ProductItem {
   featureTag: string;
 }
 
-export const CATALOG_CATEGORIES = [
-  { id: "all", name: "Todas", icon: "✨", desc: "Todo el catálogo" },
-  { id: "comerciales", name: "Comerciales", icon: "🛒", desc: "Mostrador y tickets" },
-  { id: "agropecuaria", name: "Agropecuaria", icon: "🌾", desc: "Avícola y porcino" },
-  { id: "industriales", name: "Industriales", icon: "🏭", desc: "Plataformas y grúas" },
-  { id: "laboratorio", name: "Laboratorio", icon: "🧪", desc: "Analíticas y precisión" },
-  { id: "ganadera", name: "Ganadera", icon: "🐂", desc: "Bretes y barras" },
+export interface CategoryItem {
+  id: string;
+  name: string;
+  desc: string;
+  icon: LucideIcon;
+}
+
+export const CATALOG_CATEGORIES: CategoryItem[] = [
+  { id: "all", name: "Todas", desc: "Todo el catálogo", icon: LayoutGrid },
+  { id: "comerciales", name: "Comerciales", desc: "Mostrador y tickets", icon: ShoppingCart },
+  { id: "agropecuaria", name: "Agropecuaria", desc: "Avícola y porcino", icon: Wheat },
+  { id: "industriales", name: "Industriales", desc: "Plataformas y grúas", icon: Factory },
+  { id: "laboratorio", name: "Laboratorio", desc: "Analíticas y precisión", icon: FlaskConical },
+  { id: "ganadera", name: "Ganadera", desc: "Bretes y barras", icon: Beef },
 ] as const;
 
 export const CATALOG_PRODUCTS: ProductItem[] = [
@@ -507,6 +519,7 @@ export function ProductsCatalog({
           <div className="overflow-x-auto no-scrollbar scroll-smooth flex gap-2.5 sm:gap-3.5 pb-2 pt-1 -mx-4 px-4 sm:mx-0 sm:px-0 snap-x">
             {CATALOG_CATEGORIES.map((cat) => {
               const isSelected = selectedCategory === cat.id;
+              const CatIcon = cat.icon;
               const count =
                 cat.id === "all"
                   ? CATALOG_PRODUCTS.length
@@ -517,31 +530,42 @@ export function ProductsCatalog({
                   key={cat.id}
                   type="button"
                   onClick={() => setSelectedCategory(cat.id)}
-                  className={`snap-start shrink-0 min-w-[140px] sm:min-w-[165px] p-2.5 sm:p-3 rounded-2xl transition-all duration-200 cursor-pointer flex items-center gap-2.5 sm:gap-3 border text-left ${
+                  className={`group relative snap-start shrink-0 min-w-[155px] sm:min-w-[180px] px-4 py-3 rounded-2xl transition-all duration-300 cursor-pointer flex items-center gap-3.5 border text-left active:scale-95 hover:scale-[1.03] ${
                     isSelected
-                      ? "bg-gradient-to-r from-[#991b1b] to-[#b91c1c] text-white shadow-md shadow-red-900/25 border-transparent scale-[1.02]"
-                      : "bg-white hover:bg-slate-50 text-slate-700 hover:text-[#991b1b] border-slate-200/90 hover:border-red-300 shadow-2xs hover:shadow-sm"
+                      ? "bg-red-900 text-white border-red-950 shadow-lg shadow-red-950/25 ring-2 ring-red-500/30"
+                      : "bg-white hover:bg-slate-50/90 text-slate-700 hover:text-slate-900 border-slate-200/90 hover:border-red-200 shadow-xs hover:shadow-md"
                   }`}
                 >
                   <div
-                    className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center text-lg sm:text-xl shrink-0 transition-transform ${
+                    className={`w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300 ${
                       isSelected
-                        ? "bg-white/20 backdrop-blur-xs scale-105"
-                        : "bg-slate-100 group-hover:bg-red-50"
+                        ? "bg-white/20 text-white shadow-inner scale-105"
+                        : "bg-red-50 text-[#991b1b] border border-red-100 group-hover:bg-[#991b1b] group-hover:text-white group-hover:rotate-3 group-hover:scale-110"
                     }`}
                   >
-                    {cat.icon}
+                    <CatIcon size={20} className="transition-transform duration-300 group-hover:scale-110" />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <span className="block font-extrabold text-xs sm:text-sm truncate">
-                      {cat.name}
-                    </span>
+                    <div className="flex items-center justify-between gap-1">
+                      <span className="block font-extrabold text-xs sm:text-sm tracking-tight truncate">
+                        {cat.name}
+                      </span>
+                      <span
+                        className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full transition-colors ${
+                          isSelected
+                            ? "bg-white/20 text-white"
+                            : "bg-slate-100 text-slate-600 group-hover:bg-red-50 group-hover:text-[#991b1b]"
+                        }`}
+                      >
+                        {count}
+                      </span>
+                    </div>
                     <span
-                      className={`block text-[10px] sm:text-[11px] truncate ${
-                        isSelected ? "text-white/80" : "text-slate-500"
+                      className={`block text-[10px] sm:text-[11px] font-medium truncate mt-0.5 transition-colors ${
+                        isSelected ? "text-red-100" : "text-slate-500 group-hover:text-slate-600"
                       }`}
                     >
-                      {count} {count === 1 ? "modelo" : "modelos"}
+                      {cat.desc}
                     </span>
                   </div>
                 </button>
