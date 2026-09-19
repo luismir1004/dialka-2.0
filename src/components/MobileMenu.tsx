@@ -108,7 +108,7 @@ export function MobileMenu({
       aria-modal="true"
       aria-label="Menú principal de navegación móvil"
     >
-      {/* ── FASE 1: CABECERA CON LOGOTIPO OFICIAL + BOTÓN DE CIERRE (X) ── */}
+      {/* ── CABECERA INSTITUCIONAL: LOGO OFICIAL Y CIERRE ── */}
       <div className="p-4 sm:p-5 border-b border-slate-200/90 flex items-center justify-between bg-slate-50/90 shrink-0">
         <Link href="/" onClick={onClose} className="flex items-center gap-2 group">
           <div className="relative h-9 w-36 flex items-center">
@@ -189,7 +189,7 @@ export function MobileMenu({
         </nav>
       </div>
 
-      {/* ── FASE 3: ACCIONES RÁPIDAS INFERIORES (WHATSAPP Y TELÉFONOS) ── */}
+      {/* ── ACCIONES RÁPIDAS INFERIORES: WHATSAPP Y TELÉFONOS ── */}
       <div className="p-5 border-t border-slate-200 bg-slate-50/95 space-y-3 shrink-0">
         {/* Botón Principal de Cotización Inmediata por WhatsApp */}
         <a

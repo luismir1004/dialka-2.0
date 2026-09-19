@@ -122,7 +122,7 @@ export default function ServiciosPage() {
         </div>
       </section>
 
-      {/* ── FASE 2: FICHAS DE SERVICIOS TÉCNICOS INTERACTIVOS ── */}
+      {/* ── FICHAS DE SERVICIOS TÉCNICOS INTERACTIVOS ── */}
       <section className="bg-white py-14 md:py-18">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-12">

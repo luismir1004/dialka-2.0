@@ -357,7 +357,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── FASE 2: SIMULADOR DE PESAJE INTERACTIVO (DIAL Y DISPLAY VIVO) ── */}
+      {/* ── SIMULADOR DE PESAJE INTERACTIVO (DIAL Y DISPLAY VIVO) ── */}
       <section className="bg-slate-950 py-16 md:py-24 border-b border-slate-850 text-white relative overflow-hidden">
         {/* Ambient lighting effect */}
         <div className="absolute -top-40 -right-40 w-96 h-96 bg-red-900/20 rounded-full blur-3xl pointer-events-none" />
@@ -389,7 +389,7 @@ export default function HomePage() {
         <AuthorizedBrands whatsappNumber={CONTACT.whatsapp} />
       </RevealOnScroll>
 
-      {/* ── FASE 1: PROYECTOS Y OBRAS EN CAMPO (AUTENTICIDAD LOCAL) ── */}
+      {/* ── PROYECTOS Y OBRAS EN CAMPO (AUTENTICIDAD LOCAL) ── */}
       <RevealOnScroll>
         <ProjectsGallery
           projects={FIELD_PROJECTS}
@@ -398,7 +398,7 @@ export default function HomePage() {
         />
       </RevealOnScroll>
 
-      {/* ── FASE 1: SOCIAL PROOF - CLIENTES AUDITADOS Y MARCAS OFICIALES ── */}
+      {/* ── SOCIAL PROOF: CLIENTES AUDITADOS Y MARCAS OFICIALES ── */}
       <RevealOnScroll>
         <SocialProofSection whatsappNumber={CONTACT.whatsapp} />
       </RevealOnScroll>
