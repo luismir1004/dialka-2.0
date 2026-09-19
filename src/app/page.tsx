@@ -26,6 +26,8 @@ import { LiveWeighingSimulator } from "@/components/LiveWeighingSimulator";
 import { SocialProofSection } from "@/components/SocialProofSection";
 import { AuthorizedBrands } from "@/components/AuthorizedBrands";
 import { HeroTextRotator } from "@/components/HeroTextRotator";
+import { MetricsBar } from "@/components/MetricsBar";
+import { MissionVisionTabs } from "@/components/MissionVisionTabs";
 
 export const metadata: Metadata = {
   title: "Inicio | Balanzas y Servicios Dialka",
@@ -36,72 +38,45 @@ export const metadata: Metadata = {
 const QUICK_ACCESS = [
   {
     label: "Servicio Técnico",
-    desc: "Calibración con masas patrón trazables, mantenimiento preventivo y correctivo en planta y talleres.",
+    desc: "Calibración, mantenimiento y reparación con certificación SENCAMER.",
     href: "/servicios",
     icon: Wrench,
     tag: "Calibración",
   },
   {
-    label: "Homologación SENCAMER",
-    desc: "Acreditación y cumplimiento de normativas metrológicas legales venezolanas y control de calidad.",
+    label: "Equipos SENCAMER",
+    desc: "Balanzas comerciales e industriales homologadas para uso legal en Venezuela.",
     href: "/sencamer",
-    icon: ShieldCheck,
-    tag: "Legal",
+    icon: Scale,
+    tag: "Homologados",
   },
   {
-    label: "Nuestros Productos",
-    desc: "Básculas industriales, comerciales, analíticas y agropecuarias para todo el aparato productivo.",
+    label: "Catálogo de Productos",
+    desc: "Básculas camioneras, de piso, colgantes, plataformas y pesas patrón.",
     href: "/productos",
     icon: Package,
-    tag: "Catálogo",
+    tag: "Venta",
   },
   {
     label: "Alquiler de Equipos",
-    desc: "Sistemas portátiles por eje 20T y 40T, ganaderas y plataformas para zafras y operaciones temporales.",
+    desc: "Sistemas de pesaje portátiles para zafras y contingencias operativas.",
     href: "/alquiler",
     icon: CalendarDays,
-    tag: "Disponibilidad",
+    tag: "Alquiler",
   },
   {
     label: "Software de Pesaje",
-    desc: "5 sistemas desarrollados por Dialka: pesaje de camiones, control de bobinas, etiquetas y silos.",
+    desc: "Desarrollo propio para control de básculas camioneras, silos y tolvas.",
     href: "/software",
     icon: Monitor,
-    tag: "Desarrollo Propio",
+    tag: "Software",
   },
   {
     label: "Contacto y Sedes",
-    desc: "Sedes operativas en Caracas y Maracay con atención técnica y soporte para todo el país.",
+    desc: "Oficinas en Caracas y Maracay. Atención a todo el país y soporte USA.",
     href: "/contacto",
     icon: Phone,
     tag: "Atención Inmediata",
-  },
-];
-
-const METRICS = [
-  {
-    value: "25",
-    label: "Años de Trayectoria",
-    sublabel: "Desde 2001 en Venezuela",
-    icon: Award,
-  },
-  {
-    value: "5.000",
-    label: "Proyectos Concluidos",
-    sublabel: "Industria y agro venezolano",
-    icon: Users,
-  },
-  {
-    value: "307",
-    label: "Desarrollos de Software",
-    sublabel: "Sistemas propios en producción",
-    icon: Code2,
-  },
-  {
-    value: "100%",
-    label: "Calidad y Precisión",
-    sublabel: "Trazabilidad metrológica",
-    icon: ThumbsUp,
   },
 ];
 
@@ -109,17 +84,17 @@ export default function HomePage() {
   return (
     <>
       {/* ── HERO INDUSTRIAL CON DUAL-COLUMN LAYOUT & FOTOGRAFÍA INDUSTRIAL ── */}
-      <section className="relative bg-gradient-to-b from-slate-50 via-white to-slate-50/50 border-b border-slate-200 overflow-hidden py-8 sm:py-14 md:py-20 lg:py-24">
+      <section className="relative bg-gradient-to-b from-slate-50 via-white to-slate-50/50 border-b border-slate-200 overflow-hidden py-6 sm:py-10 md:py-16 lg:py-20">
         {/* Subtle grid background */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-40 pointer-events-none" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          <div className="grid lg:grid-cols-12 gap-6 lg:gap-12 items-center">
             {/* Columna Izquierda: Mensaje Central y CTAs */}
             <div className="lg:col-span-7">
               <RevealOnScroll delay={0}>
                 {/* Status Badge Oficial con Antigüedad Exacta */}
-                <div className="inline-flex items-center gap-2 bg-red-50 border border-red-200/80 text-red-900 text-xs font-semibold px-3.5 sm:px-4 py-1.5 rounded-full mb-4 sm:mb-6 shadow-2xs max-w-full">
+                <div className="inline-flex items-center gap-2 bg-red-50 border border-red-200/80 text-red-900 text-xs font-semibold px-3.5 sm:px-4 py-1.5 rounded-full mb-3 sm:mb-5 shadow-2xs max-w-full">
                   <span className="relative flex h-2 w-2 shrink-0">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-red-700"></span>
@@ -130,14 +105,14 @@ export default function HomePage() {
                 {/* Dinamismo Tipográfico Rotativo ("El Giro") */}
                 <HeroTextRotator />
 
-                <p className="text-sm sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-6 sm:mb-8 font-normal mt-3">
+                <p className="text-sm sm:text-base lg:text-lg text-slate-600 leading-relaxed mb-5 sm:mb-6 font-normal mt-2 sm:mt-3">
                   {COMPANY.description}
                 </p>
 
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                   <Link
                     href="/productos"
-                    className="inline-flex items-center justify-center gap-2.5 bg-[#991b1b] hover:bg-[#7f1d1d] active:scale-[0.98] text-white font-semibold px-6 py-3.5 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 group text-sm sm:text-base text-center"
+                    className="inline-flex items-center justify-center gap-2.5 bg-[#991b1b] hover:bg-[#7f1d1d] active:scale-[0.98] text-white font-semibold px-6 py-3 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 group text-sm sm:text-base text-center min-h-[46px]"
                   >
                     <span>Ver Catálogo de Productos</span>
                     <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
@@ -146,7 +121,7 @@ export default function HomePage() {
                     href={`https://wa.me/${CONTACT.whatsapp}`}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-50 active:scale-[0.98] border border-slate-300 text-slate-800 font-semibold px-6 py-3.5 rounded-xl shadow-2xs hover:shadow-xs transition-all duration-200 text-sm sm:text-base text-center"
+                    className="inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-50 active:scale-[0.98] border border-slate-300 text-slate-800 font-semibold px-6 py-3 rounded-xl shadow-2xs hover:shadow-xs transition-all duration-200 text-sm sm:text-base text-center min-h-[46px]"
                   >
                     <Phone size={16} className="text-[#991b1b]" />
                     <span>Atención por WhatsApp</span>
@@ -154,7 +129,7 @@ export default function HomePage() {
                 </div>
 
                 {/* Quick credentials strip */}
-                <div className="mt-6 pt-6 sm:mt-10 sm:pt-8 border-t border-slate-200/80 grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 text-xs font-medium text-slate-600">
+                <div className="mt-5 pt-5 sm:mt-8 sm:pt-6 border-t border-slate-200/80 grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-4 text-xs font-medium text-slate-600">
                   <div className="flex items-center gap-2">
                     <CheckCircle2 size={16} className="text-[#991b1b] shrink-0" />
                     <span>Certificación SENCAMER</span>
@@ -163,7 +138,7 @@ export default function HomePage() {
                     <CheckCircle2 size={16} className="text-[#991b1b] shrink-0" />
                     <span>Normas COVENIN</span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 col-span-2 sm:col-span-1">
                     <CheckCircle2 size={16} className="text-[#991b1b] shrink-0" />
                     <span>Sedes Caracas y Maracay</span>
                   </div>
@@ -174,9 +149,9 @@ export default function HomePage() {
             {/* Columna Derecha: Tarjeta Fotográfica de Unidad Móvil / Camión Calibrador */}
             <div className="lg:col-span-5">
               <RevealOnScroll delay={150}>
-                <div className="relative group rounded-2xl bg-white p-3 border border-slate-200/90 shadow-xl shadow-slate-200/50 hover:border-red-200 transition-all duration-300">
+                <div className="relative group rounded-2xl bg-white p-2.5 sm:p-3 border border-slate-200/90 shadow-xl shadow-slate-200/50 hover:border-red-200 transition-all duration-300">
                   {/* Contenedor de la Imagen */}
-                  <div className="relative aspect-4/3 w-full rounded-xl overflow-hidden bg-slate-100 border border-slate-200/60">
+                  <div className="relative aspect-16/10 sm:aspect-4/3 w-full rounded-xl overflow-hidden bg-slate-100 border border-slate-200/60">
                     <Image
                       src="/images/proyectos/camion-calibrador.jpg"
                       alt="Camión calibrador patrón Dialka con pesas de 500kg y 1000kg en silos venezolanos"
@@ -190,34 +165,34 @@ export default function HomePage() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
 
                     {/* Top Tag */}
-                    <div className="absolute top-3 left-3 flex items-center gap-1.5 bg-white/95 backdrop-blur-md px-3 py-1 rounded-full border border-white/50 text-[11px] font-bold text-slate-900 shadow-sm">
+                    <div className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 flex items-center gap-1.5 bg-white/95 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/50 text-[10px] sm:text-[11px] font-bold text-slate-900 shadow-sm">
                       <Scale size={13} className="text-[#991b1b]" />
                       <span>Unidad Móvil de Calibración</span>
                     </div>
 
                     {/* Bottom Caption Info */}
-                    <div className="absolute bottom-3 left-3 right-3 text-white">
-                      <p className="text-xs font-semibold text-red-200 uppercase tracking-wider mb-0.5">
+                    <div className="absolute bottom-2.5 left-2.5 right-2.5 sm:bottom-3 sm:left-3 sm:right-3 text-white">
+                      <p className="text-[10px] sm:text-xs font-semibold text-red-200 uppercase tracking-wider mb-0.5">
                         Operaciones en Campo · Portuguesa
                       </p>
-                      <h3 className="text-sm sm:text-base font-bold text-white leading-snug drop-shadow-sm">
+                      <h3 className="text-xs sm:text-base font-bold text-white leading-snug drop-shadow-sm">
                         Camión Patrón con Masas de 500 kg y 1.000 kg
                       </h3>
-                      <p className="text-[11px] text-slate-200 mt-1 line-clamp-1">
+                      <p className="text-[10px] sm:text-[11px] text-slate-200 mt-0.5 line-clamp-1">
                         Calibración in situ de básculas camioneras de 40T a 100T bajo normativa SENCAMER.
                       </p>
                     </div>
                   </div>
 
                   {/* Floating Metric Badge */}
-                  <div className="mt-3 bg-slate-50 border border-slate-200/80 rounded-xl p-3 flex items-center justify-between">
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center text-[#991b1b]">
-                        <Sparkles size={16} />
+                  <div className="mt-2.5 sm:mt-3 bg-slate-50 border border-slate-200/80 rounded-xl p-2.5 sm:p-3 flex items-center justify-between">
+                    <div className="flex items-center gap-2 sm:gap-2.5">
+                      <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-red-100 flex items-center justify-center text-[#991b1b]">
+                        <Sparkles size={15} />
                       </div>
                       <div>
                         <p className="text-xs font-bold text-slate-900 leading-tight">Pesas Patrón Trazables</p>
-                        <p className="text-[11px] text-slate-500">Clase M1 certificadas</p>
+                        <p className="text-[10px] sm:text-[11px] text-slate-500">Clase M1 certificadas</p>
                       </div>
                     </div>
                     <Link
@@ -235,77 +210,25 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── MÉTRICAS COMPACTAS: CUADRÍCULA 2x2 EN MÓVIL Y 4 COLUMNAS EN ESCRITORIO ── */}
-      <section className="bg-white border-b border-slate-200 py-6 sm:py-10 md:py-14">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 lg:gap-6">
-            {METRICS.map(({ value, label, sublabel, icon: Icon }, idx) => (
-              <RevealOnScroll key={label} delay={idx * 75}>
-                <div className="group relative bg-white border border-slate-200/80 hover:border-[#991b1b]/50 rounded-xl sm:rounded-2xl p-3 sm:p-4 lg:p-5 shadow-2xs hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 overflow-hidden flex flex-col justify-between h-full">
-                  {/* Glowing top line accent on hover */}
-                  <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[#991b1b]/0 to-transparent group-hover:via-[#991b1b] transition-all duration-300" />
+      {/* ── FASE 2: BARRA DE MÉTRICAS UNIFICADA DE DISEÑO INDUSTRIAL ── */}
+      <RevealOnScroll>
+        <MetricsBar />
+      </RevealOnScroll>
 
-                  {/* Cabecera compacta: Icono minimalista y etiqueta */}
-                  <div className="flex items-center justify-between mb-2 sm:mb-3">
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-red-50 border border-red-100 group-hover:bg-[#991b1b] flex items-center justify-center transition-all duration-200 shadow-2xs shrink-0">
-                      <Icon size={16} className="text-[#991b1b] group-hover:text-white transition-colors sm:w-[18px] sm:h-[18px]" />
-                    </div>
-                    <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-slate-400 group-hover:text-[#991b1b] transition-colors">
-                      Oficial
-                    </span>
-                  </div>
-
-                  {/* Número de impacto y textos descriptivos */}
-                  <div>
-                    <div className="text-2xl sm:text-3xl font-bold text-[#991b1b] tracking-tight mb-0.5 group-hover:text-[#7f1d1d] transition-colors">
-                      <AnimatedCounter value={value} />
-                    </div>
-                    <div className="text-xs sm:text-sm font-bold text-slate-900 leading-snug">
-                      {label}
-                    </div>
-                    <div className="text-[10px] sm:text-xs text-slate-500 font-medium mt-0.5 line-clamp-1">
-                      {sublabel}
-                    </div>
-                  </div>
-                </div>
-              </RevealOnScroll>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── MISIÓN / VISIÓN CON SCROLL REVEAL ── */}
-      <section className="bg-slate-50/70 border-b border-slate-200 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-8">
-            <RevealOnScroll delay={100}>
-              <div className="card-hover bg-white border border-slate-200 rounded-2xl p-8 sm:p-10 shadow-sm relative overflow-hidden h-full">
-                <div className="w-12 h-12 rounded-xl bg-red-50 border border-red-100 flex items-center justify-center mb-6">
-                  <Award size={24} className="text-[#991b1b]" />
-                </div>
-                <h2 className="text-2xl font-bold text-slate-900 mb-3 tracking-tight">
-                  Misión Institucional
-                </h2>
-                <p className="text-slate-600 leading-relaxed text-base">
-                  {COMPANY.mission}
-                </p>
-              </div>
-            </RevealOnScroll>
-
-            <RevealOnScroll delay={200}>
-              <div className="card-hover bg-white border border-slate-200 rounded-2xl p-8 sm:p-10 shadow-sm relative overflow-hidden h-full">
-                <div className="w-12 h-12 rounded-xl bg-red-50 border border-red-100 flex items-center justify-center mb-6">
-                  <ShieldCheck size={24} className="text-[#991b1b]" />
-                </div>
-                <h2 className="text-2xl font-bold text-slate-900 mb-3 tracking-tight">
-                  Visión Corporativa
-                </h2>
-                <p className="text-slate-600 leading-relaxed text-base">
-                  {COMPANY.vision}
-                </p>
-              </div>
-            </RevealOnScroll>
-          </div>
+      {/* ── FASE 3: SECCIONES DE IDENTIDAD (MISIÓN Y VISIÓN EN PESTAÑAS INTERACTIVAS) ── */}
+      <section className="bg-slate-50/70 border-b border-slate-200 py-8 sm:py-12 md:py-14">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <RevealOnScroll>
+            <div className="text-center max-w-xl mx-auto mb-5 sm:mb-7">
+              <span className="inline-block text-xs font-bold uppercase tracking-widest text-[#991b1b] bg-red-50 border border-red-200/80 px-3 py-1 rounded-full mb-2">
+                Identidad y Valores
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                Misión y Visión Dialka
+              </h2>
+            </div>
+            <MissionVisionTabs />
+          </RevealOnScroll>
         </div>
       </section>
 
