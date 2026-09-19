@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 70" fill="none">
+  <!-- OHAUS Logo Vector -->
+  <path d="M24 15 L38 48 L10 48 Z" fill="#D32F2F" />
+  <path d="M24 23 L33 44 L15 44 Z" fill="#FFFFFF" />
+  <text x="50" y="47" font-family="system-ui, -apple-system, sans-serif" font-size="34" font-weight="900" fill="#B71C1C" letter-spacing="1.5">OHAUS</text>
+  <text x="52" y="59" font-family="system-ui, -apple-system, sans-serif" font-size="9" font-weight="700" fill="#64748B" letter-spacing="2.5">INGENIOUSLY PRACTICAL</text>
+</svg>

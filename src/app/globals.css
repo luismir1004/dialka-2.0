@@ -1,26 +1,211 @@
 @import "tailwindcss";
 
+@theme {
+  --color-dialka-50: #fef2f2;
+  --color-dialka-100: #fee2e2;
+  --color-dialka-200: #fecaca;
+  --color-dialka-600: #dc2626;
+  --color-dialka-700: #b91c1c;
+  --color-dialka-800: #991b1b;
+  --color-dialka-900: #7f1d1d;
+  --color-dialka-950: #450a0a;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-brand: #991b1b;
+  --color-brand-dark: #7f1d1d;
+  --color-brand-light: #dc2626;
+  --color-brand-subtle: #fef2f2;
+  --color-bg: #ffffff;
+  --color-surface: #ffffff;
+  --color-surface-subtle: #f8fafc;
+  --color-border: #e2e8f0;
+  --color-text-main: #0f172a;
+  --color-text-muted: #64748b;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text-main);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
 }
+
+/* ---- Typography enhancements ---- */
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+/* ---- Card hover elevation system ---- */
+.card-hover {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, box-shadow;
+}
+.card-hover:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 12px 20px -3px rgba(0, 0, 0, 0.08);
+}
+
+/* ---- Advanced Metric Card Hover (Illuminated Red Glow) ---- */
+.card-metric-glow {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, box-shadow, border-color;
+  position: relative;
+}
+.card-metric-glow:hover {
+  transform: translateY(-4px);
+  border-color: rgba(153, 27, 27, 0.45);
+  box-shadow:
+    0 0 0 1px rgba(153, 27, 27, 0.2),
+    0 12px 28px -6px rgba(153, 27, 27, 0.12),
+    0 6px 12px -2px rgba(0, 0, 0, 0.04);
+}
+
+/* ---- Scroll-driven Reveal System (60 FPS GPU-accelerated) ---- */
+.reveal-element {
+  opacity: 0;
+  will-change: opacity, transform;
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-element.reveal-up {
+  transform: translateY(28px);
+}
+.reveal-element.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---- Section divider ---- */
+.section-divider {
+  position: relative;
+}
+.section-divider::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: var(--color-brand);
+  border-radius: 2px;
+}
+
+/* ---- Fade in animation for dynamic filtering ---- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ---- Badge pulse animation (for metric counters) ---- */
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; }
+}
+
+/* ---- Gradient text utility ---- */
+.text-gradient-brand {
+  background: linear-gradient(135deg, #991b1b 0%, #dc2626 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ---- Smooth scrollbar ---- */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #991b1b; }
+
+/* ---- Focus ring utility ---- */
+.focus-brand:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+}
+
+/* ---- Decorative line (used below section headings) ---- */
+.heading-accent {
+  position: relative;
+  display: inline-block;
+}
+.heading-accent::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 40px;
+  height: 3px;
+  background: var(--color-brand);
+  border-radius: 2px;
+}
+
+/* ---- Custom Touch-Friendly Range Slider ---- */
+input[type="range"].touch-slider {
+  touch-action: pan-y;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: grab;
+}
+input[type="range"].touch-slider::-webkit-slider-runnable-track {
+  height: 14px;
+  border-radius: 7px;
+  background: #1e293b;
+  border: 1px solid #334155;
+}
+input[type="range"].touch-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -8px;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  background: #dc2626;
+  border: 3px solid #ffffff;
+  box-shadow: 0 0 14px rgba(220, 38, 38, 0.75);
+  cursor: grab;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+input[type="range"].touch-slider:active::-webkit-slider-thumb {
+  transform: scale(1.2);
+  cursor: grabbing;
+  background: #ef4444;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.95);
+}
+input[type="range"].touch-slider::-moz-range-track {
+  height: 14px;
+  border-radius: 7px;
+  background: #1e293b;
+  border: 1px solid #334155;
+}
+input[type="range"].touch-slider::-moz-range-thumb {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  background: #dc2626;
+  border: 3px solid #ffffff;
+  box-shadow: 0 0 14px rgba(220, 38, 38, 0.75);
+  cursor: grab;
+}
+

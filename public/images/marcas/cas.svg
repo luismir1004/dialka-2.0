@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 70" fill="none">
+  <!-- CAS Corporation Logo Vector -->
+  <circle cx="28" cy="35" r="18" fill="#1D4ED8" />
+  <path d="M22 27 C28 22 36 25 38 31 C36 34 30 33 26 36 C22 39 26 44 32 43 C35 42 37 40 38 38" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" fill="none" />
+  <text x="54" y="47" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="900" fill="#1E40AF" letter-spacing="1">CAS</text>
+  <text x="135" y="45" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#64748B" letter-spacing="0.5">Scale</text>
+  <text x="56" y="59" font-family="system-ui, -apple-system, sans-serif" font-size="8.5" font-weight="700" fill="#94A3B8" letter-spacing="2">GLOBAL WEIGHING LEADER</text>
+</svg>
