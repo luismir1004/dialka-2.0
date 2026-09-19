@@ -271,10 +271,18 @@ export const CATALOG_PRODUCTS: ProductItem[] = [
 interface ProductsCatalogProps {
   categories?: any;
   whatsappNumber?: string;
+  showHeading?: boolean;
+  title?: string;
+  subtitle?: string;
+  className?: string;
 }
 
 export function ProductsCatalog({
   whatsappNumber = "584142770024",
+  showHeading = true,
+  title,
+  subtitle,
+  className = "",
 }: ProductsCatalogProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -306,8 +314,24 @@ export function ProductsCatalog({
   };
 
   return (
-    <section className="bg-slate-50/60 py-10 sm:py-16 md:py-20 border-b border-slate-200">
+    <section className={`bg-slate-50/60 py-10 sm:py-16 md:py-20 border-b border-slate-200 ${className}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Encabezado Opcional del Catálogo */}
+        {showHeading && (
+          <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
+            <div className="inline-flex items-center gap-2 bg-red-50 border border-red-200/80 px-3.5 py-1 rounded-full text-[#991b1b] text-xs font-bold uppercase tracking-wider mb-2.5 shadow-2xs">
+              <Package size={14} className="text-[#991b1b]" />
+              <span>Vitrina Comercial · Entrega Inmediata</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight mb-2">
+              {title || "Catálogo de Balanzas y Sistemas de Pesaje"}
+            </h2>
+            <p className="text-slate-600 text-xs sm:text-sm md:text-base leading-relaxed max-w-2xl mx-auto">
+              {subtitle || "Explore nuestras 5 líneas de equipos con calibración garantizada, repuestos originales y despacho a todo el país."}
+            </p>
+          </div>
+        )}
+
         {/* ── ENCABEZADO Y BARRA DE FILTROS SUPERIOR TIPO E-COMMERCE ── */}
         <div className="bg-white border border-slate-200/90 rounded-2xl p-4 sm:p-6 mb-8 sm:mb-10 shadow-xs">
           <div className="flex flex-col md:flex-row gap-3 sm:gap-4 items-stretch md:items-center justify-between mb-5">

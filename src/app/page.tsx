@@ -28,6 +28,7 @@ import { AuthorizedBrands } from "@/components/AuthorizedBrands";
 import { HeroTextRotator } from "@/components/HeroTextRotator";
 import { MetricsBar } from "@/components/MetricsBar";
 import { MissionVisionTabs } from "@/components/MissionVisionTabs";
+import { ProductsCatalog } from "@/components/ProductsCatalog";
 
 export const metadata: Metadata = {
   title: "Inicio | Balanzas y Servicios Dialka",
@@ -214,6 +215,14 @@ export default function HomePage() {
       <RevealOnScroll>
         <MetricsBar />
       </RevealOnScroll>
+
+      {/* ── VITRINA DE PRODUCTOS ESTILO E-COMMERCE (5 LÍNEAS PRINCIPALES) ── */}
+      <ProductsCatalog
+        whatsappNumber={CONTACT.whatsapp}
+        showHeading={true}
+        title="Vitrina Oficial de Balanzas y Sistemas de Pesaje"
+        subtitle="Explore de forma interactiva las 5 líneas comerciales de Dialka con disponibilidad inmediata, calibración SENCAMER y entrega a nivel nacional."
+      />
 
       {/* ── FASE 3: SECCIONES DE IDENTIDAD (MISIÓN Y VISIÓN EN PESTAÑAS INTERACTIVAS) ── */}
       <section className="bg-slate-50/70 border-b border-slate-200 py-8 sm:py-12 md:py-14">
