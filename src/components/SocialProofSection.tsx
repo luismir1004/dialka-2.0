@@ -160,69 +160,70 @@ export function SocialProofSection({ whatsappNumber = CONTACT.whatsapp }: Social
               </span>
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-5">
               {CLIENTS.map((client) => {
                 const badgeConfig = getSectorBadgeConfig(client.type);
 
                 return (
                   <div
                     key={client.name}
-                    className="group relative bg-gradient-to-br from-white via-slate-50 to-red-50/20 border border-slate-200/90 hover:border-red-400 rounded-2xl p-5 shadow-sm hover:shadow-xl hover:shadow-red-500/10 transition-all duration-300 transform hover:-translate-y-1.5 flex flex-col justify-between overflow-hidden"
+                    className="group relative bg-gradient-to-br from-white via-slate-50 to-red-50/20 border border-slate-200/90 hover:border-red-400 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5 shadow-sm hover:shadow-xl hover:shadow-red-500/10 transition-all duration-300 transform hover:-translate-y-1 sm:hover:-translate-y-1.5 flex flex-col justify-between overflow-hidden"
                   >
                     {/* Borde sutil iluminado corporativo en hover */}
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-red-500/0 via-red-500/0 to-red-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                    <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-b from-red-500/0 via-red-500/0 to-red-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
                     <div>
-                      {/* Contenedor del Logo de Cliente con aspect-[3/2] y fondo blanco nítido */}
-                      <div className="aspect-[3/2] w-full rounded-xl bg-white border border-slate-100 group-hover:border-red-200/80 shadow-2xs flex items-center justify-center p-3 sm:p-4 mb-4 transition-all duration-300 relative overflow-hidden">
+                      {/* Contenedor del Logo de Cliente con aspect-[16/9] y fondo blanco nítido */}
+                      <div className="aspect-[16/9] w-full rounded-lg sm:rounded-xl bg-white border border-slate-100 group-hover:border-red-200/80 shadow-2xs flex items-center justify-center p-2 sm:p-3 mb-2.5 sm:mb-3.5 transition-all duration-300 relative overflow-hidden">
                         <div className="relative w-full h-full flex items-center justify-center transition-all duration-300 group-hover:scale-105">
                           <Image
                             src={client.logo}
                             alt={`Logo corporativo de ${client.name}`}
                             fill
                             sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 22vw"
-                            className="object-contain p-2"
+                            className="object-contain p-1 sm:p-2"
                           />
                         </div>
                       </div>
 
                       {/* Header de tarjeta: Nombre y Badge de Sector con Colores Vivos */}
-                      <div className="flex items-start justify-between gap-2 mb-2">
-                        <div>
-                          <h4 className="font-extrabold text-slate-900 text-base sm:text-lg group-hover:text-[#991b1b] transition-colors leading-snug">
+                      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-1 sm:gap-2 mb-1.5">
+                        <div className="min-w-0">
+                          <h4 className="font-extrabold text-slate-900 text-xs sm:text-base group-hover:text-[#991b1b] transition-colors leading-snug truncate">
                             {client.name}
                           </h4>
-                          <span className="text-xs font-semibold text-slate-500 block mt-0.5">
+                          <span className="text-[10px] sm:text-xs font-semibold text-slate-500 block mt-0.5 truncate">
                             {client.sector}
                           </span>
                         </div>
-                        <span className={`inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-1 rounded-full border shadow-2xs shrink-0 ${badgeConfig.classes}`}>
+                        <span className={`inline-flex items-center gap-1 text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full border shadow-2xs shrink-0 self-start mt-0.5 sm:mt-0 ${badgeConfig.classes}`}>
                           {badgeConfig.icon}
-                          <span>{client.type}</span>
+                          <span className="truncate">{client.type}</span>
                         </span>
                       </div>
 
                       {/* Descripción de servicio auditado */}
-                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed my-3 line-clamp-2">
+                      <p className="text-[10px] sm:text-xs text-slate-600 leading-relaxed my-1.5 sm:my-2.5 line-clamp-2">
                         {client.desc}
                       </p>
                     </div>
 
                     {/* Footer de tarjeta: Badge de verificación oficial y enlace a consulta */}
-                    <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                      <span className="inline-flex items-center gap-1.5 text-slate-600 font-semibold">
-                        <CheckCircle2 size={15} className="text-emerald-600" />
-                        <span>Cliente Auditado</span>
+                    <div className="pt-2 sm:pt-2.5 border-t border-slate-100 flex items-center justify-between text-[10px] sm:text-xs">
+                      <span className="inline-flex items-center gap-1 text-slate-600 font-semibold truncate">
+                        <CheckCircle2 size={12} className="text-emerald-600 shrink-0" />
+                        <span className="hidden sm:inline">Cliente Auditado</span>
+                        <span className="sm:hidden">Auditado</span>
                       </span>
                       <a
                         href={`https://wa.me/${whatsappNumber}?text=Hola%20Dialka,%20me%20gustaría%20conocer%20más%20sobre%20sus%20soluciones%20para%20${encodeURIComponent(client.name)}`}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-slate-500 group-hover:text-[#991b1b] transition-colors p-1 flex items-center gap-1 font-bold active:scale-95"
+                        className="text-slate-500 group-hover:text-[#991b1b] transition-colors p-0.5 flex items-center gap-0.5 font-bold active:scale-95 shrink-0"
                         title={`Consultar soluciones para ${client.name}`}
                       >
-                        <span className="text-[11px]">Consultar</span>
-                        <ExternalLink size={13} className="transition-transform group-hover:translate-x-0.5" />
+                        <span>Ver</span>
+                        <ExternalLink size={11} className="transition-transform group-hover:translate-x-0.5" />
                       </a>
                     </div>
                   </div>
@@ -247,61 +248,61 @@ export function SocialProofSection({ whatsappNumber = CONTACT.whatsapp }: Social
               </span>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5">
               {BRANDS.map((brand) => (
                 <div
                   key={brand.name}
-                  className="group relative bg-gradient-to-br from-white via-slate-50 to-red-50/20 border border-slate-200/90 hover:border-red-400 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-xl hover:shadow-red-500/10 transition-all duration-300 transform hover:-translate-y-1.5 flex flex-col justify-between overflow-hidden"
+                  className="group relative bg-gradient-to-br from-white via-slate-50 to-red-50/20 border border-slate-200/90 hover:border-red-400 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5 shadow-sm hover:shadow-xl hover:shadow-red-500/10 transition-all duration-300 transform hover:-translate-y-1 sm:hover:-translate-y-1.5 flex flex-col justify-between overflow-hidden"
                 >
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-red-500/0 via-red-500/0 to-red-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                  <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-b from-red-500/0 via-red-500/0 to-red-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
                   <div>
-                    {/* Contenedor del Logo de Marca con aspect-[3/2] */}
-                    <div className="aspect-[3/2] w-full rounded-xl bg-white border border-slate-100 group-hover:border-red-200/80 shadow-2xs flex items-center justify-center p-3 mb-3.5 transition-all duration-300 relative overflow-hidden">
+                    {/* Contenedor del Logo de Marca con aspect-[16/9] */}
+                    <div className="aspect-[16/9] w-full rounded-lg sm:rounded-xl bg-white border border-slate-100 group-hover:border-red-200/80 shadow-2xs flex items-center justify-center p-2 sm:p-3 mb-2.5 sm:mb-3 transition-all duration-300 relative overflow-hidden">
                       <div className="relative w-full h-full flex items-center justify-center transition-all duration-300 group-hover:scale-105">
                         <Image
                           src={brand.logo}
                           alt={`Logo oficial de ${brand.name}`}
                           fill
                           sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 22vw"
-                          className="object-contain p-2"
+                          className="object-contain p-1 sm:p-2"
                         />
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between gap-1.5 mb-1.5">
-                      <h4 className="font-extrabold text-slate-900 text-sm sm:text-base group-hover:text-[#991b1b] transition-colors leading-snug line-clamp-1">
+                    <div className="flex items-center justify-between gap-1 mb-1">
+                      <h4 className="font-extrabold text-slate-900 text-xs sm:text-base group-hover:text-[#991b1b] transition-colors leading-snug truncate">
                         {brand.name}
                       </h4>
-                      <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-slate-600 bg-white px-2 py-0.5 rounded-md border border-slate-200/70 shadow-2xs shrink-0">
+                      <span className="text-[8px] sm:text-[9px] font-bold uppercase tracking-wider text-slate-600 bg-white px-1.5 py-0.5 rounded border border-slate-200/70 shadow-2xs shrink-0">
                         {brand.origin.split(" ")[0]}
                       </span>
                     </div>
 
-                    <div className="mb-2">
-                      <span className={`inline-block text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-md border ${getBrandBadge(brand.name)} truncate max-w-full`}>
+                    <div className="mb-1.5">
+                      <span className={`inline-block text-[9px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded border ${getBrandBadge(brand.name)} truncate max-w-full`}>
                         {brand.category}
                       </span>
                     </div>
 
-                    <p className="text-[11px] sm:text-xs text-slate-600 leading-relaxed line-clamp-2 mb-3">
+                    <p className="text-[10px] sm:text-xs text-slate-600 leading-relaxed line-clamp-2 mb-2 sm:mb-3">
                       {brand.highlight}
                     </p>
                   </div>
 
-                  <div className="pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px] font-semibold text-slate-500">
-                    <span className="flex items-center gap-1">
-                      <Sparkles size={12} className="text-[#991b1b]" />
-                      <span>Original</span>
+                  <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] sm:text-xs">
+                    <span className="flex items-center gap-1 font-semibold text-slate-500 truncate">
+                      <Sparkles size={11} className="text-[#991b1b] shrink-0" />
+                      <span className="truncate">Original</span>
                     </span>
                     <a
                       href={`https://wa.me/${whatsappNumber}?text=Hola%20Dialka,%20deseo%20cotizar%20equipos%20de%20la%20marca%20${encodeURIComponent(brand.name)}`}
                       target="_blank"
                       rel="noreferrer"
-                      className="text-slate-500 group-hover:text-[#991b1b] transition-colors flex items-center gap-1 font-bold active:scale-95"
+                      className="text-slate-500 group-hover:text-[#991b1b] transition-colors flex items-center gap-0.5 font-bold active:scale-95 shrink-0"
                     >
                       <span>Cotizar</span>
-                      <ExternalLink size={12} className="transition-transform group-hover:translate-x-0.5" />
+                      <ExternalLink size={11} className="transition-transform group-hover:translate-x-0.5" />
                     </a>
                   </div>
                 </div>
