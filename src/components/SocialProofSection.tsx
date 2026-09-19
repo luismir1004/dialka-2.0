@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { 
   Building2, 
@@ -26,21 +27,59 @@ interface SocialProofSectionProps {
 export function SocialProofSection({ whatsappNumber = CONTACT.whatsapp }: SocialProofSectionProps) {
   const [activeTab, setActiveTab] = useState<"all" | "clients" | "brands">("clients");
 
-  // Helper para iconos por sector
-  const getSectorIcon = (type: string) => {
+  // Helper para iconos y colores por sector industrial
+  const getSectorBadgeConfig = (type: string) => {
     switch (type.toLowerCase()) {
       case "industrial":
-        return <Factory size={16} className="text-[#991b1b]" />;
+        return {
+          icon: <Factory size={14} className="text-blue-600" />,
+          classes: "bg-blue-50 text-blue-700 border-blue-200/80",
+        };
       case "aeronáutico":
-        return <Plane size={16} className="text-[#991b1b]" />;
+        return {
+          icon: <Plane size={14} className="text-indigo-600" />,
+          classes: "bg-indigo-50 text-indigo-700 border-indigo-200/80",
+        };
       case "logística":
-        return <Truck size={16} className="text-[#991b1b]" />;
+        return {
+          icon: <Truck size={14} className="text-emerald-600" />,
+          classes: "bg-emerald-50 text-emerald-700 border-emerald-200/80",
+        };
       case "alimentos":
-        return <Utensils size={16} className="text-[#991b1b]" />;
+        return {
+          icon: <Utensils size={14} className="text-amber-600" />,
+          classes: "bg-amber-50 text-amber-800 border-amber-200/80",
+        };
       case "agropecuario":
-        return <Wheat size={16} className="text-[#991b1b]" />;
+        return {
+          icon: <Wheat size={14} className="text-lime-700" />,
+          classes: "bg-lime-50 text-lime-800 border-lime-200/80",
+        };
       default:
-        return <Building2 size={16} className="text-[#991b1b]" />;
+        return {
+          icon: <Building2 size={14} className="text-[#991b1b]" />,
+          classes: "bg-red-50 text-[#991b1b] border-red-200/80",
+        };
+    }
+  };
+
+  // Helper para badges de marcas
+  const getBrandBadge = (name: string) => {
+    switch (name.toLowerCase()) {
+      case "ohaus":
+        return "bg-red-50 text-red-700 border-red-200/80";
+      case "keli sensing":
+        return "bg-blue-50 text-blue-700 border-blue-200/80";
+      case "cas corporation":
+        return "bg-indigo-50 text-indigo-700 border-indigo-200/80";
+      case "sipel":
+        return "bg-cyan-50 text-cyan-800 border-cyan-200/80";
+      case "grupo epelsa":
+        return "bg-amber-50 text-amber-800 border-amber-200/80";
+      case "sky":
+        return "bg-purple-50 text-purple-700 border-purple-200/80";
+      default:
+        return "bg-red-50 text-[#991b1b] border-red-300";
     }
   };
 
@@ -49,29 +88,31 @@ export function SocialProofSection({ whatsappNumber = CONTACT.whatsapp }: Social
   const showBrands = activeTab === "all" || activeTab === "brands";
 
   return (
-    <section className="bg-gradient-to-b from-white via-slate-50/60 to-white py-10 sm:py-16 md:py-20 border-b border-slate-200 overflow-hidden relative">
+    <section className="bg-gradient-to-b from-white via-slate-50/70 to-white py-12 sm:py-16 md:py-20 border-b border-slate-200 overflow-hidden relative">
       {/* Elemento decorativo de fondo */}
-      <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:24px_24px] opacity-40 pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] [background-size:24px_24px] opacity-35 pointer-events-none" />
+      <div className="absolute top-1/3 left-0 w-80 h-80 bg-red-100/20 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Encabezado Corporativo */}
-        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
-          <div className="inline-flex items-center gap-2 bg-red-50 border border-red-200/80 px-3 py-1 rounded-full text-[#991b1b] text-xs font-bold uppercase tracking-wider mb-2.5 shadow-2xs">
-            <Award size={13} className="text-[#991b1b]" />
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
+          <div className="inline-flex items-center gap-2 bg-red-50 border border-red-200/80 px-3.5 py-1 rounded-full text-[#991b1b] text-xs font-bold uppercase tracking-wider mb-3 shadow-2xs">
+            <Award size={14} className="text-[#991b1b]" />
             <span>Social Proof &amp; Respaldo Industrial</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight mb-2.5">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
             Empresas e Industrias que Confían en Dialka
           </h2>
-          <p className="text-slate-600 text-xs sm:text-sm leading-relaxed max-w-2xl mx-auto">
+          <p className="text-slate-600 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
             Más de 25 años proveyendo tecnología de pesaje, calibraciones certificadas y mantenimiento metrológico a las principales industrias, aerolíneas y cadenas logísticas de Venezuela.
           </p>
 
           {/* Selector de Pestañas Interactivo */}
-          <div className="mt-5 inline-flex p-1 bg-slate-100/90 rounded-xl border border-slate-200/80 shadow-inner">
+          <div className="mt-6 inline-flex p-1 bg-slate-100/90 rounded-2xl border border-slate-200/80 shadow-inner">
             <button
+              type="button"
               onClick={() => setActiveTab("clients")}
-              className={`px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all duration-200 ${
+              className={`px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer ${
                 activeTab === "clients"
                   ? "bg-white text-[#991b1b] shadow-xs border border-slate-200/60"
                   : "text-slate-600 hover:text-slate-900"
@@ -80,8 +121,9 @@ export function SocialProofSection({ whatsappNumber = CONTACT.whatsapp }: Social
               Clientes Auditados ({CLIENTS.length})
             </button>
             <button
+              type="button"
               onClick={() => setActiveTab("brands")}
-              className={`px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all duration-200 ${
+              className={`px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer ${
                 activeTab === "brands"
                   ? "bg-white text-[#991b1b] shadow-xs border border-slate-200/60"
                   : "text-slate-600 hover:text-slate-900"
@@ -90,8 +132,9 @@ export function SocialProofSection({ whatsappNumber = CONTACT.whatsapp }: Social
               Marcas ({BRANDS.length})
             </button>
             <button
+              type="button"
               onClick={() => setActiveTab("all")}
-              className={`px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all duration-200 ${
+              className={`px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer ${
                 activeTab === "all"
                   ? "bg-white text-slate-900 shadow-xs border border-slate-200/60"
                   : "text-slate-600 hover:text-slate-900"
@@ -107,8 +150,8 @@ export function SocialProofSection({ whatsappNumber = CONTACT.whatsapp }: Social
           <div className="mb-14">
             <div className="flex items-center justify-between mb-6 pb-2 border-b border-slate-200">
               <div className="flex items-center gap-2">
-                <Building2 size={18} className="text-[#991b1b]" />
-                <h3 className="text-lg font-bold text-slate-900 tracking-tight">
+                <Building2 size={20} className="text-[#991b1b]" />
+                <h3 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
                   Grandes Clientes e Industrias en Venezuela
                 </h3>
               </div>
@@ -118,57 +161,73 @@ export function SocialProofSection({ whatsappNumber = CONTACT.whatsapp }: Social
             </div>
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {CLIENTS.map((client) => (
-                <div
-                  key={client.name}
-                  className="group relative bg-white border border-slate-200/90 hover:border-red-300 rounded-2xl p-5 shadow-2xs hover:shadow-md transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between"
-                >
-                  <div>
-                    {/* Header de tarjeta: Inicial/Logo badge + tipo de industria */}
-                    <div className="flex items-start justify-between gap-3 mb-3.5">
-                      <div className="flex items-center gap-3">
-                        <div className="w-11 h-11 rounded-xl bg-slate-100 group-hover:bg-red-50 border border-slate-200 group-hover:border-red-200 flex items-center justify-center font-extrabold text-[#991b1b] text-base transition-colors shrink-0">
-                          {client.name.substring(0, 2).toUpperCase()}
+              {CLIENTS.map((client) => {
+                const badgeConfig = getSectorBadgeConfig(client.type);
+
+                return (
+                  <div
+                    key={client.name}
+                    className="group relative bg-gradient-to-br from-white via-slate-50 to-red-50/20 border border-slate-200/90 hover:border-red-400 rounded-2xl p-5 shadow-sm hover:shadow-xl hover:shadow-red-500/10 transition-all duration-300 transform hover:-translate-y-1.5 flex flex-col justify-between overflow-hidden"
+                  >
+                    {/* Borde sutil iluminado corporativo en hover */}
+                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-red-500/0 via-red-500/0 to-red-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+
+                    <div>
+                      {/* Contenedor del Logo de Cliente con aspect-[3/2] y fondo blanco nítido */}
+                      <div className="aspect-[3/2] w-full rounded-xl bg-white border border-slate-100 group-hover:border-red-200/80 shadow-2xs flex items-center justify-center p-3 sm:p-4 mb-4 transition-all duration-300 relative overflow-hidden">
+                        <div className="relative w-full h-full flex items-center justify-center transition-all duration-300 group-hover:scale-105">
+                          <Image
+                            src={client.logo}
+                            alt={`Logo corporativo de ${client.name}`}
+                            fill
+                            sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 22vw"
+                            className="object-contain p-2"
+                          />
                         </div>
+                      </div>
+
+                      {/* Header de tarjeta: Nombre y Badge de Sector con Colores Vivos */}
+                      <div className="flex items-start justify-between gap-2 mb-2">
                         <div>
-                          <h4 className="font-extrabold text-slate-900 text-base group-hover:text-[#991b1b] transition-colors">
+                          <h4 className="font-extrabold text-slate-900 text-base sm:text-lg group-hover:text-[#991b1b] transition-colors leading-snug">
                             {client.name}
                           </h4>
-                          <span className="text-[11px] font-semibold text-slate-500 block">
+                          <span className="text-xs font-semibold text-slate-500 block mt-0.5">
                             {client.sector}
                           </span>
                         </div>
+                        <span className={`inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-1 rounded-full border shadow-2xs shrink-0 ${badgeConfig.classes}`}>
+                          {badgeConfig.icon}
+                          <span>{client.type}</span>
+                        </span>
                       </div>
-                      <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200 shrink-0">
-                        {getSectorIcon(client.type)}
-                        <span>{client.type}</span>
-                      </span>
+
+                      {/* Descripción de servicio auditado */}
+                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed my-3 line-clamp-2">
+                        {client.desc}
+                      </p>
                     </div>
 
-                    {/* Descripción de servicio auditado */}
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">
-                      {client.desc}
-                    </p>
+                    {/* Footer de tarjeta: Badge de verificación oficial y enlace a consulta */}
+                    <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                      <span className="inline-flex items-center gap-1.5 text-slate-600 font-semibold">
+                        <CheckCircle2 size={15} className="text-emerald-600" />
+                        <span>Cliente Auditado</span>
+                      </span>
+                      <a
+                        href={`https://wa.me/${whatsappNumber}?text=Hola%20Dialka,%20me%20gustaría%20conocer%20más%20sobre%20sus%20soluciones%20para%20${encodeURIComponent(client.name)}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-slate-500 group-hover:text-[#991b1b] transition-colors p-1 flex items-center gap-1 font-bold active:scale-95"
+                        title={`Consultar soluciones para ${client.name}`}
+                      >
+                        <span className="text-[11px]">Consultar</span>
+                        <ExternalLink size={13} className="transition-transform group-hover:translate-x-0.5" />
+                      </a>
+                    </div>
                   </div>
-
-                  {/* Footer de tarjeta: Badge de verificación */}
-                  <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                    <span className="inline-flex items-center gap-1.5 text-slate-500 font-medium">
-                      <CheckCircle2 size={13} className="text-[#991b1b]" />
-                      <span>Cliente Certificado</span>
-                    </span>
-                    <a
-                      href={`https://wa.me/${whatsappNumber}?text=Hola%20Dialka,%20me%20gustaría%20conocer%20más%20sobre%20sus%20soluciones%20para%20${encodeURIComponent(client.name)}`}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-slate-400 group-hover:text-[#991b1b] transition-colors p-1"
-                      title={`Consultar soluciones para ${client.name}`}
-                    >
-                      <ExternalLink size={14} />
-                    </a>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         )}
@@ -178,8 +237,8 @@ export function SocialProofSection({ whatsappNumber = CONTACT.whatsapp }: Social
           <div className="mb-12">
             <div className="flex items-center justify-between mb-6 pb-2 border-b border-slate-200">
               <div className="flex items-center gap-2">
-                <ShieldCheck size={18} className="text-[#991b1b]" />
-                <h3 className="text-lg font-bold text-slate-900 tracking-tight">
+                <ShieldCheck size={20} className="text-[#991b1b]" />
+                <h3 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
                   Marcas Representadas y Componentes Originales
                 </h3>
               </div>
@@ -188,37 +247,62 @@ export function SocialProofSection({ whatsappNumber = CONTACT.whatsapp }: Social
               </span>
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
               {BRANDS.map((brand) => (
                 <div
                   key={brand.name}
-                  className="group bg-white border border-slate-200/90 hover:border-red-300 rounded-xl p-4 shadow-2xs hover:shadow-md transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between"
+                  className="group relative bg-gradient-to-br from-white via-slate-50 to-red-50/20 border border-slate-200/90 hover:border-red-400 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-xl hover:shadow-red-500/10 transition-all duration-300 transform hover:-translate-y-1.5 flex flex-col justify-between overflow-hidden"
                 >
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-red-500/0 via-red-500/0 to-red-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+
                   <div>
-                    <div className="flex items-center justify-between mb-2.5">
-                      <h4 className="font-extrabold text-slate-900 text-base group-hover:text-[#991b1b] transition-colors">
+                    {/* Contenedor del Logo de Marca con aspect-[3/2] */}
+                    <div className="aspect-[3/2] w-full rounded-xl bg-white border border-slate-100 group-hover:border-red-200/80 shadow-2xs flex items-center justify-center p-3 mb-3.5 transition-all duration-300 relative overflow-hidden">
+                      <div className="relative w-full h-full flex items-center justify-center transition-all duration-300 group-hover:scale-105">
+                        <Image
+                          src={brand.logo}
+                          alt={`Logo oficial de ${brand.name}`}
+                          fill
+                          sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 22vw"
+                          className="object-contain p-2"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between gap-1.5 mb-1.5">
+                      <h4 className="font-extrabold text-slate-900 text-sm sm:text-base group-hover:text-[#991b1b] transition-colors leading-snug line-clamp-1">
                         {brand.name}
                       </h4>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
-                        {brand.origin}
+                      <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-slate-600 bg-white px-2 py-0.5 rounded-md border border-slate-200/70 shadow-2xs shrink-0">
+                        {brand.origin.split(" ")[0]}
                       </span>
                     </div>
 
-                    <p className="text-xs font-semibold text-[#991b1b] mb-1.5">
-                      {brand.category}
-                    </p>
+                    <div className="mb-2">
+                      <span className={`inline-block text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-md border ${getBrandBadge(brand.name)} truncate max-w-full`}>
+                        {brand.category}
+                      </span>
+                    </div>
 
-                    <p className="text-xs text-slate-600 leading-relaxed">
+                    <p className="text-[11px] sm:text-xs text-slate-600 leading-relaxed line-clamp-2 mb-3">
                       {brand.highlight}
                     </p>
                   </div>
 
-                  <div className="mt-4 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px] font-semibold text-slate-500">
+                  <div className="pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px] font-semibold text-slate-500">
                     <span className="flex items-center gap-1">
-                      <Sparkles size={11} className="text-[#991b1b]" />
-                      Garantía Directa
+                      <Sparkles size={12} className="text-[#991b1b]" />
+                      <span>Original</span>
                     </span>
-                    <span className="text-[#991b1b]">Original</span>
+                    <a
+                      href={`https://wa.me/${whatsappNumber}?text=Hola%20Dialka,%20deseo%20cotizar%20equipos%20de%20la%20marca%20${encodeURIComponent(brand.name)}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-slate-500 group-hover:text-[#991b1b] transition-colors flex items-center gap-1 font-bold active:scale-95"
+                    >
+                      <span>Cotizar</span>
+                      <ExternalLink size={12} className="transition-transform group-hover:translate-x-0.5" />
+                    </a>
                   </div>
                 </div>
               ))}
@@ -227,14 +311,16 @@ export function SocialProofSection({ whatsappNumber = CONTACT.whatsapp }: Social
         )}
 
         {/* ── BANNER INFORMATIVO INFERIOR: RESPALDO METROLÓGICO ── */}
-        <div className="bg-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-lg flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-4">
+        <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 border border-slate-700/80 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-red-500/10 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="flex items-center gap-4 relative z-10">
             <div className="w-12 h-12 rounded-xl bg-red-600/20 border border-red-500/30 flex items-center justify-center shrink-0">
               <Award size={24} className="text-red-400" />
             </div>
             <div>
               <h4 className="text-base sm:text-lg font-bold text-white">
-                ¿Su empresa requiere soporte o homologación SENCAMER?
+                ¿Su empresa requiere soporte o calibración certificada SENCAMER?
               </h4>
               <p className="text-slate-300 text-xs sm:text-sm mt-0.5">
                 Contamos con cuadrillas en Caracas y Maracay con masas patrón y camión calibrador propio.
@@ -242,19 +328,19 @@ export function SocialProofSection({ whatsappNumber = CONTACT.whatsapp }: Social
             </div>
           </div>
 
-          <div className="flex items-center gap-3 w-full md:w-auto shrink-0">
+          <div className="flex items-center gap-3 w-full md:w-auto shrink-0 relative z-10">
             <a
               href={`https://wa.me/${whatsappNumber}?text=Hola%20Dialka,%20necesito%20asesoría%20técnica%20para%20nuestra%20empresa`}
               target="_blank"
               rel="noreferrer"
-              className="w-full md:w-auto inline-flex items-center justify-center gap-2 bg-[#991b1b] hover:bg-[#b91c1c] text-white font-bold px-5 py-2.5 rounded-xl text-xs sm:text-sm transition-colors shadow-xs"
+              className="w-full md:w-auto inline-flex items-center justify-center gap-2 bg-[#991b1b] hover:bg-[#b91c1c] text-white font-bold px-5 py-3 rounded-xl text-xs sm:text-sm transition-all shadow-md active:scale-95"
             >
               <Phone size={14} />
               <span>Contactar Cuadrilla</span>
             </a>
             <Link
               href="/proyectos"
-              className="w-full md:w-auto inline-flex items-center justify-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold px-4 py-2.5 rounded-xl text-xs sm:text-sm transition-colors border border-slate-700"
+              className="w-full md:w-auto inline-flex items-center justify-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold px-4 py-3 rounded-xl text-xs sm:text-sm transition-all border border-slate-700 hover:border-slate-600"
             >
               <span>Ver Obras</span>
               <ArrowRight size={13} />
@@ -265,3 +351,4 @@ export function SocialProofSection({ whatsappNumber = CONTACT.whatsapp }: Social
     </section>
   );
 }
+

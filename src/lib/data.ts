@@ -350,36 +350,42 @@ export const CLIENTS = [
     sector: "Petroquímica y Fertilizantes",
     desc: "Básculas camioneras y celdas de dosificación continua.",
     type: "Industrial",
+    logo: "/images/clientes/pequiven.svg",
   },
   {
     name: "Rutaca Airlines",
     sector: "Aviación Comercial",
     desc: "Pesaje de equipaje y control de carga aeroportuaria.",
     type: "Aeronáutico",
+    logo: "/images/clientes/rutaca.svg",
   },
   {
     name: "TEALCA",
     sector: "Transporte y Encomiendas",
     desc: "Balanzas de mostrador y plataformas logísticas en todo el país.",
     type: "Logística",
+    logo: "/images/clientes/tealca.svg",
   },
   {
     name: "Charcutería Tovar",
     sector: "Alimentos y Embutidos",
     desc: "Balanzas comerciales homologadas SENCAMER y pesaje en línea.",
     type: "Alimentos",
+    logo: "/images/clientes/tovar.svg",
   },
   {
     name: "Santa Barbara Airlines",
     sector: "Aviación Comercial",
     desc: "Sistemas de pesaje de equipaje y carga aérea.",
     type: "Aeronáutico",
+    logo: "/images/clientes/sba.svg",
   },
   {
     name: "Silos Portuguesa",
     sector: "Agroindustria y Granos",
     desc: "Calibración con camión patrón en básculas de 80T.",
     type: "Agropecuario",
+    logo: "/images/clientes/silos-portuguesa.svg",
   },
 ];
 

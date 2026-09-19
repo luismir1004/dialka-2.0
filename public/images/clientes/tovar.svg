@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 70" fill="none">
+  <!-- Charcutería Tovar Logo Vector -->
+  <rect x="8" y="14" width="42" height="42" rx="10" fill="#B45309" />
+  <path d="M22 23 C22 23 29 19 36 23 C36 28 34 38 29 45 C24 38 22 28 22 23 Z" fill="#FDE68A" />
+  <path d="M25 28 L33 28 M26 33 L32 33 M27 38 L31 38" stroke="#78350F" stroke-width="2" stroke-linecap="round" />
+  <text x="58" y="41" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="900" fill="#78350F" letter-spacing="1">CHARCUTERÍA</text>
+  <text x="59" y="56" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="800" fill="#D97706" letter-spacing="3">TOVAR</text>
+</svg>

@@ -41,68 +41,92 @@ export function AuthorizedBrands({
 
         {/* ── CUADRÍCULA DE TARJETAS DE MARCAS (2 COLUMNAS EN MÓVIL, 3 EN TABLET, 4 EN ESCRITORIO) ── */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-5 md:gap-6 mb-6 sm:mb-8">
-          {BRANDS.map((brand) => (
-            <div
-              key={brand.name}
-              className="relative group bg-white border border-slate-200/90 hover:border-red-300/90 rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-xl hover:shadow-slate-200/60 transition-all duration-300 transform hover:-translate-y-1.5 flex flex-col justify-between overflow-hidden"
-            >
-              {/* Borde sutil iluminado corporativo en hover */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-red-500/0 via-red-500/0 to-red-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+          {BRANDS.map((brand) => {
+            // Estilos de badge por categoría de marca
+            const getBrandBadge = (name: string) => {
+              switch (name.toLowerCase()) {
+                case "ohaus":
+                  return "bg-red-50 text-red-700 border-red-200/80";
+                case "keli sensing":
+                  return "bg-blue-50 text-blue-700 border-blue-200/80";
+                case "cas corporation":
+                  return "bg-indigo-50 text-indigo-700 border-indigo-200/80";
+                case "sipel":
+                  return "bg-cyan-50 text-cyan-800 border-cyan-200/80";
+                case "grupo epelsa":
+                  return "bg-amber-50 text-amber-800 border-amber-200/80";
+                case "sky":
+                  return "bg-purple-50 text-purple-700 border-purple-200/80";
+                default:
+                  return "bg-red-50 text-[#991b1b] border-red-300";
+              }
+            };
 
-              <div>
-                {/* Contenedor del Logo con relación de aspecto fija aspect-[3/2] */}
-                <div className="aspect-[3/2] w-full rounded-xl bg-slate-50/90 group-hover:bg-red-50/30 border border-slate-100 group-hover:border-red-100/80 flex items-center justify-center p-3 sm:p-4 mb-3.5 transition-all duration-300 relative overflow-hidden">
-                  <div className="relative w-full h-full flex items-center justify-center grayscale opacity-75 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500">
-                    <Image
-                      src={brand.logo}
-                      alt={`Logo oficial de ${brand.name}`}
-                      fill
-                      sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 22vw"
-                      className="object-contain p-2 group-hover:scale-105 transition-transform duration-300"
-                    />
+            return (
+              <div
+                key={brand.name}
+                className="relative group bg-gradient-to-br from-white via-slate-50 to-red-50/20 border border-slate-200/90 hover:border-red-400 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-xl hover:shadow-red-500/10 transition-all duration-300 transform hover:-translate-y-1.5 flex flex-col justify-between overflow-hidden"
+              >
+                {/* Borde sutil iluminado corporativo en hover */}
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-red-500/0 via-red-500/0 to-red-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+
+                <div>
+                  {/* Contenedor del Logo con relación de aspecto fija aspect-[3/2] y fondo blanco nítido */}
+                  <div className="aspect-[3/2] w-full rounded-xl bg-white border border-slate-100 group-hover:border-red-200/80 shadow-2xs flex items-center justify-center p-3 sm:p-4 mb-3.5 transition-all duration-300 relative overflow-hidden">
+                    <div className="relative w-full h-full flex items-center justify-center transition-all duration-300 group-hover:scale-105">
+                      <Image
+                        src={brand.logo}
+                        alt={`Logo oficial de ${brand.name}`}
+                        fill
+                        sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 22vw"
+                        className="object-contain p-2"
+                      />
+                    </div>
                   </div>
+
+                  {/* Encabezado: Nombre de la Marca y País de Origen */}
+                  <div className="flex items-start justify-between gap-1.5 mb-1.5">
+                    <h3 className="font-extrabold text-slate-900 text-sm sm:text-base group-hover:text-[#991b1b] transition-colors leading-snug line-clamp-1">
+                      {brand.name}
+                    </h3>
+                    <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-slate-600 bg-white group-hover:bg-red-50 group-hover:text-red-900 px-2 py-0.5 rounded-md border border-slate-200/70 transition-colors shrink-0 shadow-2xs">
+                      {brand.origin.split(" ")[0]}
+                    </span>
+                  </div>
+
+                  {/* Badge de Categoría / División con color vivo */}
+                  <div className="mb-2">
+                    <span className={`inline-block text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-md border ${getBrandBadge(brand.name)} truncate max-w-full`}>
+                      {brand.category}
+                    </span>
+                  </div>
+
+                  {/* Micro-especificación técnica */}
+                  <p className="text-[11px] sm:text-xs text-slate-600 leading-relaxed line-clamp-2 mb-4">
+                    {brand.highlight}
+                  </p>
                 </div>
 
-                {/* Encabezado: Nombre de la Marca y País de Origen */}
-                <div className="flex items-start justify-between gap-1.5 mb-1.5">
-                  <h3 className="font-extrabold text-slate-900 text-sm sm:text-base group-hover:text-[#991b1b] transition-colors leading-snug line-clamp-1">
-                    {brand.name}
-                  </h3>
-                  <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-slate-600 bg-slate-100 group-hover:bg-red-50 group-hover:text-red-900 px-2 py-0.5 rounded-md border border-slate-200/70 transition-colors shrink-0">
-                    {brand.origin.split(" ")[0]}
+                {/* Pie de Tarjeta con Garantía y Acción Rápida */}
+                <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] sm:text-xs">
+                  <span className="inline-flex items-center gap-1 font-semibold text-slate-500">
+                    <Sparkles size={12} className="text-[#991b1b] shrink-0" />
+                    <span className="truncate">Genuino</span>
                   </span>
+                  <a
+                    href={`https://wa.me/${whatsappNumber}?text=Hola%20Dialka,%20deseo%20cotizar%20equipos%20o%20repuestos%20de%20la%20marca%20${encodeURIComponent(brand.name)}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-slate-500 group-hover:text-[#991b1b] transition-colors flex items-center gap-1 font-bold active:scale-95"
+                    title={`Cotizar repuestos y equipos de ${brand.name}`}
+                  >
+                    <span>Cotizar</span>
+                    <ExternalLink size={12} className="transition-transform group-hover:translate-x-0.5" />
+                  </a>
                 </div>
-
-                {/* Categoría / División */}
-                <p className="text-[11px] sm:text-xs font-semibold text-[#991b1b] mb-1.5 leading-tight line-clamp-1">
-                  {brand.category}
-                </p>
-
-                {/* Micro-especificación técnica */}
-                <p className="text-[11px] sm:text-xs text-slate-600 leading-relaxed line-clamp-2 mb-4">
-                  {brand.highlight}
-                </p>
               </div>
-
-              {/* Pie de Tarjeta con Garantía y Acción Rápida */}
-              <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] sm:text-xs">
-                <span className="inline-flex items-center gap-1 font-semibold text-slate-500">
-                  <Sparkles size={12} className="text-[#991b1b] shrink-0" />
-                  <span className="truncate">Genuino</span>
-                </span>
-                <a
-                  href={`https://wa.me/${whatsappNumber}?text=Hola%20Dialka,%20deseo%20cotizar%20equipos%20o%20repuestos%20de%20la%20marca%20${encodeURIComponent(brand.name)}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-slate-500 group-hover:text-[#991b1b] transition-colors flex items-center gap-1 font-bold active:scale-95"
-                  title={`Cotizar repuestos y equipos de ${brand.name}`}
-                >
-                  <span>Cotizar</span>
-                  <ExternalLink size={12} className="transition-transform group-hover:translate-x-0.5" />
-                </a>
-              </div>
-            </div>
-          ))}
+            );
+          })}
 
           {/* Tarjeta de Soporte Multimarca (completa la cuadrícula en un slot de alta relevancia) */}
           <div className="relative group bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white border border-slate-700/90 rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-xl hover:shadow-slate-900/30 transition-all duration-300 transform hover:-translate-y-1.5 flex flex-col justify-between overflow-hidden">

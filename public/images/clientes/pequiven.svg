@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 70" fill="none">
+  <!-- PEQUIVEN Logo Vector -->
+  <rect x="8" y="14" width="42" height="42" rx="10" fill="#0284C7" />
+  <path d="M29 20 L42 45 L16 45 Z" stroke="#FFFFFF" stroke-width="3" stroke-linejoin="round" />
+  <circle cx="29" cy="37" r="4" fill="#E11D48" />
+  <text x="58" y="44" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="900" fill="#0369A1" letter-spacing="1.5">PEQUIVEN</text>
+  <text x="59" y="56" font-family="system-ui, -apple-system, sans-serif" font-size="8.5" font-weight="800" fill="#BE123C" letter-spacing="2">PETROQUÍMICA DE VENEZUELA</text>
+</svg>

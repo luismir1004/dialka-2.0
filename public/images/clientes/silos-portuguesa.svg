@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 70" fill="none">
+  <!-- Silos Portuguesa Logo Vector -->
+  <rect x="8" y="14" width="42" height="42" rx="10" fill="#15803D" />
+  <path d="M21 44 L21 28 C21 24 29 20 29 20 C29 20 37 24 37 28 L37 44 Z" stroke="#FEF08A" stroke-width="2.5" stroke-linejoin="round" />
+  <path d="M25 44 L25 32 M33 44 L33 32" stroke="#FFFFFF" stroke-width="2" />
+  <text x="58" y="41" font-family="system-ui, -apple-system, sans-serif" font-size="21" font-weight="900" fill="#14532D" letter-spacing="1">SILOS</text>
+  <text x="59" y="55" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="800" fill="#16A34A" letter-spacing="2">PORTUGUESA</text>
+</svg>

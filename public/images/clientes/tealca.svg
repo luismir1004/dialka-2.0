@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 70" fill="none">
+  <!-- TEALCA Logo Vector -->
+  <rect x="8" y="14" width="42" height="42" rx="10" fill="#059669" />
+  <path d="M17 25 L35 25 M26 25 L26 47" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" />
+  <path d="M30 38 L38 45 L43 32" stroke="#FBBF24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+  <text x="58" y="44" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="900" fill="#065F46" letter-spacing="2">TEALCA</text>
+  <text x="59" y="56" font-family="system-ui, -apple-system, sans-serif" font-size="8.5" font-weight="800" fill="#047857" letter-spacing="2">LOGÍSTICA &amp; ENCOMIENDAS</text>
+</svg>
