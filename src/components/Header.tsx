@@ -294,7 +294,7 @@ export function Header() {
       {/* ── DRAWER MÓVIL MODERNO DESLIZANTE DESDE LA DERECHA (60 FPS) ── */}
       {/* Backdrop con Blur Translúcido */}
       <div
-        className={`fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm lg:hidden transition-opacity duration-300 ease-in-out ${
+        className={`fixed inset-0 z-50 bg-black/60 backdrop-blur-md lg:hidden transition-opacity duration-300 ease-in-out ${
           menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setMenuOpen(false)}
@@ -311,8 +311,8 @@ export function Header() {
         aria-modal="true"
         aria-label="Menú de navegación móvil"
       >
-        {/* Cabecera del Drawer: Logotipo + Botón Cerrar */}
-        <div className="p-4 sm:p-5 border-b border-slate-200/80 flex items-center justify-between bg-slate-50/80 shrink-0">
+        {/* Cabecera del Drawer: Logotipo Oficial + Botón Cerrar */}
+        <div className="p-4 sm:p-5 border-b border-slate-200/80 flex items-center justify-between bg-slate-50/90 shrink-0">
           <Link href="/" onClick={() => setMenuOpen(false)} className="flex items-center gap-2">
             <div className="relative h-9 w-36 flex items-center">
               <Image
@@ -336,51 +336,49 @@ export function Header() {
           </button>
         </div>
 
-        {/* Contenido Desplazable del Drawer */}
-        <div className="p-4 sm:p-5 overflow-y-auto flex-1 space-y-4">
-          {/* Estatus Operativo en Vivo */}
-          <div className="px-3.5 py-2.5 bg-emerald-50/90 border border-emerald-200/80 rounded-xl flex items-center justify-between text-xs text-emerald-900 shadow-2xs">
-            <span className="flex items-center gap-2 font-bold">
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-              </span>
-              Sedes Abiertas Hoy
-            </span>
-            <span className="text-[10px] font-extrabold text-emerald-800 bg-white px-2 py-0.5 rounded-md border border-emerald-200">
-              08:00–17:00
-            </span>
+        {/* Contenido Desplazable del Drawer: Pantallas Reales de Navegación */}
+        <div className="p-4 sm:p-5 overflow-y-auto flex-1 space-y-2">
+          <div className="text-[11px] font-black uppercase tracking-wider text-slate-400 px-2 mb-2">
+            Navegación Principal
           </div>
 
-          {/* Enlaces de Navegación con Tipografía Grande y Táctil (min-h-[52px]) */}
           <nav className="space-y-1.5" aria-label="Enlaces de navegación móvil">
-            {NAV_LINKS.map((link) => {
+            {[
+              { label: "Inicio", href: "/", icon: Home },
+              { label: "Servicio Técnico", href: "/servicios", icon: Wrench },
+              { label: "Equipos SENCAMER", href: "/sencamer", icon: Scale },
+              { label: "Catálogo de Productos", href: "/productos", icon: Package },
+              { label: "Alquiler de Equipos", href: "/alquiler", icon: HardHat },
+              { label: "Software de Pesaje", href: "/software", icon: Monitor },
+              { label: "Contacto y Sedes", href: "/contacto", icon: Phone },
+            ].map((item) => {
               const isActive =
-                link.href === "/"
+                item.href === "/"
                   ? pathname === "/"
-                  : pathname.startsWith(link.href);
+                  : pathname.startsWith(item.href);
+              const IconComponent = item.icon;
               return (
                 <Link
-                  key={link.href}
-                  href={link.href}
+                  key={item.href}
+                  href={item.href}
                   onClick={() => setMenuOpen(false)}
-                  className={`flex items-center justify-between min-h-[52px] px-3.5 py-3 rounded-xl font-bold transition-all text-base sm:text-lg active:scale-[0.98] ${
+                  className={`flex items-center justify-between min-h-[50px] px-3.5 py-3 rounded-xl font-bold transition-all text-base active:scale-[0.98] ${
                     isActive
-                      ? "bg-red-50 text-[#991b1b] border-l-4 border-[#991b1b] shadow-2xs"
+                      ? "bg-red-50 text-[#991b1b] border-l-4 border-[#991b1b] shadow-2xs font-extrabold"
                       : "text-slate-800 hover:bg-slate-50 hover:text-[#991b1b] border-l-4 border-transparent"
                   }`}
                 >
                   <div className="flex items-center gap-3">
                     <div
-                      className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors shrink-0 ${
+                      className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors shrink-0 ${
                         isActive
                           ? "bg-[#991b1b] text-white shadow-2xs"
                           : "bg-slate-100 text-slate-600"
                       }`}
                     >
-                      {getNavIcon(link.href)}
+                      <IconComponent size={18} />
                     </div>
-                    <span>{link.label}</span>
+                    <span>{item.label}</span>
                   </div>
                   <ChevronRight
                     size={18}
@@ -392,75 +390,50 @@ export function Header() {
           </nav>
         </div>
 
-        {/* Footer del Drawer con Contactos y WhatsApp Directo */}
-        <div className="p-4 sm:p-5 border-t border-slate-200 bg-slate-50/95 space-y-2.5 shrink-0">
-          {/* Sedes Telefónicas Caracas y Maracay */}
-          <div className="grid grid-cols-2 gap-2">
-            <a
-              href={`tel:${ccsPhone.replace(/\s+/g, "").replace(/[()]/g, "")}`}
-              className="flex flex-col items-center justify-center min-h-[48px] p-2 rounded-xl bg-white border border-slate-200 hover:border-red-300 active:scale-95 transition-all text-center shadow-2xs group"
-              title="Llamar a sede central Caracas"
-            >
-              <div className="flex items-center gap-1 text-[10px] font-bold text-slate-500 uppercase">
-                <Phone size={11} className="text-[#991b1b]" />
-                <span>Caracas</span>
-              </div>
-              <span className="text-[11px] font-extrabold text-slate-900 mt-0.5 group-hover:text-[#991b1b] transition-colors truncate w-full px-1">
-                {ccsPhone}
-              </span>
-            </a>
-
-            <a
-              href="tel:+582432343360"
-              className="flex flex-col items-center justify-center min-h-[48px] p-2 rounded-xl bg-white border border-slate-200 hover:border-red-300 active:scale-95 transition-all text-center shadow-2xs group"
-              title="Llamar a sede Maracay"
-            >
-              <div className="flex items-center gap-1 text-[10px] font-bold text-slate-500 uppercase">
-                <Phone size={11} className="text-[#991b1b]" />
-                <span>Maracay</span>
-              </div>
-              <span className="text-[11px] font-extrabold text-slate-900 mt-0.5 group-hover:text-[#991b1b] transition-colors truncate w-full px-1">
-                0243-234.33.60
-              </span>
-            </a>
-          </div>
-
-          {/* Tarjeta Contacto USA Directa con Bandera */}
-          <a
-            href={`tel:${usaPhone.replace(/\s+/g, "").replace(/[()]/g, "").replace(/-/g, "")}`}
-            className="flex items-center justify-between min-h-[46px] px-3.5 py-2.5 rounded-xl bg-amber-50/90 border border-amber-200 hover:border-amber-300 active:scale-95 transition-all shadow-2xs group"
-            title="Llamar a oficina Estados Unidos (+1 786 321-4890)"
-          >
-            <div className="flex items-center gap-2.5">
-              <span className="text-lg" role="img" aria-label="Bandera Estados Unidos">🇺🇸</span>
-              <div className="text-left">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-amber-900 block leading-none">
-                  Oficina Estados Unidos
-                </span>
-                <span className="text-xs font-black text-slate-900 mt-0.5 block group-hover:text-[#991b1b] transition-colors">
-                  {usaPhone}
-                </span>
-              </div>
-            </div>
-            <div className="flex items-center gap-1 text-xs font-bold text-[#991b1b] group-hover:translate-x-0.5 transition-transform">
-              <span>Llamar</span>
-              <ChevronRight size={14} />
-            </div>
-          </a>
-
-          {/* Botón Principal: WhatsApp con min-h-[48px] */}
+        {/* Footer del Drawer: Acciones Rápidas Ordenadas (WhatsApp y Teléfonos sin saturar) */}
+        <div className="p-4 border-t border-slate-200 bg-slate-50/95 space-y-2.5 shrink-0">
+          {/* Botón Principal de Cotización por WhatsApp */}
           <a
             href={`https://wa.me/${CONTACT.whatsapp}`}
             target="_blank"
             rel="noreferrer"
-            className="w-full inline-flex items-center justify-center gap-2 min-h-[48px] bg-[#991b1b] hover:bg-[#7f1d1d] active:scale-95 text-white font-bold py-3 px-4 rounded-xl shadow-sm text-sm transition-all"
+            className="w-full inline-flex items-center justify-center gap-2 min-h-[46px] bg-[#25D366] hover:bg-[#20bd5a] active:scale-95 text-white font-bold py-2.5 px-4 rounded-xl shadow-xs text-sm transition-all"
           >
             <Phone size={16} />
-            <span>Contactar vía WhatsApp</span>
+            <span>Cotizar por WhatsApp</span>
           </a>
 
-          {/* Redes Sociales y RIF */}
-          <div className="pt-1 flex items-center justify-between text-[11px] text-slate-500 font-medium">
+          {/* Accesos Telefónicos Rápidos y Compactos */}
+          <div className="flex items-center justify-between gap-1.5 text-[11px] font-bold">
+            <a
+              href={`tel:${ccsPhone.replace(/\s+/g, "").replace(/[()]/g, "")}`}
+              className="flex-1 inline-flex items-center justify-center gap-1 py-2 px-2 rounded-lg bg-white border border-slate-200 hover:border-red-300 text-slate-800 active:scale-95 transition-all truncate shadow-2xs"
+              title={`Llamar a Caracas: ${ccsPhone}`}
+            >
+              <Phone size={11} className="text-[#991b1b] shrink-0" />
+              <span>CCS</span>
+            </a>
+
+            <a
+              href="tel:+582432343360"
+              className="flex-1 inline-flex items-center justify-center gap-1 py-2 px-2 rounded-lg bg-white border border-slate-200 hover:border-red-300 text-slate-800 active:scale-95 transition-all truncate shadow-2xs"
+              title="Llamar a Maracay: 0243-234.33.60"
+            >
+              <Phone size={11} className="text-[#991b1b] shrink-0" />
+              <span>MCY</span>
+            </a>
+
+            <a
+              href={`tel:${usaPhone.replace(/\s+/g, "").replace(/[()]/g, "").replace(/-/g, "")}`}
+              className="flex-1 inline-flex items-center justify-center gap-1 py-2 px-2 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 active:scale-95 transition-all truncate shadow-2xs"
+              title={`Llamar a USA: ${usaPhone}`}
+            >
+              <span className="text-xs" role="img" aria-label="Bandera USA">🇺🇸</span>
+              <span>USA</span>
+            </a>
+          </div>
+
+          <div className="pt-1 flex items-center justify-between text-[10px] text-slate-500 font-medium">
             <span>RIF: J-30814715-0</span>
             <a
               href="https://www.instagram.com/balanzasyserviciosdialka"

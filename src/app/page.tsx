@@ -127,25 +127,6 @@ export default function HomePage() {
                   <span>Fundada en 2001 · 25 Años de Liderazgo Metrológico</span>
                 </div>
 
-                {/* Identidad Protagónica: Logotipo e Isotipo Oficial Dialka */}
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="relative h-11 sm:h-13 w-40 sm:w-48 flex items-center">
-                    <Image
-                      src="/images/logo-dialka.svg"
-                      alt="Balanzas y Servicios Dialka, S.A."
-                      width={200}
-                      height={50}
-                      priority
-                      className="h-10 sm:h-12 w-auto object-contain"
-                    />
-                  </div>
-                  <div className="h-7 w-px bg-slate-200 hidden sm:block" />
-                  <div className="hidden sm:flex flex-col text-[10px] font-bold text-slate-500 leading-tight">
-                    <span className="text-slate-900 font-extrabold tracking-wider">FABRICANTES Y METROLOGÍA</span>
-                    <span>DESDE 2001 EN VENEZUELA</span>
-                  </div>
-                </div>
-
                 {/* Dinamismo Tipográfico Rotativo ("El Giro") */}
                 <HeroTextRotator />
 
