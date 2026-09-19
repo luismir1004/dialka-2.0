@@ -114,8 +114,8 @@ export function ProductsCatalog({
     <div className="bg-white py-10 md:py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* ── BARRA DE BÚSQUEDA Y FILTROS INTERACTIVOS ── */}
-        <div className="bg-slate-50/90 border border-slate-200/90 rounded-2xl p-5 sm:p-7 mb-12 shadow-xs">
-          <div className="flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between mb-6">
+        <div className="bg-slate-50/90 border border-slate-200/90 rounded-2xl p-4 sm:p-6 mb-8 sm:mb-10 shadow-xs">
+          <div className="flex flex-col md:flex-row gap-3.5 sm:gap-4 items-stretch md:items-center justify-between mb-4 sm:mb-5">
             {/* Input de búsqueda en tiempo real */}
             <div className="relative flex-1">
               <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -126,12 +126,12 @@ export function ProductsCatalog({
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Buscar por equipo (ej: Ganaderas, Camioneras, Apolo Lab, Mostrador)..."
-                className="w-full bg-white border border-slate-300 rounded-xl pl-10 pr-10 py-3 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#991b1b] focus:ring-2 focus:ring-[#991b1b]/10 transition-all shadow-2xs"
+                className="w-full bg-white border border-slate-300 rounded-xl pl-10 pr-10 py-2.5 sm:py-3 text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#991b1b] focus:ring-2 focus:ring-[#991b1b]/10 transition-all shadow-2xs"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery("")}
-                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-700 transition-colors"
+                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-700 transition-colors cursor-pointer"
                   aria-label="Limpiar búsqueda"
                 >
                   <X size={16} />
@@ -140,9 +140,9 @@ export function ProductsCatalog({
             </div>
 
             {/* Contador de resultados */}
-            <div className="flex items-center justify-between sm:justify-end gap-3 text-xs font-semibold text-slate-600 shrink-0">
-              <span className="flex items-center gap-1.5 bg-white border border-slate-200 px-3.5 py-2 rounded-xl shadow-2xs">
-                <SlidersHorizontal size={14} className="text-[#991b1b]" />
+            <div className="flex items-center justify-between sm:justify-end gap-2 sm:gap-3 text-xs font-semibold text-slate-600 shrink-0">
+              <span className="flex items-center gap-1.5 bg-white border border-slate-200 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl shadow-2xs text-[11px] sm:text-xs">
+                <SlidersHorizontal size={13} className="text-[#991b1b]" />
                 <span>
                   {matchingProductsCount} de {totalProductsCount} equipos
                 </span>
@@ -150,7 +150,7 @@ export function ProductsCatalog({
               {(selectedCategory !== "all" || searchQuery !== "") && (
                 <button
                   onClick={handleResetFilters}
-                  className="flex items-center gap-1 text-[#991b1b] hover:text-[#7f1d1d] hover:underline transition-colors px-2 py-1"
+                  className="flex items-center gap-1 text-[#991b1b] hover:text-[#7f1d1d] hover:underline transition-colors px-2 py-1 text-xs cursor-pointer"
                 >
                   <RotateCcw size={13} />
                   <span>Restablecer</span>
@@ -161,13 +161,13 @@ export function ProductsCatalog({
 
           {/* Botones de Categorías Interactivas (Pills) */}
           <div>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 block mb-2.5">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 block mb-2">
               Filtrar por categoría:
             </span>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5 sm:gap-2">
               <button
                 onClick={() => setSelectedCategory("all")}
-                className={`text-xs font-bold px-4 py-2 rounded-xl transition-all duration-200 cursor-pointer ${
+                className={`text-xs font-bold px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl transition-all duration-200 cursor-pointer ${
                   selectedCategory === "all"
                     ? "bg-[#991b1b] text-white shadow-xs"
                     : "bg-white border border-slate-200 text-slate-700 hover:border-red-200 hover:text-[#991b1b] shadow-2xs"
@@ -182,7 +182,7 @@ export function ProductsCatalog({
                   <button
                     key={cat.id}
                     onClick={() => setSelectedCategory(cat.id)}
-                    className={`text-xs font-bold px-4 py-2 rounded-xl transition-all duration-200 cursor-pointer ${
+                    className={`text-xs font-bold px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl transition-all duration-200 cursor-pointer ${
                       isSelected
                         ? "bg-[#991b1b] text-white shadow-xs"
                         : "bg-white border border-slate-200 text-slate-700 hover:border-red-200 hover:text-[#991b1b] shadow-2xs"
@@ -198,31 +198,31 @@ export function ProductsCatalog({
 
         {/* ── LISTADO DINÁMICO DE PRODUCTOS CON ANIMACIÓN ── */}
         {filteredCategories.length > 0 ? (
-          <div className="space-y-16 lg:space-y-20 animate-fadeIn">
+          <div className="space-y-10 sm:space-y-14 lg:space-y-16 animate-fadeIn">
             {filteredCategories.map((cat) => (
               <section key={cat.id} id={cat.id} className="scroll-mt-28">
                 {/* ── BANNER VISUAL DE CATEGORÍA CON IMAGEN REAL (Click abre Lightbox) ── */}
-                <div className="mb-8 rounded-2xl overflow-hidden border border-slate-200 bg-gradient-to-r from-slate-50 via-white to-slate-50 flex flex-col md:flex-row items-stretch shadow-xs group">
+                <div className="mb-6 sm:mb-8 rounded-xl sm:rounded-2xl overflow-hidden border border-slate-200 bg-gradient-to-r from-slate-50 via-white to-slate-50 flex flex-col md:flex-row items-stretch shadow-xs group">
                   {cat.image && (
                     <div
                       onClick={() => handleOpenLightbox(cat.id)}
-                      className="relative w-full md:w-80 aspect-[16/10] sm:aspect-video md:aspect-auto min-h-[190px] bg-slate-100 shrink-0 overflow-hidden cursor-pointer"
+                      className="relative w-full md:w-72 aspect-[16/10] sm:aspect-video md:aspect-auto min-h-[160px] bg-slate-100 shrink-0 overflow-hidden cursor-pointer"
                       title="Haz clic para ver la imagen y especificaciones en grande"
                     >
                       <Image
                         src={cat.image}
                         alt={cat.name}
                         fill
-                        sizes="(max-width: 768px) 100vw, 320px"
+                        sizes="(max-width: 768px) 100vw, 300px"
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent md:hidden" />
-                      <div className="absolute top-3 left-3">
+                      <div className="absolute top-2.5 left-2.5">
                         <span className="inline-block bg-white/95 backdrop-blur-md text-[#991b1b] text-[10px] font-bold px-2.5 py-1 rounded-full shadow-2xs">
                           {cat.id.toUpperCase()}
                         </span>
                       </div>
-                      <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="absolute top-2.5 right-2.5 opacity-0 group-hover:opacity-100 transition-opacity">
                         <span className="inline-flex items-center gap-1 bg-slate-900/80 backdrop-blur-md text-white text-[10px] font-bold px-2 py-0.5 rounded-md border border-white/20">
                           <Maximize2 size={11} className="text-red-400" />
                           <span>Ver en Grande</span>
@@ -231,80 +231,80 @@ export function ProductsCatalog({
                     </div>
                   )}
 
-                  <div className="p-6 sm:p-8 flex flex-col justify-between flex-1">
+                  <div className="p-4 sm:p-6 md:p-7 flex flex-col justify-between flex-1">
                     <div>
-                      <div className="flex items-center justify-between gap-2 mb-2">
-                        <span className="inline-block bg-red-50 border border-red-200/80 text-[#991b1b] text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                      <div className="flex items-center justify-between gap-2 mb-1.5">
+                        <span className="inline-block bg-red-50 border border-red-200/80 text-[#991b1b] text-[10px] sm:text-[11px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
                           Línea Especializada Dialka
                         </span>
-                        <span className="text-xs font-semibold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
+                        <span className="text-[11px] sm:text-xs font-semibold text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-full">
                           {cat.products.length} modelos
                         </span>
                       </div>
-                      <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-2">
+                      <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight mb-1.5">
                         {cat.name}
                       </h2>
-                      <p className="text-slate-600 text-sm sm:text-base leading-relaxed max-w-2xl">
+                      <p className="text-slate-600 text-xs sm:text-sm leading-relaxed max-w-2xl">
                         {cat.description}
                       </p>
                     </div>
 
-                    <div className="mt-4 pt-4 border-t border-slate-200/80 flex flex-wrap items-center justify-between gap-4 text-xs font-semibold text-slate-500">
-                      <div className="flex items-center gap-4">
+                    <div className="mt-3.5 pt-3.5 border-t border-slate-200/80 flex flex-wrap items-center justify-between gap-3 text-xs font-semibold text-slate-500">
+                      <div className="flex items-center gap-3 text-[11px] sm:text-xs">
                         <span className="flex items-center gap-1 text-slate-700">
-                          <CheckCircle2 size={14} className="text-[#991b1b]" />
+                          <CheckCircle2 size={13} className="text-[#991b1b]" />
                           Calibración garantizada
                         </span>
                         <span className="flex items-center gap-1 text-slate-700">
-                          <CheckCircle2 size={14} className="text-[#991b1b]" />
-                          Soporte técnico nacional
+                          <CheckCircle2 size={13} className="text-[#991b1b]" />
+                          Soporte nacional
                         </span>
                       </div>
                       <button
                         type="button"
                         onClick={() => handleOpenLightbox(cat.id)}
-                        className="text-[#991b1b] hover:text-[#7f1d1d] font-bold inline-flex items-center gap-1 cursor-pointer"
+                        className="text-[#991b1b] hover:text-[#7f1d1d] font-bold inline-flex items-center gap-1 cursor-pointer text-xs"
                       >
-                        <Maximize2 size={13} />
+                        <Maximize2 size={12} />
                         <span>Ficha y Especificaciones</span>
                       </button>
                     </div>
                   </div>
                 </div>
 
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-5">
                   {cat.products.map((product) => (
                     <div
                       key={product}
-                      className="card-hover group bg-white border border-slate-200/90 hover:border-red-300 active:scale-[0.98] rounded-xl p-6 shadow-2xs hover:shadow-md transition-all duration-200 flex flex-col justify-between animate-fadeIn"
+                      className="card-hover group bg-white border border-slate-200/90 hover:border-red-300 active:scale-[0.98] rounded-xl p-4 sm:p-5 shadow-2xs hover:shadow-md transition-all duration-200 flex flex-col justify-between animate-fadeIn"
                     >
-                      <div className="flex items-start gap-4">
-                        <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-100 group-hover:bg-red-50 group-hover:border-red-100 flex items-center justify-center shrink-0 transition-colors">
+                      <div className="flex items-start gap-3">
+                        <div className="w-9 h-9 rounded-lg bg-slate-50 border border-slate-100 group-hover:bg-red-50 group-hover:border-red-100 flex items-center justify-center shrink-0 transition-colors">
                           <Package
-                            size={18}
+                            size={16}
                             className="text-slate-700 group-hover:text-[#991b1b] transition-colors"
                           />
                         </div>
                         <div>
-                          <h3 className="text-slate-900 group-hover:text-[#991b1b] font-bold text-base leading-snug transition-colors">
+                          <h3 className="text-slate-900 group-hover:text-[#991b1b] font-bold text-sm sm:text-base leading-snug transition-colors line-clamp-2">
                             {product}
                           </h3>
-                          <p className="text-xs text-slate-500 mt-1 flex items-center gap-1.5">
-                            <CheckCircle2 size={13} className="text-[#991b1b]" />
-                            <span>Garantía y soporte directo</span>
+                          <p className="text-[11px] text-slate-500 mt-1 flex items-center gap-1">
+                            <CheckCircle2 size={12} className="text-[#991b1b] shrink-0" />
+                            <span>Garantía y calibración oficial</span>
                           </p>
                         </div>
                       </div>
 
-                      <div className="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between">
-                        <span className="text-[11px] font-semibold text-slate-400">
+                      <div className="mt-4 pt-2.5 border-t border-slate-100 flex items-center justify-between">
+                        <span className="text-[10px] sm:text-[11px] font-semibold text-slate-400">
                           {cat.name.replace("Pesaje ", "")}
                         </span>
                         <a
                           href={`https://wa.me/${whatsappNumber}?text=Hola,%20solicito%20información%20y%20cotización%20del%20equipo:%20${encodeURIComponent(product)}`}
                           target="_blank"
                           rel="noreferrer"
-                          className="text-xs font-bold text-[#991b1b] hover:text-[#7f1d1d] inline-flex items-center gap-1"
+                          className="text-xs font-bold text-[#991b1b] hover:text-[#7f1d1d] inline-flex items-center gap-1 p-0.5"
                         >
                           <span>Cotizar</span>
                           <ArrowRight size={12} />
