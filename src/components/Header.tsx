@@ -97,17 +97,17 @@ export function Header() {
       {/* ── TOP BAR INSTITUCIONAL (CARACAS, MARACAY, USA Y REDES) ── */}
       <div className="bg-[#991b1b] text-white text-xs py-2 border-b border-[#7f1d1d]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Vista Móvil (md:hidden): Caracas, Maracay y USA accesibles como enlaces directos */}
+          {/* Vista Móvil (md:hidden): Caracas, Maracay y USA organizados con iconos claros y marcación directa */}
           <div className="flex md:hidden items-center justify-between gap-1.5 text-[11px]">
             <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
               {/* Caracas */}
               <a
                 href={`tel:${ccsPhone.replace(/\s+/g, "").replace(/[()]/g, "")}`}
-                className="inline-flex items-center gap-1 font-bold text-white hover:text-red-200 active:scale-95 transition-all py-0.5 px-1.5 rounded-md bg-black/20 shrink-0"
-                title="Llamar a Caracas"
+                className="inline-flex items-center gap-1 font-bold text-white hover:text-red-200 active:scale-95 transition-all py-0.5 px-2 rounded-md bg-black/20 shrink-0"
+                title={`Llamar a Caracas: ${ccsPhone}`}
               >
                 <Phone size={10} className="text-red-300 shrink-0" />
-                <span>CCS</span>
+                <span>CCS: {ccsPhone}</span>
               </a>
 
               <span className="text-red-300/40">|</span>
@@ -115,11 +115,11 @@ export function Header() {
               {/* Maracay */}
               <a
                 href="tel:+582432343360"
-                className="inline-flex items-center gap-1 font-bold text-white hover:text-red-200 active:scale-95 transition-all py-0.5 px-1.5 rounded-md bg-black/20 shrink-0"
-                title="Llamar a Maracay"
+                className="inline-flex items-center gap-1 font-bold text-white hover:text-red-200 active:scale-95 transition-all py-0.5 px-2 rounded-md bg-black/20 shrink-0"
+                title="Llamar a Maracay: 0243-234.33.60"
               >
                 <Phone size={10} className="text-red-300 shrink-0" />
-                <span>MCY</span>
+                <span>MCY: 0243-234.33.60</span>
               </a>
 
               <span className="text-red-300/40">|</span>
@@ -127,8 +127,8 @@ export function Header() {
               {/* USA con bandera */}
               <a
                 href={`tel:${usaPhone.replace(/\s+/g, "").replace(/[()]/g, "").replace(/-/g, "")}`}
-                className="inline-flex items-center gap-1 font-bold text-amber-200 hover:text-white active:scale-95 transition-all py-0.5 px-1.5 rounded-md bg-black/20 shrink-0"
-                title="Llamar a Estados Unidos"
+                className="inline-flex items-center gap-1 font-bold text-amber-200 hover:text-white active:scale-95 transition-all py-0.5 px-2 rounded-md bg-black/20 shrink-0"
+                title={`Llamar a Estados Unidos: ${usaPhone}`}
               >
                 <span className="text-[11px]" role="img" aria-label="Bandera Estados Unidos">🇺🇸</span>
                 <span>USA: {usaPhone}</span>
@@ -238,12 +238,12 @@ export function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logotipo Oficial Dialka */}
           <Link href="/" className="flex items-center gap-2.5 group py-1" title="Inicio | Balanzas y Servicios Dialka">
-            <div className="relative h-10 w-32 sm:w-36 flex items-center">
+            <div className="relative h-10 w-36 sm:w-44 flex items-center">
               <Image
                 src="/images/logo-dialka.svg"
                 alt="Balanzas y Servicios Dialka, S.A."
-                width={134}
-                height={43}
+                width={200}
+                height={50}
                 priority
                 className="h-9 sm:h-10 w-auto object-contain transition-transform group-hover:scale-105 duration-200"
               />
