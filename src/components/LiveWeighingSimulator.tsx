@@ -44,9 +44,11 @@ export function LiveWeighingSimulator({
   const [isStable, setIsStable] = useState<boolean>(true);
   const [tareTons, setTareTons] = useState<number>(0);
   const [isNetMode, setIsNetMode] = useState<boolean>(false);
+  const [activePreset, setActivePreset] = useState<string | null>(null);
+  const [isCellActive, setIsCellActive] = useState<boolean>(false);
   const sliderId = useId();
 
-  // Animación fluida de la aguja y efecto de conteo rápido del display
+  // Animación fluida de la aguja con curva física amortiguada
   useEffect(() => {
     let animationFrameId: number;
     let startTime: number | null = null;
@@ -59,17 +61,18 @@ export function LiveWeighingSimulator({
       return;
     }
 
-    // Duración adaptativa: instantánea para deslizamiento suave, ~320ms con ease-out para presets
-    const duration = delta < 1.0 ? 80 : Math.min(480, Math.max(220, delta * 6));
+    // Duración adaptativa: instantánea para slider continuo, dinámica con desaceleración para saltos de peso
+    const duration = delta < 1.0 ? 70 : Math.min(450, Math.max(200, delta * 5.5));
 
     const step = (timestamp: number) => {
       if (!startTime) startTime = timestamp;
       const elapsed = timestamp - startTime;
       const progress = Math.min(1, elapsed / duration);
 
-      // Curva Ease-Out cúbica fluida
-      const easeOutProgress = 1 - Math.pow(1 - progress, 3);
-      const current = startVal + (targetVal - startVal) * easeOutProgress;
+      // Curva física con desaceleración cúbica y sutil rebote elástico
+      const easeOutProgress = 1 - Math.pow(1 - progress, 3.2);
+      const microBounce = delta > 12 && progress < 0.95 ? Math.sin(progress * Math.PI * 1.5) * 0.015 * delta : 0;
+      const current = Math.max(0, Math.min(maxTons, startVal + (targetVal - startVal) * easeOutProgress + microBounce));
 
       setAnimatedTons(current);
 
@@ -82,7 +85,15 @@ export function LiveWeighingSimulator({
 
     animationFrameId = requestAnimationFrame(step);
     return () => cancelAnimationFrame(animationFrameId);
-  }, [tons]);
+  }, [tons, maxTons]);
+
+  // Manejo de preset con disparo visual en celdas de carga
+  const handlePresetSelect = (presetTons: number, label: string) => {
+    setActivePreset(label);
+    setTons(presetTons);
+    setIsCellActive(true);
+    setTimeout(() => setIsCellActive(false), 500);
+  };
 
   // Conversión de toneladas a kg basada en animatedTons (resolución d = 20 kg metrológica)
   const rawKg = Math.round((animatedTons * 1000) / 20) * 20;
@@ -107,7 +118,7 @@ export function LiveWeighingSimulator({
     setIsStable(false);
     const timer = setTimeout(() => {
       setIsStable(true);
-    }, 320);
+    }, 280);
     return () => clearTimeout(timer);
   }, [tons]);
 
@@ -257,12 +268,12 @@ export function LiveWeighingSimulator({
               <div className="relative w-1.5 h-26 sm:h-36 bg-transparent flex flex-col items-center">
                 {/* Punta de la aguja con gradiente y sombra reactiva */}
                 <div
-                  className={`w-2 h-16 sm:h-20 rounded-full shadow-lg transition-colors duration-200 ${
+                  className={`w-2.5 h-16 sm:h-20 rounded-full shadow-lg transition-colors duration-200 ${
                     isOverload
-                      ? "bg-red-500 shadow-[0_0_14px_rgba(239,68,68,0.95)] animate-pulse"
+                      ? "bg-red-500 shadow-[0_0_20px_rgba(239,68,68,1),0_0_40px_rgba(239,68,68,0.6)] animate-pulse"
                       : isWarning
-                      ? "bg-amber-400 shadow-[0_0_14px_rgba(245,158,11,0.85)]"
-                      : "bg-emerald-400 shadow-[0_0_14px_rgba(16,185,129,0.85)]"
+                      ? "bg-amber-400 shadow-[0_0_20px_rgba(245,158,11,1),0_0_35px_rgba(245,158,11,0.5)]"
+                      : "bg-emerald-400 shadow-[0_0_20px_rgba(16,185,129,1),0_0_35px_rgba(16,185,129,0.5)]"
                   }`}
                 />
               </div>
@@ -272,10 +283,10 @@ export function LiveWeighingSimulator({
             <div
               className={`absolute w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-900 border-2 shadow-lg z-10 flex items-center justify-center transition-colors duration-200 ${
                 isOverload
-                  ? "border-red-500 shadow-[0_0_10px_rgba(239,68,68,0.7)]"
+                  ? "border-red-500 shadow-[0_0_12px_rgba(239,68,68,0.8)]"
                   : isWarning
-                  ? "border-amber-400 shadow-[0_0_10px_rgba(245,158,11,0.6)]"
-                  : "border-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.6)]"
+                  ? "border-amber-400 shadow-[0_0_12px_rgba(245,158,11,0.7)]"
+                  : "border-emerald-400 shadow-[0_0_12px_rgba(16,185,129,0.7)]"
               }`}
             >
               <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white shadow-inner" />
@@ -300,8 +311,11 @@ export function LiveWeighingSimulator({
           </div>
 
           {/* ── DISPLAY DIGITAL LED INDUSTRIAL (ESTILO TERMINAL TOLEDO / RICE LAKE) ── */}
-          <div className="w-full max-w-lg mt-3 bg-black/95 border-2 border-slate-700/90 rounded-2xl p-4 sm:p-5 shadow-[inset_0_3px_10px_rgba(0,0,0,0.9),0_6px_25px_rgba(0,0,0,0.6)]">
-            <div className="flex flex-wrap items-center justify-between text-[10px] sm:text-[11px] font-mono tracking-widest text-slate-400 mb-2.5 border-b border-slate-800 pb-2 gap-2">
+          <div className="w-full max-w-lg mt-3 bg-black/95 border-2 border-slate-700/90 rounded-2xl p-4 sm:p-5 shadow-[inset_0_3px_12px_rgba(0,0,0,0.95),0_6px_25px_rgba(0,0,0,0.6)] relative overflow-hidden">
+            {/* CRT Scanline & Phosphor Grid effect */}
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.03),rgba(0,255,0,0.01),rgba(0,0,255,0.03))] [background-size:100%_4px,6px_100%] pointer-events-none opacity-40" />
+
+            <div className="relative z-10 flex flex-wrap items-center justify-between text-[10px] sm:text-[11px] font-mono tracking-widest text-slate-400 mb-2.5 border-b border-slate-800 pb-2 gap-2">
               <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
                 <span
                   className={`px-2 py-0.5 rounded text-[9px] sm:text-[10px] font-bold ${
@@ -330,8 +344,8 @@ export function LiveWeighingSimulator({
               <span className="text-emerald-400/90 font-bold">d = 20 kg</span>
             </div>
 
-            {/* Lectura Numérica Gigante 7-Segmentos */}
-            <div className="flex items-baseline justify-between gap-2">
+            {/* Lectura Numérica Gigante 7-Segmentos con Phosphor Glow */}
+            <div className="relative z-10 flex items-baseline justify-between gap-2">
               <span
                 className={`font-mono text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-black tabular-nums tracking-tight drop-shadow-md transition-colors duration-200 ${
                   isOverload
@@ -342,10 +356,10 @@ export function LiveWeighingSimulator({
                 }`}
                 style={{
                   textShadow: isOverload
-                    ? "0 0 25px rgba(239, 68, 68, 0.75)"
+                    ? "0 0 10px #ef4444, 0 0 25px rgba(239, 68, 68, 0.85), 0 0 50px rgba(239, 68, 68, 0.5)"
                     : isWarning
-                    ? "0 0 25px rgba(245, 158, 11, 0.6)"
-                    : "0 0 25px rgba(16, 185, 129, 0.6)",
+                    ? "0 0 10px #f59e0b, 0 0 25px rgba(245, 158, 11, 0.85), 0 0 50px rgba(245, 158, 11, 0.5)"
+                    : "0 0 10px #10b981, 0 0 25px rgba(16, 185, 129, 0.85), 0 0 50px rgba(16, 185, 129, 0.5)",
                 }}
               >
                 {displayedKg.toLocaleString("es-VE")}
@@ -361,7 +375,7 @@ export function LiveWeighingSimulator({
             </div>
 
             {/* Barra Gráfica de Segmentos LED Progresivos */}
-            <div className="mt-4 pt-3 border-t border-slate-850">
+            <div className="relative z-10 mt-4 pt-3 border-t border-slate-850">
               <div className="flex items-center justify-between text-[10px] font-mono text-slate-400 mb-1">
                 <span>0% Carga</span>
                 <span>Capacidad Plataforma: 80.000 kg</span>
@@ -371,9 +385,9 @@ export function LiveWeighingSimulator({
                 {Array.from({ length: 20 }).map((_, i) => {
                   const segPercent = (i + 1) * 5;
                   const isActive = percentage >= segPercent;
-                  let colorClass = "bg-emerald-500";
-                  if (segPercent > 70) colorClass = "bg-amber-500";
-                  if (segPercent > 85) colorClass = "bg-red-500";
+                  let colorClass = "bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.8)]";
+                  if (segPercent > 70) colorClass = "bg-amber-500 shadow-[0_0_6px_rgba(245,158,11,0.8)]";
+                  if (segPercent > 85) colorClass = "bg-red-500 shadow-[0_0_6px_rgba(239,68,68,0.9)]";
 
                   return (
                     <div
@@ -467,13 +481,15 @@ export function LiveWeighingSimulator({
 
             {/* Simulación Gráfica de la Báscula de Concreto */}
             <div className="relative h-24 w-full rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700/70 flex items-center px-4 overflow-hidden shadow-inner">
-              {/* Celdas de Carga de Alta Precisión en la base */}
+              {/* Celdas de Carga de Alta Precisión en la base con efecto flash */}
               <div className="absolute inset-x-6 bottom-1.5 flex justify-between">
                 {[1, 2, 3, 4, 5, 6, 7, 8].map((cell) => (
                   <div
                     key={cell}
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      tons > 0
+                    className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                      isCellActive
+                        ? "bg-amber-300 shadow-[0_0_12px_rgba(252,211,77,1)] scale-125"
+                        : tons > 0
                         ? "bg-red-400 shadow-[0_0_8px_rgba(248,113,113,0.8)] animate-pulse"
                         : "bg-slate-700"
                     }`}
@@ -536,7 +552,10 @@ export function LiveWeighingSimulator({
               max={maxTons}
               step="0.2"
               value={tons}
-              onChange={(e) => setTons(Number(e.target.value))}
+              onChange={(e) => {
+                setActivePreset(null);
+                setTons(Number(e.target.value));
+              }}
               className="touch-slider touch-pan-y w-full h-3.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-red-600 focus:outline-none"
             />
 
@@ -557,7 +576,10 @@ export function LiveWeighingSimulator({
               <div className="flex items-center gap-1.5 flex-1 justify-between xs:justify-end">
                 <button
                   type="button"
-                  onClick={() => setTons((t) => Math.max(0, +(t - 10).toFixed(1)))}
+                  onClick={() => {
+                    setActivePreset(null);
+                    setTons((t) => Math.max(0, +(t - 10).toFixed(1)));
+                  }}
                   className="min-h-[44px] min-w-[44px] px-3 py-2 flex items-center justify-center rounded-xl bg-slate-800/90 hover:bg-slate-700 active:scale-90 text-slate-200 hover:text-white text-xs font-mono font-bold border border-slate-700/60 cursor-pointer transition-all shadow-xs"
                   title="Restar 10 toneladas"
                 >
@@ -565,7 +587,10 @@ export function LiveWeighingSimulator({
                 </button>
                 <button
                   type="button"
-                  onClick={() => setTons((t) => Math.max(0, +(t - 1).toFixed(1)))}
+                  onClick={() => {
+                    setActivePreset(null);
+                    setTons((t) => Math.max(0, +(t - 1).toFixed(1)));
+                  }}
                   className="min-h-[44px] min-w-[44px] px-3 py-2 flex items-center justify-center rounded-xl bg-slate-800/90 hover:bg-slate-700 active:scale-90 text-slate-200 hover:text-white text-xs font-mono font-bold border border-slate-700/60 cursor-pointer transition-all shadow-xs"
                   title="Restar 1 tonelada"
                 >
@@ -573,7 +598,7 @@ export function LiveWeighingSimulator({
                 </button>
                 <button
                   type="button"
-                  onClick={() => setTons(0)}
+                  onClick={() => handlePresetSelect(0, "Báscula en Cero")}
                   className="min-h-[44px] px-3.5 py-2 flex items-center justify-center rounded-xl bg-red-950/90 hover:bg-red-900 active:scale-90 text-red-200 hover:text-white text-xs font-mono font-bold border border-red-700/60 cursor-pointer transition-all shadow-xs"
                   title="Poner a cero"
                 >
@@ -581,7 +606,10 @@ export function LiveWeighingSimulator({
                 </button>
                 <button
                   type="button"
-                  onClick={() => setTons((t) => Math.min(maxTons, +(t + 1).toFixed(1)))}
+                  onClick={() => {
+                    setActivePreset(null);
+                    setTons((t) => Math.min(maxTons, +(t + 1).toFixed(1)));
+                  }}
                   className="min-h-[44px] min-w-[44px] px-3 py-2 flex items-center justify-center rounded-xl bg-slate-800/90 hover:bg-slate-700 active:scale-90 text-slate-200 hover:text-white text-xs font-mono font-bold border border-slate-700/60 cursor-pointer transition-all shadow-xs"
                   title="Sumar 1 tonelada"
                 >
@@ -589,7 +617,10 @@ export function LiveWeighingSimulator({
                 </button>
                 <button
                   type="button"
-                  onClick={() => setTons((t) => Math.min(maxTons, +(t + 10).toFixed(1)))}
+                  onClick={() => {
+                    setActivePreset(null);
+                    setTons((t) => Math.min(maxTons, +(t + 10).toFixed(1)));
+                  }}
                   className="min-h-[44px] min-w-[44px] px-3 py-2 flex items-center justify-center rounded-xl bg-slate-800/90 hover:bg-slate-700 active:scale-90 text-slate-200 hover:text-white text-xs font-mono font-bold border border-slate-700/60 cursor-pointer transition-all shadow-xs"
                   title="Sumar 10 toneladas"
                 >
@@ -599,27 +630,35 @@ export function LiveWeighingSimulator({
             </div>
           </div>
 
-          {/* Botones de Carga Rápida (Presets de Vehículos Venezolanos) */}
+          {/* Botones de Carga Rápida (Presets de Vehículos Venezolanos) con Iluminación Activa */}
           <div>
             <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-2.5">
               Pruebas Rápidas con Vehículos Reales:
             </span>
             <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-2">
-              {VEHICLE_PRESETS.map((p) => (
-                <button
-                  key={p.label}
-                  type="button"
-                  onClick={() => setTons(p.tons)}
-                  className={`min-h-[48px] p-3 rounded-xl text-left border transition-all text-xs font-semibold active:scale-95 cursor-pointer ${
-                    tons === p.tons
-                      ? "bg-red-950 border-red-500 text-white shadow-sm"
-                      : "bg-slate-800/60 border-slate-700/60 text-slate-300 hover:bg-slate-800 hover:text-white"
-                  }`}
-                >
-                  <div className="font-bold truncate">{p.label}</div>
-                  <div className="text-[10px] text-slate-400 truncate">{p.desc}</div>
-                </button>
-              ))}
+              {VEHICLE_PRESETS.map((p) => {
+                const isSelected = tons === p.tons;
+                return (
+                  <button
+                    key={p.label}
+                    type="button"
+                    onClick={() => handlePresetSelect(p.tons, p.label)}
+                    className={`min-h-[48px] p-3 rounded-xl text-left border transition-all text-xs font-semibold active:scale-95 cursor-pointer relative overflow-hidden ${
+                      isSelected
+                        ? "bg-gradient-to-br from-red-950 via-slate-900 to-red-950 border-red-500 text-white shadow-[0_0_15px_rgba(239,68,68,0.4)] ring-1 ring-red-500"
+                        : "bg-slate-800/60 border-slate-700/60 text-slate-300 hover:bg-slate-800 hover:text-white"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-1">
+                      <div className="font-bold truncate">{p.label}</div>
+                      {isSelected && (
+                        <span className="w-2 h-2 rounded-full bg-red-400 animate-ping shrink-0" />
+                      )}
+                    </div>
+                    <div className="text-[10px] text-slate-400 truncate">{p.desc}</div>
+                  </button>
+                );
+              })}
 
               {/* Botón de Tara */}
               <button

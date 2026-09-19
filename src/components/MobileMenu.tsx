@@ -135,9 +135,9 @@ export function MobileMenu({
       </div>
 
       {/* ── NAVEGACIÓN COMERCIAL LIMPIA: LAS 7 PANTALLAS PRINCIPALES ── */}
-      <div className="px-4 sm:px-6 py-3 sm:py-4 overflow-y-auto flex-1 space-y-1.5">
-        <nav className="space-y-1.5" aria-label="Navegación principal">
-          {MAIN_SCREENS.map((screen) => {
+      <div className="px-4 sm:px-6 py-3 sm:py-4 overflow-y-auto flex-1 space-y-2">
+        <nav className="space-y-2" aria-label="Navegación principal">
+          {MAIN_SCREENS.map((screen, idx) => {
             const isActive =
               screen.href === "/"
                 ? pathname === "/"
@@ -149,24 +149,31 @@ export function MobileMenu({
                 key={screen.href}
                 href={screen.href}
                 onClick={onClose}
-                className={`flex items-center justify-between min-h-[52px] p-3 rounded-xl transition-all active:scale-[0.98] group ${
+                style={{
+                  transitionDelay: isOpen ? `${idx * 45}ms` : "0ms",
+                }}
+                className={`flex items-center justify-between min-h-[52px] p-3 rounded-xl transition-all duration-300 transform active:scale-[0.98] group ${
+                  isOpen
+                    ? "translate-x-0 opacity-100"
+                    : "translate-x-6 opacity-0"
+                } ${
                   isActive
                     ? "bg-red-50/90 text-[#991b1b] border-l-4 border-[#991b1b] shadow-2xs font-bold"
-                    : "text-slate-800 hover:bg-slate-50 hover:text-[#991b1b] border-l-4 border-transparent"
+                    : "text-slate-800 hover:bg-slate-50 hover:text-[#991b1b] border-l-4 border-transparent hover:border-red-200"
                 }`}
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <div
-                    className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors shrink-0 ${
+                    className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-200 shrink-0 group-hover:scale-110 group-active:scale-95 ${
                       isActive
                         ? "bg-[#991b1b] text-white shadow-2xs"
                         : "bg-slate-100 text-slate-600 group-hover:bg-red-50 group-hover:text-[#991b1b]"
                     }`}
                   >
-                    <IconComp size={20} />
+                    <IconComp size={20} className="transition-transform duration-200 group-hover:rotate-3" />
                   </div>
                   <div className="min-w-0">
-                    <div className="text-base sm:text-lg font-medium leading-tight truncate">
+                    <div className="text-base sm:text-lg font-semibold leading-tight truncate">
                       {screen.label}
                     </div>
                     <p className="text-xs text-slate-500 font-normal truncate mt-0.5">
@@ -177,10 +184,10 @@ export function MobileMenu({
 
                 <ArrowRight
                   size={16}
-                  className={`shrink-0 transition-transform ${
+                  className={`shrink-0 transition-transform duration-200 ${
                     isActive
-                      ? "text-[#991b1b] translate-x-0.5"
-                      : "text-slate-300 group-hover:text-[#991b1b] group-hover:translate-x-1"
+                      ? "text-[#991b1b] translate-x-1"
+                      : "text-slate-300 group-hover:text-[#991b1b] group-hover:translate-x-1.5"
                   }`}
                 />
               </Link>
@@ -189,24 +196,27 @@ export function MobileMenu({
         </nav>
       </div>
 
-      {/* ── ACCIONES RÁPIDAS INFERIORES: WHATSAPP Y TELÉFONOS ── */}
-      <div className="p-5 border-t border-slate-200 bg-slate-50/95 space-y-3 shrink-0">
-        {/* Botón Principal de Cotización Inmediata por WhatsApp */}
+      {/* ── ACCIONES RÁPIDAS INFERIORES: DOCK INDUSTRIAL MODERNO ── */}
+      <div className="p-4 sm:p-5 border-t border-slate-200 bg-gradient-to-b from-slate-50 to-slate-100/90 space-y-3 shrink-0">
+        {/* Botón Principal de Cotización Inmediata por WhatsApp con Glow */}
         <a
           href={`https://wa.me/${CONTACT.whatsapp}`}
           target="_blank"
           rel="noreferrer"
-          className="w-full inline-flex items-center justify-center gap-2 min-h-[50px] bg-[#25D366] hover:bg-[#20bd5a] active:scale-95 text-white font-bold py-3.5 px-4 rounded-xl shadow-xs text-base transition-all cursor-pointer"
+          className="w-full inline-flex items-center justify-center gap-2.5 min-h-[50px] bg-gradient-to-r from-[#22c55e] via-[#16a34a] to-[#15803d] hover:from-[#16a34a] hover:to-[#15803d] active:scale-[0.98] text-white font-bold py-3.5 px-4 rounded-xl shadow-md shadow-emerald-600/20 text-sm sm:text-base transition-all duration-200 cursor-pointer group"
         >
-          <Phone size={18} />
-          <span>Cotizar por WhatsApp</span>
+          <div className="relative flex items-center justify-center">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white/40 opacity-75"></span>
+            <Phone size={18} className="relative transition-transform duration-200 group-hover:scale-110" />
+          </div>
+          <span className="tracking-wide">Cotizar por WhatsApp</span>
         </a>
 
-        {/* Accesos Rápidos a Teléfonos Oficiales (CCS, MCY, USA) */}
-        <div className="flex items-center justify-between gap-2 text-xs font-bold">
+        {/* Accesos Rápidos a Teléfonos Oficiales (CCS, MCY, USA) en Tarjetas Táctiles */}
+        <div className="grid grid-cols-3 gap-2 text-xs font-bold">
           <a
             href={`tel:${ccsPhone.replace(/\s+/g, "").replace(/[()]/g, "")}`}
-            className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl bg-white border border-slate-200 hover:border-red-300 text-slate-800 active:scale-95 transition-all truncate shadow-2xs"
+            className="inline-flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl bg-white border border-slate-200/90 hover:border-red-300 text-slate-800 hover:text-[#991b1b] active:scale-95 transition-all truncate shadow-2xs"
             title={`Llamar a Caracas: ${ccsPhone}`}
           >
             <Phone size={13} className="text-[#991b1b] shrink-0" />
@@ -215,7 +225,7 @@ export function MobileMenu({
 
           <a
             href="tel:+582432343360"
-            className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl bg-white border border-slate-200 hover:border-red-300 text-slate-800 active:scale-95 transition-all truncate shadow-2xs"
+            className="inline-flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl bg-white border border-slate-200/90 hover:border-red-300 text-slate-800 hover:text-[#991b1b] active:scale-95 transition-all truncate shadow-2xs"
             title="Llamar a Maracay: 0243-234.33.60"
           >
             <Phone size={13} className="text-[#991b1b] shrink-0" />
@@ -224,17 +234,17 @@ export function MobileMenu({
 
           <a
             href={`tel:${usaPhone.replace(/\s+/g, "").replace(/[()]/g, "").replace(/-/g, "")}`}
-            className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 active:scale-95 transition-all truncate shadow-2xs"
+            className="inline-flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200/80 active:scale-95 transition-all truncate shadow-2xs"
             title={`Llamar a USA: ${usaPhone}`}
           >
-            <span className="text-sm" role="img" aria-label="Bandera USA">🇺🇸</span>
+            <span className="text-xs" role="img" aria-label="Bandera USA">🇺🇸</span>
             <span>USA</span>
           </a>
         </div>
 
         {/* Información Institucional en el Pie */}
         <div className="pt-1 flex items-center justify-between text-[11px] text-slate-500 font-medium">
-          <span>RIF: J-30814715-0</span>
+          <span>RIF: J-30814715-0 · 25 Años</span>
           <a
             href="https://www.instagram.com/balanzasyserviciosdialka"
             target="_blank"

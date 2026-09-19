@@ -71,12 +71,12 @@ export default function ContactoPage() {
   return (
     <>
       {/* ── HEADER DE PÁGINA CON FOTOGRAFÍA INDUSTRIAL ── */}
-      <section className="relative bg-gradient-to-b from-slate-50 via-white to-slate-50 border-b border-slate-200 py-12 md:py-18 overflow-hidden">
+      <section className="relative bg-gradient-to-b from-slate-50 via-white to-slate-50 border-b border-slate-200 py-8 sm:py-12 md:py-16 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-12 gap-10 items-center">
+          <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
             {/* Columna Izquierda: Información */}
             <div className="lg:col-span-7">
-              <div className="flex items-center gap-2 text-sm text-slate-500 mb-4">
+              <div className="flex items-center gap-2 text-sm text-slate-500 mb-3 sm:mb-4">
                 <Link href="/" className="hover:text-[#991b1b] transition-colors">
                   Inicio
                 </Link>
@@ -84,21 +84,21 @@ export default function ContactoPage() {
                 <span className="text-slate-900 font-semibold">Contacto</span>
               </div>
 
-              <div className="flex items-center gap-3.5 mb-4">
-                <div className="w-12 h-12 rounded-xl bg-red-50 border border-red-100 flex items-center justify-center shrink-0">
+              <div className="flex items-center gap-3.5 mb-3 sm:mb-4">
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-red-50 border border-red-100 flex items-center justify-center shrink-0">
                   <MapPin size={22} className="text-[#991b1b]" />
                 </div>
                 <div>
                   <span className="text-xs font-bold uppercase tracking-widest text-[#991b1b]">
                     Sedes y Canales Oficiales en Venezuela
                   </span>
-                  <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                  <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
                     Contacto y Sedes Dialka
                   </h1>
                 </div>
               </div>
 
-              <p className="text-slate-600 max-w-2xl text-base sm:text-lg leading-relaxed mb-6">
+              <p className="text-slate-600 max-w-2xl text-sm sm:text-base lg:text-lg leading-relaxed mb-5 sm:mb-6">
                 Nuestras dos sedes en Caracas y Maracay cuentan con ingenieros certificados, talleres de calibración y unidades móviles para atender requerimientos en toda Venezuela. Horario: Lunes a Viernes de 08:00 a 17:00.
               </p>
 
@@ -107,14 +107,14 @@ export default function ContactoPage() {
                   href={`https://wa.me/${CONTACT.whatsapp}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 bg-[#991b1b] hover:bg-[#7f1d1d] text-white font-semibold px-5 py-3 rounded-xl shadow-xs hover:shadow-md transition-all text-sm"
+                  className="inline-flex items-center gap-2 bg-[#991b1b] hover:bg-[#7f1d1d] text-white font-semibold px-5 py-3 rounded-xl shadow-xs hover:shadow-md transition-all text-sm min-h-[46px]"
                 >
                   <Phone size={15} />
                   <span>WhatsApp de Atención Inmediata</span>
                 </a>
                 <a
                   href="#formulario"
-                  className="inline-flex items-center gap-1.5 bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 font-semibold px-5 py-3 rounded-xl transition-all text-sm"
+                  className="inline-flex items-center gap-1.5 bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 font-semibold px-5 py-3 rounded-xl transition-all text-sm min-h-[46px]"
                 >
                   <span>Enviar Formulario</span>
                   <ArrowRight size={14} />
@@ -124,8 +124,8 @@ export default function ContactoPage() {
 
             {/* Columna Derecha: Tarjeta Fotográfica de Unidad Móvil / Sedes */}
             <div className="lg:col-span-5">
-              <div className="relative rounded-2xl bg-white p-3 border border-slate-200/90 shadow-xl shadow-slate-200/50 group">
-                <div className="relative aspect-4/3 w-full rounded-xl overflow-hidden bg-slate-100">
+              <div className="relative rounded-2xl bg-white p-2.5 sm:p-3 border border-slate-200/90 shadow-xl shadow-slate-200/50 group">
+                <div className="relative aspect-16/10 sm:aspect-4/3 w-full rounded-xl overflow-hidden bg-slate-100">
                   <Image
                     src="/images/proyectos/camion-calibrador.jpg"
                     alt="Soporte y Flota Técnica de Dialka en Venezuela"
