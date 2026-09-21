@@ -193,14 +193,14 @@ export function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logotipo Oficial Dialka */}
           <Link href="/" className="flex items-center gap-2.5 group py-1" title="Inicio | Balanzas y Servicios Dialka">
-            <div className="relative h-10 w-36 sm:w-44 flex items-center">
+            <div className="relative h-11 w-44 sm:w-56 lg:w-64 flex items-center">
               <Image
                 src="/images/logo-dialka.svg"
                 alt="Balanzas y Servicios Dialka, S.A."
-                width={182}
-                height={44}
+                width={275}
+                height={48}
                 priority
-                className="h-9 sm:h-10 w-auto object-contain transition-transform group-hover:scale-105 duration-200"
+                className="h-9 sm:h-10 lg:h-11 w-auto object-contain transition-transform group-hover:scale-105 duration-200"
               />
             </div>
           </Link>

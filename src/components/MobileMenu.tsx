@@ -111,14 +111,14 @@ export function MobileMenu({
       {/* ── CABECERA INSTITUCIONAL: LOGO OFICIAL Y CIERRE ── */}
       <div className="p-4 sm:p-5 border-b border-slate-200/90 flex items-center justify-between bg-slate-50/90 shrink-0">
         <Link href="/" onClick={onClose} className="flex items-center gap-2 group">
-          <div className="relative h-9 w-36 flex items-center">
+          <div className="relative h-10 w-48 sm:w-56 flex items-center">
             <Image
               src="/images/logo-dialka.svg"
               alt="Balanzas y Servicios Dialka, S.A."
-              width={182}
-              height={44}
+              width={275}
+              height={48}
               priority
-              className="h-8 w-auto object-contain transition-transform group-hover:scale-105"
+              className="h-9 sm:h-10 w-auto object-contain transition-transform group-hover:scale-105"
             />
           </div>
         </Link>
