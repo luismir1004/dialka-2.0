@@ -36,7 +36,7 @@ export default function HomePage() {
           <div className="grid lg:grid-cols-12 gap-6 lg:gap-12 items-center">
             {/* Columna Izquierda: Mensaje Central y CTAs */}
             <div className="lg:col-span-7">
-              <RevealOnScroll delay={0}>
+              <div>
                 {/* Status Badge Oficial con Antigüedad Exacta */}
                 <div className="inline-flex items-center gap-2 bg-red-50 border border-red-200/80 text-red-900 text-xs font-semibold px-3.5 sm:px-4 py-1.5 rounded-full mb-3 sm:mb-5 shadow-2xs max-w-full">
                   <span className="relative flex h-2 w-2 shrink-0">
@@ -87,68 +87,66 @@ export default function HomePage() {
                     <span>Sedes Caracas y Maracay</span>
                   </div>
                 </div>
-              </RevealOnScroll>
+              </div>
             </div>
 
             {/* Columna Derecha: Tarjeta Fotográfica de Unidad Móvil / Camión Calibrador */}
             <div className="lg:col-span-5">
-              <RevealOnScroll delay={150}>
-                <div className="relative group rounded-2xl bg-white p-2.5 sm:p-3 border border-slate-200/90 shadow-xl shadow-slate-200/50 hover:border-red-200 transition-all duration-300">
-                  {/* Contenedor de la Imagen */}
-                  <div className="relative aspect-16/10 sm:aspect-4/3 w-full rounded-xl overflow-hidden bg-slate-100 border border-slate-200/60">
-                    <Image
-                      src="/images/proyectos/camion-calibrador.jpg"
-                      alt="Camión calibrador patrón Dialka con pesas de 500kg y 1000kg en silos venezolanos"
-                      fill
-                      priority
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                    />
+              <div className="relative group rounded-2xl bg-white p-2.5 sm:p-3 border border-slate-200/90 shadow-xl shadow-slate-200/50 hover:border-red-200 transition-all duration-300">
+                {/* Contenedor de la Imagen */}
+                <div className="relative aspect-16/10 sm:aspect-4/3 w-full rounded-xl overflow-hidden bg-slate-100 border border-slate-200/60">
+                  <Image
+                    src="/images/proyectos/camion-calibrador.jpg"
+                    alt="Camión calibrador patrón Dialka con pesas de 500kg y 1000kg en silos venezolanos"
+                    fill
+                    priority
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                  />
 
-                    {/* Gradient overlay for readability */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
+                  {/* Gradient overlay for readability */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
 
-                    {/* Top Tag */}
-                    <div className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 flex items-center gap-1.5 bg-white/95 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/50 text-[10px] sm:text-[11px] font-bold text-slate-900 shadow-sm">
-                      <Scale size={13} className="text-[#991b1b]" />
-                      <span>Unidad Móvil de Calibración</span>
-                    </div>
-
-                    {/* Bottom Caption Info */}
-                    <div className="absolute bottom-2.5 left-2.5 right-2.5 sm:bottom-3 sm:left-3 sm:right-3 text-white">
-                      <p className="text-[10px] sm:text-xs font-semibold text-red-200 uppercase tracking-wider mb-0.5">
-                        Operaciones en Campo · Portuguesa
-                      </p>
-                      <h3 className="text-xs sm:text-base font-bold text-white leading-snug drop-shadow-sm">
-                        Camión Patrón con Masas de 500 kg y 1.000 kg
-                      </h3>
-                      <p className="text-[10px] sm:text-[11px] text-slate-200 mt-0.5 line-clamp-1">
-                        Calibración in situ de básculas camioneras de 40T a 100T bajo normativa SENCAMER.
-                      </p>
-                    </div>
+                  {/* Top Tag */}
+                  <div className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 flex items-center gap-1.5 bg-white/95 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/50 text-[10px] sm:text-[11px] font-bold text-slate-900 shadow-sm">
+                    <Scale size={13} className="text-[#991b1b]" />
+                    <span>Unidad Móvil de Calibración</span>
                   </div>
 
-                  {/* Floating Metric Badge */}
-                  <div className="mt-2.5 sm:mt-3 bg-slate-50 border border-slate-200/80 rounded-xl p-2.5 sm:p-3 flex items-center justify-between">
-                    <div className="flex items-center gap-2 sm:gap-2.5">
-                      <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-red-100 flex items-center justify-center text-[#991b1b]">
-                        <Sparkles size={15} />
-                      </div>
-                      <div>
-                        <p className="text-xs font-bold text-slate-900 leading-tight">Pesas Patrón Trazables</p>
-                        <p className="text-[10px] sm:text-[11px] text-slate-500">Clase M1 certificadas</p>
-                      </div>
-                    </div>
-                    <Link
-                      href="/servicios"
-                      className="text-xs font-bold text-[#991b1b] hover:text-[#7f1d1d] hover:underline flex items-center gap-1"
-                    >
-                      <span>Ver servicio</span>
-                      <ArrowRight size={13} />
-                    </Link>
+                  {/* Bottom Caption Info */}
+                  <div className="absolute bottom-2.5 left-2.5 right-2.5 sm:bottom-3 sm:left-3 sm:right-3 text-white">
+                    <p className="text-[10px] sm:text-xs font-semibold text-red-200 uppercase tracking-wider mb-0.5">
+                      Operaciones en Campo · Portuguesa
+                    </p>
+                    <h3 className="text-xs sm:text-base font-bold text-white leading-snug drop-shadow-sm">
+                      Camión Patrón con Masas de 500 kg y 1.000 kg
+                    </h3>
+                    <p className="text-[10px] sm:text-[11px] text-slate-200 mt-0.5 line-clamp-1">
+                      Calibración in situ de básculas camioneras de 40T a 100T bajo normativa SENCAMER.
+                    </p>
                   </div>
                 </div>
-              </RevealOnScroll>
+
+                {/* Floating Metric Badge */}
+                <div className="mt-2.5 sm:mt-3 bg-slate-50 border border-slate-200/80 rounded-xl p-2.5 sm:p-3 flex items-center justify-between">
+                  <div className="flex items-center gap-2 sm:gap-2.5">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-red-100 flex items-center justify-center text-[#991b1b]">
+                      <Sparkles size={15} />
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-slate-900 leading-tight">Pesas Patrón Trazables</p>
+                      <p className="text-[10px] sm:text-[11px] text-slate-500">Clase M1 certificadas</p>
+                    </div>
+                  </div>
+                  <Link
+                    href="/servicios"
+                    className="text-xs font-bold text-[#991b1b] hover:text-[#7f1d1d] hover:underline flex items-center gap-1"
+                  >
+                    <span>Ver servicio</span>
+                    <ArrowRight size={13} />
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>

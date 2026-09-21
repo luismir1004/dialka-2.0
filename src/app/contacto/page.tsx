@@ -490,17 +490,62 @@ export default function ContactoPage() {
             <div className="lg:col-span-5">
               <div className="sticky top-24 bg-white border border-slate-200 rounded-2xl p-7 sm:p-8 shadow-sm">
                 {sent ? (
-                  <div className="flex flex-col items-center justify-center py-12 text-center gap-4">
+                  <div className="flex flex-col items-center justify-center py-8 text-center gap-4">
                     <div className="w-16 h-16 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center">
                       <CheckCircle2 size={36} className="text-emerald-600" />
                     </div>
-                    <h3 className="text-xl font-bold text-slate-900">
-                      ¡Consulta preparada con éxito!
-                    </h3>
-                    <p className="text-slate-600 text-sm max-w-xs leading-relaxed">
-                      Se abrió la ventana de WhatsApp con los datos de su consulta. Nuestro equipo le atenderá de inmediato.
-                    </p>
+                    <div>
+                      <h3 className="text-xl font-bold text-slate-900">
+                        ¡Consulta preparada con éxito!
+                      </h3>
+                      <p className="text-slate-600 text-xs sm:text-sm max-w-sm mt-1 leading-relaxed">
+                        Hemos conectado su requerimiento con el WhatsApp oficial de Balanzas Dialka. Si la ventana no abrió automáticamente, utilice los accesos directos de respaldo:
+                      </p>
+                    </div>
+
+                    {/* Botones de Respaldo */}
+                    <div className="w-full flex flex-col gap-2.5 pt-2">
+                      <a
+                        href={`https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(
+                          `*Consulta desde Dialka 2.0*\n\n*Nombre:* ${form.nombre}\n*Empresa:* ${form.empresa || "N/A"}\n*Teléfono:* ${form.telefono}\n*Email:* ${form.email}\n*Ciudad:* ${form.ciudad}\n*Asunto:* ${form.asunto}\n\n*Mensaje:*\n${form.mensaje}`
+                        )}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-4 rounded-xl text-xs sm:text-sm transition-all shadow-xs"
+                      >
+                        <Phone size={14} />
+                        <span>Abrir WhatsApp Manualmente</span>
+                      </a>
+
+                      <button
+                        type="button"
+                        onClick={() =>
+                          copyToClipboard(
+                            `Consulta Dialka\nNombre: ${form.nombre}\nEmpresa: ${form.empresa || "N/A"}\nTeléfono: ${form.telefono}\nEmail: ${form.email}\nCiudad: ${form.ciudad}\nAsunto: ${form.asunto}\nMensaje: ${form.mensaje}`,
+                            "¡Mensaje copiado al portapapeles!"
+                          )
+                        }
+                        className="w-full flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold py-2.5 px-4 rounded-xl text-xs sm:text-sm border border-slate-300 transition-all cursor-pointer"
+                      >
+                        <Copy size={14} />
+                        <span>Copiar Datos de la Consulta</span>
+                      </button>
+
+                      <a
+                        href={`mailto:${CONTACT.headquarters[0].email}?subject=${encodeURIComponent(
+                          `[Dialka Web] Consulta: ${form.asunto} - ${form.nombre}`
+                        )}&body=${encodeURIComponent(
+                          `Nombre: ${form.nombre}\nEmpresa: ${form.empresa}\nTeléfono: ${form.telefono}\nCiudad: ${form.ciudad}\n\nMensaje:\n${form.mensaje}`
+                        )}`}
+                        className="w-full flex items-center justify-center gap-2 bg-white hover:bg-slate-50 text-slate-700 font-medium py-2 px-4 rounded-xl text-xs border border-slate-200 transition-all"
+                      >
+                        <Mail size={13} />
+                        <span>Enviar por Correo Electrónico</span>
+                      </a>
+                    </div>
+
                     <button
+                      type="button"
                       onClick={() => {
                         setSent(false);
                         setForm({
@@ -513,9 +558,9 @@ export default function ContactoPage() {
                           mensaje: "",
                         });
                       }}
-                      className="mt-2 text-sm text-[#991b1b] hover:text-[#7f1d1d] font-bold underline transition-colors cursor-pointer"
+                      className="mt-3 text-xs text-[#991b1b] hover:text-[#7f1d1d] font-bold underline transition-colors cursor-pointer"
                     >
-                      Enviar otra consulta
+                      ← Enviar otra consulta o cotización
                     </button>
                   </div>
                 ) : (
