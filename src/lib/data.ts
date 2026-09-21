@@ -50,10 +50,6 @@ export const CONTACT = {
       schedule: "Lunes a Viernes, 08:00 – 17:00",
     },
   ],
-  usa: {
-    phone: "+1 (786) 321-4890",
-    email: "odkinvestment@gmail.com",
-  },
   whatsapp: "584142320610",
   socials: [
     { name: "TikTok", url: "https://www.tiktok.com/@balanzasyservicios" },

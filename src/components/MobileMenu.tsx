@@ -23,7 +23,6 @@ interface MobileMenuProps {
   onClose: () => void;
   ccsPhone?: string;
   mcyPhone?: string;
-  usaPhone?: string;
 }
 
 // Las 7 pantallas principales oficiales de Dialka 2.0
@@ -67,7 +66,7 @@ const MAIN_SCREENS = [
   {
     label: "Contactos y Sedes",
     href: "/contacto",
-    desc: "Sedes operativas en Caracas, Maracay y USA",
+    desc: "Sedes operativas en Caracas y Maracay",
     icon: Phone,
   },
 ];
@@ -77,7 +76,6 @@ export function MobileMenu({
   onClose,
   ccsPhone = "(+58 414) 277.00.24",
   mcyPhone = "0243-234.33.60 / 234.33.72",
-  usaPhone = "+1 (786) 321-4890",
 }: MobileMenuProps) {
   const pathname = usePathname();
 
@@ -212,33 +210,24 @@ export function MobileMenu({
           <span className="tracking-wide">Cotizar por WhatsApp</span>
         </a>
 
-        {/* Accesos Rápidos a Teléfonos Oficiales (CCS, MCY, USA) en Tarjetas Táctiles */}
-        <div className="grid grid-cols-3 gap-2 text-xs font-bold">
+        {/* Accesos Rápidos a Teléfonos Oficiales (CCS y MCY) en Tarjetas Táctiles */}
+        <div className="grid grid-cols-2 gap-2 text-xs font-bold">
           <a
             href={`tel:${ccsPhone.replace(/\s+/g, "").replace(/[()]/g, "")}`}
-            className="inline-flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl bg-white border border-slate-200/90 hover:border-red-300 text-slate-800 hover:text-[#991b1b] active:scale-95 transition-all truncate shadow-2xs"
+            className="inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-white border border-slate-200/90 hover:border-red-300 text-slate-800 hover:text-[#991b1b] active:scale-95 transition-all truncate shadow-2xs"
             title={`Llamar a Caracas: ${ccsPhone}`}
           >
             <Phone size={13} className="text-[#991b1b] shrink-0" />
-            <span>CCS</span>
+            <span className="truncate">CCS: {ccsPhone}</span>
           </a>
 
           <a
             href={`tel:${mcyPhone.split("/")[0].replace(/\s+/g, "").replace(/-/g, "").replace(/\./g, "")}`}
-            className="inline-flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl bg-white border border-slate-200/90 hover:border-red-300 text-slate-800 hover:text-[#991b1b] active:scale-95 transition-all truncate shadow-2xs"
+            className="inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-white border border-slate-200/90 hover:border-red-300 text-slate-800 hover:text-[#991b1b] active:scale-95 transition-all truncate shadow-2xs"
             title={`Llamar a Maracay: ${mcyPhone}`}
           >
             <Phone size={13} className="text-[#991b1b] shrink-0" />
-            <span>MCY</span>
-          </a>
-
-          <a
-            href={`tel:${usaPhone.replace(/\s+/g, "").replace(/[()]/g, "").replace(/-/g, "")}`}
-            className="inline-flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200/80 active:scale-95 transition-all truncate shadow-2xs"
-            title={`Llamar a USA: ${usaPhone}`}
-          >
-            <span className="text-xs" role="img" aria-label="Bandera USA">🇺🇸</span>
-            <span>USA</span>
+            <span className="truncate">MCY: 0243-234.33.60</span>
           </a>
         </div>
 

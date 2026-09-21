@@ -9,6 +9,7 @@ import {
   X,
   Phone,
   ShieldCheck,
+  MessageSquare,
 } from "lucide-react";
 import { NAV_LINKS, CONTACT } from "@/lib/data";
 import { MobileMenu } from "@/components/MobileMenu";
@@ -52,15 +53,14 @@ export function Header() {
       ? CONTACT.headquarters[0].phones.main
       : "") || "(+58 414) 277.00.24";
   const mcyPhone = "0243-234.33.60 / 234.33.72";
-  const usaPhone = CONTACT.usa.phone || "+1 (786) 321-4890";
 
   return (
     <>
       <header ref={headerRef} className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-xs transition-shadow">
-      {/* ── TOP BAR INSTITUCIONAL (CARACAS, MARACAY, USA Y REDES) ── */}
+      {/* ── TOP BAR INSTITUCIONAL (CARACAS, MARACAY Y WHATSAPP) ── */}
       <div className={`bg-[#991b1b] text-white text-xs border-b border-[#7f1d1d] transition-all duration-300 ${isScrolled ? "md:py-1.5 py-0 border-b-0 md:border-b" : "py-1.5 sm:py-2"}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Vista Móvil (md:hidden): Caracas, Maracay y USA colapsables con el scroll para maximizar pantalla */}
+          {/* Vista Móvil (md:hidden): Caracas, Maracay y WhatsApp colapsables con el scroll para maximizar pantalla */}
           <div
             className={`flex md:hidden flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-[10px] sm:text-[11px] font-bold transition-all duration-300 ease-in-out ${
               isScrolled
@@ -71,7 +71,7 @@ export function Header() {
             {/* Caracas */}
             <a
               href={`tel:${ccsPhone.replace(/\s+/g, "").replace(/[()]/g, "")}`}
-              className="inline-flex items-center gap-1 text-white hover:text-red-200 active:scale-95 transition-all py-0.5 px-1.5 rounded-md bg-black/20 shrink-0"
+              className="inline-flex items-center gap-1 text-white hover:text-red-200 active:scale-95 transition-all py-0.5 px-2 rounded-md bg-black/20 shrink-0"
               title={`Llamar a Caracas: ${ccsPhone}`}
             >
               <Phone size={10} className="text-red-300 shrink-0" />
@@ -81,25 +81,27 @@ export function Header() {
             {/* Maracay */}
             <a
               href="tel:+582432343360"
-              className="inline-flex items-center gap-1 text-white hover:text-red-200 active:scale-95 transition-all py-0.5 px-1.5 rounded-md bg-black/20 shrink-0"
+              className="inline-flex items-center gap-1 text-white hover:text-red-200 active:scale-95 transition-all py-0.5 px-2 rounded-md bg-black/20 shrink-0"
               title="Llamar a Maracay: 0243-234.33.60 / 234.33.72"
             >
               <Phone size={10} className="text-red-300 shrink-0" />
               <span>MCY: 0243-234.33.60</span>
             </a>
 
-            {/* USA con bandera */}
+            {/* WhatsApp Directo */}
             <a
-              href={`tel:${usaPhone.replace(/\s+/g, "").replace(/[()]/g, "").replace(/-/g, "")}`}
-              className="inline-flex items-center gap-1 text-amber-200 hover:text-white active:scale-95 transition-all py-0.5 px-1.5 rounded-md bg-black/25 shrink-0"
-              title={`Llamar a Estados Unidos: ${usaPhone}`}
+              href="https://wa.me/584142320610"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-emerald-200 hover:text-white active:scale-95 transition-all py-0.5 px-2 rounded-md bg-emerald-950/40 border border-emerald-500/30 shrink-0"
+              title="Atención inmediata vía WhatsApp"
             >
-              <span className="text-xs" role="img" aria-label="Bandera Estados Unidos">🇺🇸</span>
-              <span>USA: {usaPhone}</span>
+              <MessageSquare size={10} className="text-emerald-300 shrink-0" />
+              <span>WhatsApp Directo</span>
             </a>
           </div>
 
-          {/* Vista Escritorio (hidden md:flex): Caracas, Maracay, USA con banderas e iconos */}
+          {/* Vista Escritorio (hidden md:flex): Caracas, Maracay, WhatsApp y estatus */}
           <div className="hidden md:flex justify-between items-center gap-2">
             {/* Lado Izquierdo: Teléfonos como enlaces directos tel: */}
             <div className="flex flex-wrap items-center gap-2.5 lg:gap-3.5 text-[11px] sm:text-xs">
@@ -127,14 +129,16 @@ export function Header() {
 
               <span className="text-red-300/60">|</span>
 
-              {/* USA con bandera */}
+              {/* WhatsApp Oficial */}
               <a
-                href={`tel:${usaPhone.replace(/\s+/g, "").replace(/[()]/g, "").replace(/-/g, "")}`}
-                className="inline-flex items-center gap-1.5 text-amber-200 hover:text-white transition-colors py-0.5 group font-bold"
-                title="Clic para llamar a USA (+1 786 321-4890)"
+                href="https://wa.me/584142320610"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5 text-emerald-300 hover:text-white transition-colors py-0.5 group font-bold"
+                title="WhatsApp Directo Atención Comercial"
               >
-                <span className="text-xs" role="img" aria-label="Bandera Estados Unidos">🇺🇸</span>
-                <span>USA: {usaPhone}</span>
+                <MessageSquare size={11} className="text-emerald-400 shrink-0" />
+                <span>WhatsApp: +58 (414) 232.06.10</span>
               </a>
             </div>
 
@@ -267,7 +271,6 @@ export function Header() {
       onClose={() => setMenuOpen(false)}
       ccsPhone={ccsPhone}
       mcyPhone={mcyPhone}
-      usaPhone={usaPhone}
     />
   </>
 );

@@ -13,7 +13,6 @@ import {
   Send,
   CheckCircle2,
   Building2,
-  Globe2,
   ShieldCheck,
   Copy,
   Sparkles,
@@ -23,7 +22,7 @@ import { useToast } from "@/context/ToastContext";
 
 export default function ContactoPage() {
   const [sent, setSent] = useState(false);
-  const [activeSede, setActiveSede] = useState<"caracas" | "maracay" | "usa">("caracas");
+  const [activeSede, setActiveSede] = useState<"caracas" | "maracay">("caracas");
   const { toast, copyToClipboard } = useToast();
 
   const [form, setForm] = useState({
@@ -174,12 +173,12 @@ export default function ContactoPage() {
           <div className="grid lg:grid-cols-12 gap-10">
             {/* Columna Izquierda: Información de Sedes con Selector Modular (7 cols) */}
             <div className="lg:col-span-7">
-              {/* Selector de Sedes por Pestañas */}
-              <div className="flex p-1.5 bg-slate-100 rounded-2xl border border-slate-200/90 mb-6 gap-1">
+              {/* Selector de Sedes por Pestañas (Caracas y Maracay) */}
+              <div className="grid grid-cols-2 p-1.5 bg-slate-100 rounded-2xl border border-slate-200/90 mb-6 gap-1.5">
                 <button
                   type="button"
                   onClick={() => setActiveSede("caracas")}
-                  className={`flex-1 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                  className={`py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
                     activeSede === "caracas"
                       ? "bg-[#991b1b] text-white shadow-sm"
                       : "text-slate-600 hover:text-slate-900"
@@ -191,7 +190,7 @@ export default function ContactoPage() {
                 <button
                   type="button"
                   onClick={() => setActiveSede("maracay")}
-                  className={`flex-1 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                  className={`py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
                     activeSede === "maracay"
                       ? "bg-[#991b1b] text-white shadow-sm"
                       : "text-slate-600 hover:text-slate-900"
@@ -200,22 +199,10 @@ export default function ContactoPage() {
                   <Building2 size={15} />
                   <span>Sede Maracay</span>
                 </button>
-                <button
-                  type="button"
-                  onClick={() => setActiveSede("usa")}
-                  className={`flex-1 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
-                    activeSede === "usa"
-                      ? "bg-[#991b1b] text-white shadow-sm"
-                      : "text-slate-600 hover:text-slate-900"
-                  }`}
-                >
-                  <Globe2 size={15} />
-                  <span>Sede USA</span>
-                </button>
               </div>
 
-              {/* Contenido de Sedes Nacionales (Caracas / Maracay) */}
-              {(activeSede === "caracas" || activeSede === "maracay") && (() => {
+              {/* Contenido de Sedes Oficiales (Caracas / Maracay) */}
+              {(() => {
                 const hq = activeSede === "caracas" ? CONTACT.headquarters[0] : CONTACT.headquarters[1];
                 return (
                   <div
@@ -418,72 +405,6 @@ export default function ContactoPage() {
                   </div>
                 );
               })()}
-
-              {/* Sede Internacional USA */}
-              {activeSede === "usa" && (
-                <div className="card-hover bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-xs animate-fadeIn">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center">
-                      <Globe2 size={20} className="text-slate-700" />
-                    </div>
-                    <div>
-                      <h3 className="text-base font-bold text-slate-900">
-                        Contacto Internacional (USA)
-                      </h3>
-                      <span className="text-xs text-slate-500">
-                        Representación Comercial y Despacho
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="grid sm:grid-cols-2 gap-4 text-sm pt-3 border-t border-slate-100 mb-6">
-                    <button
-                      onClick={() =>
-                        copyToClipboard(CONTACT.usa.phone, "Teléfono USA")
-                      }
-                      className="flex items-center gap-2 text-slate-800 font-bold hover:text-[#991b1b] transition-colors cursor-pointer text-left"
-                      title="Copiar teléfono USA"
-                    >
-                      <Phone size={15} className="text-slate-400 shrink-0" />
-                      <span>{CONTACT.usa.phone}</span>
-                      <Copy size={12} className="text-slate-400" />
-                    </button>
-                    <button
-                      onClick={() =>
-                        copyToClipboard(CONTACT.usa.email, "Correo USA")
-                      }
-                      className="flex items-center gap-2 text-slate-800 font-semibold hover:text-[#991b1b] transition-colors break-all cursor-pointer text-left"
-                      title="Copiar correo USA"
-                    >
-                      <Mail size={15} className="text-slate-400 shrink-0" />
-                      <span>{CONTACT.usa.email}</span>
-                      <Copy size={12} className="text-slate-400" />
-                    </button>
-                  </div>
-
-                  <div className="pt-4 border-t border-slate-100">
-                    <div className="flex items-center justify-between mb-3">
-                      <div className="flex items-center gap-2">
-                        <MapPin size={16} className="text-[#991b1b]" />
-                        <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
-                          Ubicación Comercial — Florida, USA
-                        </h4>
-                      </div>
-                    </div>
-
-                    <div className="relative w-full h-56 sm:h-64 rounded-xl overflow-hidden border border-slate-200 shadow-inner bg-slate-100">
-                      <iframe
-                        title="Mapa comercial USA"
-                        src="https://maps.google.com/maps?q=Miami%20Florida%20USA&t=&z=12&ie=UTF8&iwloc=&output=embed"
-                        className="w-full h-full border-0"
-                        loading="lazy"
-                        allowFullScreen
-                        referrerPolicy="no-referrer-when-downgrade"
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
 
             {/* Columna Derecha: Formulario de Contacto (5 cols) */}
