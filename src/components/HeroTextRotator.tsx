@@ -77,8 +77,8 @@ export function HeroTextRotator() {
         </div>
       </div>
 
-      {/* Titular rotativo animado con gradiente corporativo */}
-      <h2
+      {/* Titular rotativo animado con gradiente corporativo (H1 Oficial) */}
+      <h1
         aria-live="polite"
         className={`text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-black tracking-tight leading-[1.12] text-slate-900 transition-all duration-300 ease-out transform ${
           fadeState === "in"
@@ -91,7 +91,7 @@ export function HeroTextRotator() {
         >
           {current.title}
         </span>
-      </h2>
+      </h1>
     </div>
   );
 }

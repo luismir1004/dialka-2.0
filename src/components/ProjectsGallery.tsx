@@ -8,9 +8,7 @@ import {
   CheckCircle2,
   ArrowRight,
   ShieldCheck,
-  Phone,
   SlidersHorizontal,
-  ExternalLink,
   Maximize2,
 } from "lucide-react";
 import { ImageLightbox, type LightboxItem } from "@/components/ImageLightbox";

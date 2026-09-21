@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { RENTAL_EQUIPMENT, CONTACT } from "@/lib/data";
-import { CalendarDays, ChevronRight, Phone, ArrowRight, CheckCircle2, Truck, ShieldCheck, Clock, Sparkles } from "lucide-react";
+import { CalendarDays, ChevronRight, Phone, ArrowRight, Truck, ShieldCheck, Clock, Sparkles } from "lucide-react";
 import { RentalCatalog } from "@/components/RentalCatalog";
 
 export const metadata: Metadata = {

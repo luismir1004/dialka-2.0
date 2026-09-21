@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { PRODUCT_CATEGORIES, CONTACT } from "@/lib/data";
-import { Package, ChevronRight, Phone, ArrowRight, Scale, Sparkles, CheckCircle2 } from "lucide-react";
+import { Package, ChevronRight, Phone, ArrowRight, Scale, Sparkles } from "lucide-react";
 import { ProductsCatalog } from "@/components/ProductsCatalog";
 import { AuthorizedBrands } from "@/components/AuthorizedBrands";
 

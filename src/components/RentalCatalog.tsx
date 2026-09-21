@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { ArrowRight, CheckCircle2, Maximize2, ShieldCheck, Truck } from "lucide-react";
+import { ArrowRight, CheckCircle2, Maximize2 } from "lucide-react";
 import { ImageLightbox, type LightboxItem } from "@/components/ImageLightbox";
 
 interface RentalItem {

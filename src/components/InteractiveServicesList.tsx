@@ -10,11 +10,8 @@ import {
   FileCheck2, 
   CheckCircle2, 
   Phone, 
-  ArrowRight,
-  Clock,
   Sparkles,
   MapPin,
-  HelpCircle
 } from "lucide-react";
 import { SERVICES, CONTACT } from "@/lib/data";
 

@@ -17,15 +17,13 @@ export function RevealOnScroll({
   direction = "up",
   threshold = 0.1,
 }: RevealOnScrollProps) {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(
+    () => typeof window !== "undefined" && !("IntersectionObserver" in window)
+  );
   const domRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // If IntersectionObserver is not supported, reveal immediately
-    if (typeof window === "undefined" || !("IntersectionObserver" in window)) {
-      setIsVisible(true);
-      return;
-    }
+    if (!("IntersectionObserver" in window)) return;
 
     const observer = new IntersectionObserver(
       (entries) => {

@@ -1,10 +1,8 @@
 "use client";
 
-import React, { useState, useEffect, useId, useTransition } from "react";
+import React, { useState, useEffect, useId, useRef } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import {
-  Scale,
   Gauge,
   Truck,
   AlertTriangle,
@@ -15,7 +13,6 @@ import {
   Zap,
   Phone,
   ArrowRight,
-  Info,
 } from "lucide-react";
 import { CONTACT } from "@/lib/data";
 
@@ -44,21 +41,29 @@ export function LiveWeighingSimulator({
   const [isStable, setIsStable] = useState<boolean>(true);
   const [tareTons, setTareTons] = useState<number>(0);
   const [isNetMode, setIsNetMode] = useState<boolean>(false);
-  const [activePreset, setActivePreset] = useState<string | null>(null);
   const [isCellActive, setIsCellActive] = useState<boolean>(false);
+  const [mobileTab, setMobileTab] = useState<"terminal" | "platform">("terminal");
   const sliderId = useId();
+  const animatedTonsRef = useRef(initialTons);
 
   // Animación fluida de la aguja con curva física amortiguada
   useEffect(() => {
     let animationFrameId: number;
     let startTime: number | null = null;
-    const startVal = animatedTons;
+    const startVal = animatedTonsRef.current;
     const targetVal = tons;
     const delta = Math.abs(targetVal - startVal);
 
     if (delta < 0.05) {
-      setAnimatedTons(targetVal);
-      return;
+      if (startVal !== targetVal) {
+        animationFrameId = requestAnimationFrame(() => {
+          setAnimatedTons(targetVal);
+          animatedTonsRef.current = targetVal;
+        });
+      }
+      return () => {
+        if (animationFrameId) cancelAnimationFrame(animationFrameId);
+      };
     }
 
     // Duración adaptativa: instantánea para slider continuo, dinámica con desaceleración para saltos de peso
@@ -75,11 +80,13 @@ export function LiveWeighingSimulator({
       const current = Math.max(0, Math.min(maxTons, startVal + (targetVal - startVal) * easeOutProgress + microBounce));
 
       setAnimatedTons(current);
+      animatedTonsRef.current = current;
 
       if (progress < 1) {
         animationFrameId = requestAnimationFrame(step);
       } else {
         setAnimatedTons(targetVal);
+        animatedTonsRef.current = targetVal;
       }
     };
 
@@ -88,8 +95,7 @@ export function LiveWeighingSimulator({
   }, [tons, maxTons]);
 
   // Manejo de preset con disparo visual en celdas de carga
-  const handlePresetSelect = (presetTons: number, label: string) => {
-    setActivePreset(label);
+  const handlePresetSelect = (presetTons: number) => {
     setTons(presetTons);
     setIsCellActive(true);
     setTimeout(() => setIsCellActive(false), 500);
@@ -115,11 +121,14 @@ export function LiveWeighingSimulator({
 
   // Simulación de estabilización de celdas
   useEffect(() => {
-    setIsStable(false);
-    const timer = setTimeout(() => {
+    const unshakeTimer = setTimeout(() => setIsStable(false), 0);
+    const stableTimer = setTimeout(() => {
       setIsStable(true);
     }, 280);
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(unshakeTimer);
+      clearTimeout(stableTimer);
+    };
   }, [tons]);
 
   const handleTareToggle = () => {
@@ -215,12 +224,40 @@ export function LiveWeighingSimulator({
         </div>
       </div>
 
+      {/* ── MÓVIL: SELECTOR DE PESTAÑAS TÁCTILES COMPACTO ── */}
+      <div className="lg:hidden relative z-10 px-3 py-2 border-b border-slate-800/80 bg-slate-950/75 flex items-center gap-2">
+        <button
+          type="button"
+          onClick={() => setMobileTab("terminal")}
+          className={`flex-1 py-2 px-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+            mobileTab === "terminal"
+              ? "bg-red-900 text-white shadow-md border border-red-500/60 ring-1 ring-red-500/30"
+              : "bg-slate-900/90 border border-slate-800 text-slate-400 hover:text-white"
+          }`}
+        >
+          <Gauge size={14} className={mobileTab === "terminal" ? "text-white" : "text-red-400"} />
+          <span>Terminal LED y Aguja</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => setMobileTab("platform")}
+          className={`flex-1 py-2 px-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+            mobileTab === "platform"
+              ? "bg-red-900 text-white shadow-md border border-red-500/60 ring-1 ring-red-500/30"
+              : "bg-slate-900/90 border border-slate-800 text-slate-400 hover:text-white"
+          }`}
+        >
+          <Truck size={14} className={mobileTab === "platform" ? "text-white" : "text-red-400"} />
+          <span>Báscula y Controles</span>
+        </button>
+      </div>
+
       {/* ── CUERPO PRINCIPAL: DIAL CIRCULAR + DISPLAY DIGITAL + CONTROLES ── */}
-      <div className="relative z-10 p-4 sm:p-6 md:p-8 lg:p-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
+      <div className="relative z-10 p-3 sm:p-6 md:p-8 lg:p-10 grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-10 items-center">
         {/* Columna Izquierda (7 cols): Dial Analógico con Aguja Viva + Display LED */}
-        <div className="lg:col-span-7 flex flex-col items-center justify-center">
-          {/* Dial Circular SVG */}
-          <div className="relative w-56 h-56 xs:w-64 xs:h-64 sm:w-80 sm:h-80 flex items-center justify-center">
+        <div className={`lg:col-span-7 flex-col items-center justify-center ${mobileTab === "terminal" ? "flex" : "hidden lg:flex"}`}>
+          {/* Dial Circular SVG Compacto y Adaptativo */}
+          <div className="relative w-44 h-44 xs:w-52 xs:h-52 sm:w-80 sm:h-80 flex items-center justify-center">
             <svg className="w-full h-full -rotate-90 transform" viewBox="0 0 220 220">
               {/* Background Track (240 deg arc) */}
               <circle
@@ -463,10 +500,35 @@ export function LiveWeighingSimulator({
               </p>
             </div>
           </div>
+
+          {/* Slider Táctil Rápido Integrado para Modo Terminal en Móviles */}
+          <div className="w-full max-w-lg mt-3 p-3 rounded-2xl bg-slate-950/80 border border-slate-800 lg:hidden">
+            <div className="flex items-center justify-between text-xs font-mono font-bold text-slate-300 mb-2">
+              <span className="flex items-center gap-1.5 text-red-400">
+                <Sliders size={13} />
+                <span>Simular Carga Táctil:</span>
+              </span>
+              <span className="text-red-400">{tons.toFixed(1)} t / {maxTons.toFixed(1)} t</span>
+            </div>
+            <input
+              type="range"
+              min="0"
+              max={maxTons}
+              step="0.2"
+              value={tons}
+              onChange={(e) => setTons(Number(e.target.value))}
+              className="w-full h-3 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-red-600 focus:outline-none"
+            />
+            <div className="flex justify-between text-[9px] font-mono text-slate-500 mt-1.5">
+              <span>0t (Cero)</span>
+              <span>40t (Medio)</span>
+              <span className="text-red-400">80t (Máx)</span>
+            </div>
+          </div>
         </div>
 
         {/* Columna Derecha (5 cols): Controles Deslizantes, Presets y Plataforma */}
-        <div className="lg:col-span-5 flex flex-col gap-5">
+        <div className={`lg:col-span-5 flex-col gap-5 ${mobileTab === "platform" ? "flex" : "hidden lg:flex"}`}>
           {/* Visual de Plataforma Camionera y Camión Desplazándose */}
           <div className="relative rounded-2xl bg-slate-950/90 border border-slate-800 p-4 sm:p-5 overflow-hidden">
             <div className="flex items-center justify-between text-xs font-bold text-slate-300 mb-2.5">
@@ -552,10 +614,7 @@ export function LiveWeighingSimulator({
               max={maxTons}
               step="0.2"
               value={tons}
-              onChange={(e) => {
-                setActivePreset(null);
-                setTons(Number(e.target.value));
-              }}
+              onChange={(e) => setTons(Number(e.target.value))}
               className="touch-slider touch-pan-y w-full h-3.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-red-600 focus:outline-none"
             />
 
@@ -576,10 +635,7 @@ export function LiveWeighingSimulator({
               <div className="flex items-center gap-1.5 flex-1 justify-between xs:justify-end">
                 <button
                   type="button"
-                  onClick={() => {
-                    setActivePreset(null);
-                    setTons((t) => Math.max(0, +(t - 10).toFixed(1)));
-                  }}
+                  onClick={() => setTons((t) => Math.max(0, +(t - 10).toFixed(1)))}
                   className="min-h-[44px] min-w-[44px] px-3 py-2 flex items-center justify-center rounded-xl bg-slate-800/90 hover:bg-slate-700 active:scale-90 text-slate-200 hover:text-white text-xs font-mono font-bold border border-slate-700/60 cursor-pointer transition-all shadow-xs"
                   title="Restar 10 toneladas"
                 >
@@ -587,10 +643,7 @@ export function LiveWeighingSimulator({
                 </button>
                 <button
                   type="button"
-                  onClick={() => {
-                    setActivePreset(null);
-                    setTons((t) => Math.max(0, +(t - 1).toFixed(1)));
-                  }}
+                  onClick={() => setTons((t) => Math.max(0, +(t - 1).toFixed(1)))}
                   className="min-h-[44px] min-w-[44px] px-3 py-2 flex items-center justify-center rounded-xl bg-slate-800/90 hover:bg-slate-700 active:scale-90 text-slate-200 hover:text-white text-xs font-mono font-bold border border-slate-700/60 cursor-pointer transition-all shadow-xs"
                   title="Restar 1 tonelada"
                 >
@@ -598,7 +651,7 @@ export function LiveWeighingSimulator({
                 </button>
                 <button
                   type="button"
-                  onClick={() => handlePresetSelect(0, "Báscula en Cero")}
+                  onClick={() => handlePresetSelect(0)}
                   className="min-h-[44px] px-3.5 py-2 flex items-center justify-center rounded-xl bg-red-950/90 hover:bg-red-900 active:scale-90 text-red-200 hover:text-white text-xs font-mono font-bold border border-red-700/60 cursor-pointer transition-all shadow-xs"
                   title="Poner a cero"
                 >
@@ -606,10 +659,7 @@ export function LiveWeighingSimulator({
                 </button>
                 <button
                   type="button"
-                  onClick={() => {
-                    setActivePreset(null);
-                    setTons((t) => Math.min(maxTons, +(t + 1).toFixed(1)));
-                  }}
+                  onClick={() => setTons((t) => Math.min(maxTons, +(t + 1).toFixed(1)))}
                   className="min-h-[44px] min-w-[44px] px-3 py-2 flex items-center justify-center rounded-xl bg-slate-800/90 hover:bg-slate-700 active:scale-90 text-slate-200 hover:text-white text-xs font-mono font-bold border border-slate-700/60 cursor-pointer transition-all shadow-xs"
                   title="Sumar 1 tonelada"
                 >
@@ -617,10 +667,7 @@ export function LiveWeighingSimulator({
                 </button>
                 <button
                   type="button"
-                  onClick={() => {
-                    setActivePreset(null);
-                    setTons((t) => Math.min(maxTons, +(t + 10).toFixed(1)));
-                  }}
+                  onClick={() => setTons((t) => Math.min(maxTons, +(t + 10).toFixed(1)))}
                   className="min-h-[44px] min-w-[44px] px-3 py-2 flex items-center justify-center rounded-xl bg-slate-800/90 hover:bg-slate-700 active:scale-90 text-slate-200 hover:text-white text-xs font-mono font-bold border border-slate-700/60 cursor-pointer transition-all shadow-xs"
                   title="Sumar 10 toneladas"
                 >
@@ -642,7 +689,7 @@ export function LiveWeighingSimulator({
                   <button
                     key={p.label}
                     type="button"
-                    onClick={() => handlePresetSelect(p.tons, p.label)}
+                    onClick={() => handlePresetSelect(p.tons)}
                     className={`min-h-[48px] p-3 rounded-xl text-left border transition-all text-xs font-semibold active:scale-95 cursor-pointer relative overflow-hidden ${
                       isSelected
                         ? "bg-gradient-to-br from-red-950 via-slate-900 to-red-950 border-red-500 text-white shadow-[0_0_15px_rgba(239,68,68,0.4)] ring-1 ring-red-500"

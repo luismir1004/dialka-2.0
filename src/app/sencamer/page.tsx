@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { SENCAMER_MODELS, CONTACT } from "@/lib/data";
-import { ShieldCheck, ChevronRight, Info, Phone, ArrowRight, Scale, CheckCircle2 } from "lucide-react";
+import { ShieldCheck, ChevronRight, Info, Phone, ArrowRight, CheckCircle2 } from "lucide-react";
 import { SencamerCatalog } from "@/components/SencamerCatalog";
 import { SencamerMockupCard } from "@/components/SencamerMockupCard";
 

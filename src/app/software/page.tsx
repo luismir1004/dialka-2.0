@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { SOFTWARE_SYSTEMS, CONTACT } from "@/lib/data";
 import { Monitor, ChevronRight, Phone, ArrowRight, Code2, Cpu, CheckCircle2, Layers, Sparkles } from "lucide-react";
-import { DynamicDial } from "@/components/DynamicDial";
+import { SoftwareScreenshotsShowcase } from "@/components/SoftwareScreenshotsShowcase";
 import { SoftwareBannerLightbox } from "@/components/SoftwareBannerLightbox";
 
 export const metadata: Metadata = {
@@ -139,21 +139,21 @@ export default function SoftwarePage() {
       {/* ── BANNER VISUAL DE SOFTWARE EN EJECUCIÓN CON LIGHTBOX ── */}
       <SoftwareBannerLightbox whatsappNumber={CONTACT.whatsapp} />
 
-      {/* ── SIMULADOR EN VIVO DE CAPTURA DE DATOS ── */}
+      {/* ── MÓDULOS DEL SISTEMA DE SOFTWARE EN VIVO ── */}
       <section className="bg-slate-950 py-10 sm:py-14 md:py-16 text-white border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-8">
             <span className="text-xs font-bold uppercase tracking-widest text-red-400 bg-red-950/80 border border-red-500/30 px-3 py-1 rounded-full">
-              Demostración Interactiva
+              Demostración Interactiva del Sistema
             </span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white mt-2.5 mb-2 tracking-tight">
-              Simulador del Indicador Conectado al Software
+              Interfaz y Módulos de Pesaje en Vivo
             </h2>
             <p className="text-slate-400 text-xs sm:text-sm">
-              Mueva el control de peso para simular el paso vehicular sobre la báscula y verificar la respuesta del terminal en tiempo real.
+              Explore los módulos operativos de pesaje vehicular, emisión de comprobantes COVENIN, streaming RS-232 y reportes gerenciales.
             </p>
           </div>
-          <DynamicDial />
+          <SoftwareScreenshotsShowcase />
         </div>
       </section>
 

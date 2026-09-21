@@ -126,6 +126,72 @@ export const FIELD_PROJECTS = [
     image: "/images/proyectos/inspeccion-planta.jpg",
     specs: ["Celdas de carga herméticas", "Terminal digital industrial", "Prueba de repetibilidad"],
   },
+  {
+    id: "calibracion-masas-barinas",
+    title: "Certificación Metrológica de Báscula de Camiones 60TN",
+    category: "Calibración y Metrología",
+    location: "Barinas, Edo. Barinas",
+    state: "Barinas",
+    description:
+      "Verificación de excentricidad, repetibilidad y linealidad con pesas patrón clase M1 en central azucarero del estado Barinas, emitiendo informe técnico de calibración.",
+    image: "/images/servicios/calibracion-masas.jpg",
+    specs: ["Tolerancia COVENIN 2548", "Masas patrón clase M1", "Informe SENCAMER"],
+  },
+  {
+    id: "pesaje-ejes-zulia",
+    title: "Sistema de Pesaje de Ejes Portátil en Puerto Comercial",
+    category: "Pesaje Vehicular Pesado",
+    location: "Maracaibo, Edo. Zulia",
+    state: "Zulia",
+    description:
+      "Puesta en marcha de plataformas portátiles de pesaje por eje para control de sobrecarga de gandolas de carga pesada y contenedores en zona portuaria del Lago de Maracaibo.",
+    image: "/images/alquiler/ejes-portatil.jpg",
+    specs: ["Capacidad 40 TN por eje", "Inalámbrico RF", "Software de Pesaje Ejes"],
+  },
+  {
+    id: "automatizacion-silos-miranda",
+    title: "Automatización y Software de Tolvas en Planta Procesadora",
+    category: "Software y Automatización",
+    location: "Guatire, Edo. Miranda",
+    state: "Miranda",
+    description:
+      "Integración de celdas de carga con indicador inteligente y software Dialka WeighMaster para dosificación automática de mezclas en seco y control de inventarios.",
+    image: "/images/software/software-camiones.jpg",
+    specs: ["Conectividad RS-485 / Ethernet", "Dosificación automática", "Reportes en Excel"],
+  },
+  {
+    id: "modernizacion-camionera-caracas",
+    title: "Modernización Electrónica de Báscula Camionera 80TN",
+    category: "Pesaje Vehicular Pesado",
+    location: "Caracas, Distrito Capital",
+    state: "Distrito Capital",
+    description:
+      "Conversión de antigua romana mecánica a sistema full electrónico con celdas de compresión canister de 30 toneladas, caja sumadora hermética IP68 y terminal digital.",
+    image: "/images/proyectos/montaje-camionera.jpg",
+    specs: ["Celdas Canister IP68", "Supresores de transitorios", "Doble visor LED remoto"],
+  },
+  {
+    id: "celdas-tanques-lara",
+    title: "Pesaje Electrónico de Silos Verticales de Harina",
+    category: "Control Industrial",
+    location: "Barquisimeto, Edo. Lara",
+    state: "Lara",
+    description:
+      "Montaje de módulos de pesaje con celdas de carga autocentrantes bajo 4 silos verticales de 60 toneladas de capacidad en importante molino harinero larense.",
+    image: "/images/proyectos/inspeccion-planta.jpg",
+    specs: ["Módulos autocentrantes", "Protección contra viento/sismo", "Lectura continua 24/7"],
+  },
+  {
+    id: "laboratorio-calibracion-anzoategui",
+    title: "Calibración de Balanzas de Precisión en Complejo Químico",
+    category: "Calibración y Metrología",
+    location: "Barcelona, Edo. Anzoátegui",
+    state: "Anzoátegui",
+    description:
+      "Mantenimiento preventivo, ajuste fino con masas patrón clase E2 y calibración trazable SENCAMER para balanzas analíticas en laboratorios de control de calidad.",
+    image: "/images/sencamer/balanza-certificada.jpg",
+    specs: ["Patrones clase E2/F1", "Certificado de calibración", "Control de excentricidad"],
+  },
 ];
 
 export const PRODUCT_CATEGORIES = [

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { ShieldCheck, Maximize2, Sparkles, CheckCircle2 } from "lucide-react";
+import { ShieldCheck, Maximize2, CheckCircle2 } from "lucide-react";
 import { ImageLightbox, type LightboxItem } from "@/components/ImageLightbox";
 
 interface SencamerMockupCardProps {

@@ -2,15 +2,14 @@
 
 import { useState, useMemo } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   Search,
   X,
   Phone,
   ArrowRight,
-  CheckCircle2,
   SlidersHorizontal,
   RotateCcw,
-  Sparkles,
   ShieldCheck,
   Package,
   Scale,
@@ -22,6 +21,7 @@ import {
   HeartPulse,
   Layers,
   MoveDown,
+  FileText,
   Monitor,
   FlaskConical,
   Gauge,
@@ -31,7 +31,6 @@ import {
   Users,
   Cpu,
   Truck,
-  Zap,
   Tag,
   LayoutGrid,
   ShoppingCart,
@@ -40,6 +39,7 @@ import {
   Beef,
   type LucideIcon,
 } from "lucide-react";
+import { ProductDetailsModal } from "./ProductDetailsModal";
 
 export interface ProductItem {
   id: string;
@@ -344,12 +344,13 @@ export const CATALOG_PRODUCTS: ProductItem[] = [
 ];
 
 interface ProductsCatalogProps {
-  categories?: any;
+  categories?: { id: string; name: string }[];
   whatsappNumber?: string;
   showHeading?: boolean;
   title?: string;
   subtitle?: string;
   className?: string;
+  initialLimit?: number;
 }
 
 function ProductCardImage({
@@ -410,9 +411,23 @@ export function ProductsCatalog({
   title,
   subtitle,
   className = "",
+  initialLimit,
 }: ProductsCatalogProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [showAll, setShowAll] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<ProductItem | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const handleOpenModal = (product: ProductItem) => {
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedProduct(null);
+  };
 
   // Filtrado reactivo en tiempo real
   const filteredProducts = useMemo(() => {
@@ -436,9 +451,18 @@ export function ProductsCatalog({
     });
   }, [selectedCategory, searchQuery]);
 
+  // Lista a mostrar: limitada inicialmente en el Home a initialLimit si no se ha expandido
+  const displayedProducts = useMemo(() => {
+    if (initialLimit && !showAll && !searchQuery && selectedCategory === "all") {
+      return filteredProducts.slice(0, initialLimit);
+    }
+    return filteredProducts;
+  }, [filteredProducts, initialLimit, showAll, searchQuery, selectedCategory]);
+
   const handleReset = () => {
     setSelectedCategory("all");
     setSearchQuery("");
+    setShowAll(false);
   };
 
   return (
@@ -515,131 +539,186 @@ export function ProductsCatalog({
             </div>
           </div>
 
-          {/* Carrusel Deslizante Horizontal (Touch-Friendly sin Scrollbar Fea) */}
-          <div className="overflow-x-auto no-scrollbar scroll-smooth flex gap-2.5 sm:gap-3.5 pb-2 pt-1 -mx-4 px-4 sm:mx-0 sm:px-0 snap-x">
-            {CATALOG_CATEGORIES.map((cat) => {
-              const isSelected = selectedCategory === cat.id;
-              const CatIcon = cat.icon;
-              const count =
-                cat.id === "all"
-                  ? CATALOG_PRODUCTS.length
-                  : CATALOG_PRODUCTS.filter((p) => p.category === cat.id).length;
+          {/* Carrusel Deslizante Horizontal (Touch-Friendly con Fade Indicator) */}
+          <div className="relative">
+            <div className="overflow-x-auto no-scrollbar scroll-smooth flex gap-2.5 sm:gap-3.5 pb-2 pt-1 -mx-4 px-4 sm:mx-0 sm:px-0 snap-x">
+              {CATALOG_CATEGORIES.map((cat) => {
+                const isSelected = selectedCategory === cat.id;
+                const CatIcon = cat.icon;
+                const count =
+                  cat.id === "all"
+                    ? CATALOG_PRODUCTS.length
+                    : CATALOG_PRODUCTS.filter((p) => p.category === cat.id).length;
 
-              return (
-                <button
-                  key={cat.id}
-                  type="button"
-                  onClick={() => setSelectedCategory(cat.id)}
-                  className={`group relative snap-start shrink-0 min-w-[155px] sm:min-w-[180px] px-4 py-3 rounded-2xl transition-all duration-300 cursor-pointer flex items-center gap-3.5 border text-left active:scale-95 hover:scale-[1.03] ${
-                    isSelected
-                      ? "bg-red-900 text-white border-red-950 shadow-lg shadow-red-950/25 ring-2 ring-red-500/30"
-                      : "bg-white hover:bg-slate-50/90 text-slate-700 hover:text-slate-900 border-slate-200/90 hover:border-red-200 shadow-xs hover:shadow-md"
-                  }`}
-                >
-                  <div
-                    className={`w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300 ${
+                return (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    onClick={() => {
+                      setSelectedCategory(cat.id);
+                      setShowAll(false);
+                    }}
+                    className={`group relative snap-start shrink-0 min-w-[155px] sm:min-w-[180px] px-4 py-3 rounded-2xl transition-all duration-300 cursor-pointer flex items-center gap-3.5 border text-left active:scale-95 hover:scale-[1.03] ${
                       isSelected
-                        ? "bg-white/20 text-white shadow-inner scale-105"
-                        : "bg-red-50 text-[#991b1b] border border-red-100 group-hover:bg-[#991b1b] group-hover:text-white group-hover:rotate-3 group-hover:scale-110"
+                        ? "bg-red-900 text-white border-red-950 shadow-lg shadow-red-950/25 ring-2 ring-red-500/30"
+                        : "bg-white hover:bg-slate-50/90 text-slate-700 hover:text-slate-900 border-slate-200/90 hover:border-red-200 shadow-xs hover:shadow-md"
                     }`}
                   >
-                    <CatIcon size={20} className="transition-transform duration-300 group-hover:scale-110" />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center justify-between gap-1">
-                      <span className="block font-extrabold text-xs sm:text-sm tracking-tight truncate">
-                        {cat.name}
-                      </span>
-                      <span
-                        className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full transition-colors ${
-                          isSelected
-                            ? "bg-white/20 text-white"
-                            : "bg-slate-100 text-slate-600 group-hover:bg-red-50 group-hover:text-[#991b1b]"
-                        }`}
-                      >
-                        {count}
-                      </span>
-                    </div>
-                    <span
-                      className={`block text-[10px] sm:text-[11px] font-medium truncate mt-0.5 transition-colors ${
-                        isSelected ? "text-red-100" : "text-slate-500 group-hover:text-slate-600"
+                    <div
+                      className={`w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300 ${
+                        isSelected
+                          ? "bg-white/20 text-white shadow-inner scale-105"
+                          : "bg-red-50 text-[#991b1b] border border-red-100 group-hover:bg-[#991b1b] group-hover:text-white group-hover:rotate-3 group-hover:scale-110"
                       }`}
                     >
-                      {cat.desc}
-                    </span>
-                  </div>
-                </button>
-              );
-            })}
+                      <CatIcon size={20} className="transition-transform duration-300 group-hover:scale-110" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center justify-between gap-1">
+                        <span className="block font-extrabold text-xs sm:text-sm tracking-tight truncate">
+                          {cat.name}
+                        </span>
+                        <span
+                          className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full transition-colors ${
+                            isSelected
+                              ? "bg-white/20 text-white"
+                              : "bg-slate-100 text-slate-600 group-hover:bg-red-50 group-hover:text-[#991b1b]"
+                          }`}
+                        >
+                          {count}
+                        </span>
+                      </div>
+                      <span
+                        className={`block text-[10px] sm:text-[11px] font-medium truncate mt-0.5 transition-colors ${
+                          isSelected ? "text-red-100" : "text-slate-500 group-hover:text-slate-600"
+                        }`}
+                      >
+                        {cat.desc}
+                      </span>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+            {/* Indicador sutil de scroll derecho en pantallas táctiles */}
+            <div className="pointer-events-none absolute right-0 top-0 bottom-2 w-8 bg-gradient-to-l from-white/90 to-transparent sm:hidden" />
           </div>
         </div>
 
         {/* ── FASE 2: CUADRÍCULA DE TARJETAS ESTILO E-COMMERCE (GRID 2 COLS EN MÓVIL) ── */}
-        {filteredProducts.length > 0 ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5 animate-fadeIn">
-            {filteredProducts.map((product) => {
-              const ItemIcon = product.icon;
+        {displayedProducts.length > 0 ? (
+          <>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5 animate-fadeIn">
+              {displayedProducts.map((product) => {
+                const ItemIcon = product.icon;
 
-              return (
-                <div
-                  key={product.id}
-                  className="group relative bg-white border border-slate-100 hover:border-red-200/90 rounded-2xl p-2.5 sm:p-3.5 shadow-xs hover:shadow-xl hover:shadow-slate-200/70 transition-all duration-300 flex flex-col justify-between overflow-hidden"
-                >
-                  <div>
-                    {/* Fotografía Protagonista Limpia con Fallback Robusto */}
-                    <ProductCardImage
-                      src={product.image}
-                      alt={product.name}
-                      categoryIcon={product.categoryIcon}
-                      categoryName={product.categoryName}
-                      badge={product.badge}
-                    />
+                return (
+                  <div
+                    key={product.id}
+                    className="group relative bg-white border border-slate-100 hover:border-red-200/90 rounded-2xl p-2.5 sm:p-3.5 shadow-xs hover:shadow-xl hover:shadow-slate-200/70 transition-all duration-300 flex flex-col justify-between overflow-hidden"
+                  >
+                    <div>
+                      {/* Fotografía Protagonista Limpia con Fallback Robusto */}
+                      <button
+                        type="button"
+                        onClick={() => handleOpenModal(product)}
+                        className="w-full text-left cursor-pointer focus:outline-none rounded-xl block transition-transform active:scale-[0.99]"
+                        aria-label={`Ver ficha técnica de ${product.name}`}
+                      >
+                        <ProductCardImage
+                          src={product.image}
+                          alt={product.name}
+                          categoryIcon={product.categoryIcon}
+                          categoryName={product.categoryName}
+                          badge={product.badge}
+                        />
+                      </button>
 
-                    {/* Nombre del Producto con Icono Vectorial Único */}
-                    <div className="flex items-start gap-1.5 mb-1.5">
-                      <div className="w-5 h-5 rounded-md bg-red-50 flex items-center justify-center text-[#991b1b] shrink-0 mt-0.5">
-                        <ItemIcon size={12} />
+                      {/* Nombre del Producto con Icono Vectorial Único */}
+                      <button
+                        type="button"
+                        onClick={() => handleOpenModal(product)}
+                        className="w-full text-left flex items-start gap-1.5 mb-1.5 cursor-pointer group/title focus:outline-none"
+                        aria-label={`Ver ficha técnica de ${product.name}`}
+                      >
+                        <div className="w-5 h-5 rounded-md bg-red-50 flex items-center justify-center text-[#991b1b] shrink-0 mt-0.5">
+                          <ItemIcon size={12} />
+                        </div>
+                        <h3 className="font-bold text-slate-900 text-xs sm:text-sm group-hover/title:text-[#991b1b] transition-colors leading-snug line-clamp-2 min-h-[2rem] sm:min-h-[2.5rem]">
+                          {product.name}
+                        </h3>
+                      </button>
+
+                      {/* Especificaciones técnicas clave como etiqueta limpia */}
+                      <div className="flex items-center gap-1.5 mb-2 flex-wrap">
+                        <span className="inline-flex items-center gap-1 bg-slate-100 group-hover:bg-red-50 text-slate-700 group-hover:text-[#991b1b] text-[10px] sm:text-[11px] font-semibold px-2 py-0.5 rounded-md leading-tight line-clamp-1 border border-slate-200/60 group-hover:border-red-100 transition-colors">
+                          {product.specs}
+                        </span>
+                        <span className="inline-flex items-center gap-0.5 text-[9px] font-bold uppercase text-slate-500 bg-slate-50 px-1.5 py-0.5 rounded border border-slate-200/50">
+                          <Tag size={9} className="text-[#991b1b]" />
+                          <span>{product.featureTag}</span>
+                        </span>
                       </div>
-                      <h3 className="font-bold text-slate-900 text-xs sm:text-sm group-hover:text-[#991b1b] transition-colors leading-snug line-clamp-2 min-h-[2rem] sm:min-h-[2.5rem]">
-                        {product.name}
-                      </h3>
+
+                      {/* Reseña de aplicación comercial */}
+                      <p className="text-[10px] sm:text-[11px] text-slate-500 leading-snug line-clamp-1 mb-3">
+                        {product.highlight}
+                      </p>
                     </div>
 
-                    {/* Especificaciones técnicas clave como etiqueta limpia */}
-                    <div className="flex items-center gap-1.5 mb-2 flex-wrap">
-                      <span className="inline-flex items-center gap-1 bg-slate-100 group-hover:bg-red-50 text-slate-700 group-hover:text-[#991b1b] text-[10px] sm:text-[11px] font-semibold px-2 py-0.5 rounded-md leading-tight line-clamp-1 border border-slate-200/60 group-hover:border-red-100 transition-colors">
-                        {product.specs}
-                      </span>
-                      <span className="inline-flex items-center gap-0.5 text-[9px] font-bold uppercase text-slate-500 bg-slate-50 px-1.5 py-0.5 rounded border border-slate-200/50">
-                        <Tag size={9} className="text-[#991b1b]" />
-                        <span>{product.featureTag}</span>
-                      </span>
+                    {/* Acciones de la Tarjeta: Ficha Técnica + WhatsApp */}
+                    <div className="pt-2 sm:pt-2.5 border-t border-slate-100 space-y-1.5">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleOpenModal(product);
+                        }}
+                        className="w-full inline-flex items-center justify-center gap-1.5 bg-slate-100 hover:bg-red-50 active:scale-[0.98] text-slate-700 hover:text-[#991b1b] font-bold py-2 sm:py-2.5 px-3 rounded-xl text-xs sm:text-sm border border-slate-200 hover:border-red-200 transition-all cursor-pointer shadow-2xs"
+                        title={`Ver especificaciones y ficha de ${product.name}`}
+                      >
+                        <FileText size={13} className="text-[#991b1b] shrink-0" />
+                        <span>Ficha Técnica</span>
+                      </button>
+
+                      <a
+                        href={`https://wa.me/${whatsappNumber}?text=Hola%20Dialka,%20deseo%20cotizar%20el%20equipo:%20${encodeURIComponent(product.name)}%20(${encodeURIComponent(product.specs)})`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="w-full inline-flex items-center justify-center gap-1.5 bg-[#991b1b] hover:bg-[#7f1d1d] active:scale-[0.98] text-white font-bold py-2 sm:py-2.5 px-3 rounded-xl text-xs sm:text-sm transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer group/btn"
+                        title={`Cotizar ${product.name}`}
+                      >
+                        <Phone size={13} className="transition-transform group-hover/btn:scale-110 shrink-0" />
+                        <span>Cotizar por WhatsApp</span>
+                        <ArrowRight size={13} className="transition-transform group-hover/btn:translate-x-0.5 shrink-0" />
+                      </a>
                     </div>
-
-                    {/* Reseña de aplicación comercial */}
-                    <p className="text-[10px] sm:text-[11px] text-slate-500 leading-snug line-clamp-1 mb-3">
-                      {product.highlight}
-                    </p>
                   </div>
+                );
+              })}
+            </div>
 
-                  {/* Botón de Conversión Comercial (Llamativo y optimizado para clics) */}
-                  <div className="pt-2 sm:pt-2.5 border-t border-slate-100">
-                    <a
-                      href={`https://wa.me/${whatsappNumber}?text=Hola%20Dialka,%20deseo%20cotizar%20el%20equipo:%20${encodeURIComponent(product.name)}%20(${encodeURIComponent(product.specs)})`}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="w-full inline-flex items-center justify-center gap-1.5 bg-[#991b1b] hover:bg-[#7f1d1d] active:scale-[0.98] text-white font-bold py-2.5 px-3 rounded-xl text-xs sm:text-sm transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer group/btn"
-                      title={`Cotizar ${product.name}`}
-                    >
-                      <Phone size={13} className="transition-transform group-hover/btn:scale-110 shrink-0" />
-                      <span>Cotizar por WhatsApp</span>
-                      <ArrowRight size={13} className="transition-transform group-hover/btn:translate-x-0.5 shrink-0" />
-                    </a>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+            {/* Botón de Cargar Más / Explorar Catálogo Completo (cuando initialLimit está activo y no se ha expandido) */}
+            {initialLimit && !showAll && !searchQuery && selectedCategory === "all" && filteredProducts.length > initialLimit && (
+              <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => setShowAll(true)}
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 active:scale-[0.98] text-white font-bold py-3.5 px-6 rounded-xl text-xs sm:text-sm shadow-md hover:shadow-lg transition-all cursor-pointer"
+                >
+                  <span>Ver más equipos en esta vitrina (+{filteredProducts.length - initialLimit})</span>
+                  <MoveDown size={15} />
+                </button>
+                <Link
+                  href="/productos"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white hover:bg-red-50 active:scale-[0.98] text-[#991b1b] border border-red-200 hover:border-red-300 font-bold py-3.5 px-6 rounded-xl text-xs sm:text-sm shadow-2xs hover:shadow-sm transition-all text-center"
+                >
+                  <span>Explorar Catálogo Completo (20 equipos)</span>
+                  <ArrowRight size={15} />
+                </Link>
+              </div>
+            )}
+          </>
         ) : (
           /* ── ESTADO VACÍO (SIN RESULTADOS) ── */
           <div className="bg-white border border-dashed border-slate-300 rounded-2xl p-10 sm:p-14 text-center max-w-md mx-auto animate-fadeIn shadow-xs">
@@ -664,6 +743,14 @@ export function ProductsCatalog({
           </div>
         )}
       </div>
+
+      {/* Modal de Especificaciones Técnicas y Descarga */}
+      <ProductDetailsModal
+        product={selectedProduct}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        whatsappNumber={whatsappNumber}
+      />
     </section>
   );
 }

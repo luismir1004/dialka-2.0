@@ -3,28 +3,16 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
-  Wrench,
-  ShieldCheck,
-  Package,
-  CalendarDays,
-  Monitor,
   Phone,
-  Award,
-  Users,
-  Code2,
-  ThumbsUp,
   CheckCircle2,
-  Building2,
   Scale,
   Sparkles,
 } from "lucide-react";
-import { COMPANY, CONTACT, CLIENTS, BRANDS, FIELD_PROJECTS } from "@/lib/data";
+import { COMPANY, CONTACT, FIELD_PROJECTS } from "@/lib/data";
 import { RevealOnScroll } from "@/components/RevealOnScroll";
-import { AnimatedCounter } from "@/components/AnimatedCounter";
 import { ProjectsGallery } from "@/components/ProjectsGallery";
 import { LiveWeighingSimulator } from "@/components/LiveWeighingSimulator";
 import { SocialProofSection } from "@/components/SocialProofSection";
-import { AuthorizedBrands } from "@/components/AuthorizedBrands";
 import { HeroTextRotator } from "@/components/HeroTextRotator";
 import { MetricsBar } from "@/components/MetricsBar";
 import { MissionVisionTabs } from "@/components/MissionVisionTabs";
@@ -35,51 +23,6 @@ export const metadata: Metadata = {
   description:
     "25 años siendo líderes en Venezuela en venta, alquiler y servicio técnico de equipos de pesaje industriales, comerciales y agropecuarios.",
 };
-
-const QUICK_ACCESS = [
-  {
-    label: "Servicio Técnico",
-    desc: "Calibración, mantenimiento y reparación con certificación SENCAMER.",
-    href: "/servicios",
-    icon: Wrench,
-    tag: "Calibración",
-  },
-  {
-    label: "Equipos SENCAMER",
-    desc: "Balanzas comerciales e industriales homologadas para uso legal en Venezuela.",
-    href: "/sencamer",
-    icon: Scale,
-    tag: "Homologados",
-  },
-  {
-    label: "Catálogo de Productos",
-    desc: "Básculas camioneras, de piso, colgantes, plataformas y pesas patrón.",
-    href: "/productos",
-    icon: Package,
-    tag: "Venta",
-  },
-  {
-    label: "Alquiler de Equipos",
-    desc: "Sistemas de pesaje portátiles para zafras y contingencias operativas.",
-    href: "/alquiler",
-    icon: CalendarDays,
-    tag: "Alquiler",
-  },
-  {
-    label: "Software de Pesaje",
-    desc: "Desarrollo propio para control de básculas camioneras, silos y tolvas.",
-    href: "/software",
-    icon: Monitor,
-    tag: "Software",
-  },
-  {
-    label: "Contacto y Sedes",
-    desc: "Oficinas en Caracas y Maracay. Atención a todo el país y soporte USA.",
-    href: "/contacto",
-    icon: Phone,
-    tag: "Atención Inmediata",
-  },
-];
 
 export default function HomePage() {
   return (
@@ -222,6 +165,7 @@ export default function HomePage() {
         showHeading={true}
         title="Vitrina Oficial de Balanzas y Sistemas de Pesaje"
         subtitle="Explore de forma interactiva las 5 líneas comerciales de Dialka con disponibilidad inmediata, calibración SENCAMER y entrega a nivel nacional."
+        initialLimit={6}
       />
 
       {/* ── FASE 3: SECCIONES DE IDENTIDAD (MISIÓN Y VISIÓN EN PESTAÑAS INTERACTIVAS) ── */}
@@ -238,58 +182,6 @@ export default function HomePage() {
             </div>
             <MissionVisionTabs />
           </RevealOnScroll>
-        </div>
-      </section>
-
-      {/* ── ACCESOS RÁPIDOS CON STAGGERED SCROLL REVEAL ── */}
-      <section className="bg-white py-10 sm:py-16 md:py-20 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <RevealOnScroll>
-            <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
-              <span className="inline-block text-xs font-bold uppercase tracking-widest text-[#991b1b] bg-red-50 border border-red-200/80 px-3 py-1 rounded-full mb-2.5">
-                Áreas de Especialización
-              </span>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight mb-2.5">
-                Soluciones Integrales de Pesaje
-              </h2>
-              <p className="text-slate-600 text-xs sm:text-sm md:text-base leading-relaxed">
-                Explore nuestras divisiones especializadas con soporte técnico certificado en todo el territorio venezolano.
-              </p>
-            </div>
-          </RevealOnScroll>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {QUICK_ACCESS.map(({ label, desc, href, icon: Icon, tag }, idx) => (
-              <RevealOnScroll key={href} delay={(idx % 3) * 100}>
-                <Link
-                  href={href}
-                  className="card-hover group bg-white border border-slate-200 hover:border-red-300 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between h-full"
-                >
-                  <div>
-                    <div className="flex items-center justify-between mb-3 sm:mb-4">
-                      <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-slate-50 border border-slate-100 group-hover:bg-red-50 group-hover:border-red-100 flex items-center justify-center transition-colors">
-                        <Icon size={20} className="text-slate-700 group-hover:text-[#991b1b] transition-colors" />
-                      </div>
-                      <span className="text-[10px] sm:text-[11px] font-semibold text-slate-500 bg-slate-100 px-2.5 py-0.5 sm:py-1 rounded-full group-hover:bg-red-50 group-hover:text-[#991b1b] transition-colors">
-                        {tag}
-                      </span>
-                    </div>
-                    <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-1.5 group-hover:text-[#991b1b] transition-colors">
-                      {label}
-                    </h3>
-                    <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mb-4">
-                      {desc}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-1.5 text-[#991b1b] text-xs sm:text-sm font-bold pt-3 border-t border-slate-100 group-hover:gap-2.5 transition-all">
-                    <span>Conocer más</span>
-                    <ArrowRight size={14} />
-                  </div>
-                </Link>
-              </RevealOnScroll>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -320,11 +212,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── MARCAS AUTORIZADAS Y ALIANZAS TECNOLÓGICAS (ALTA GAMA) ── */}
-      <RevealOnScroll>
-        <AuthorizedBrands whatsappNumber={CONTACT.whatsapp} />
-      </RevealOnScroll>
-
       {/* ── PROYECTOS Y OBRAS EN CAMPO (AUTENTICIDAD LOCAL) ── */}
       <RevealOnScroll>
         <ProjectsGallery
@@ -334,7 +221,7 @@ export default function HomePage() {
         />
       </RevealOnScroll>
 
-      {/* ── SOCIAL PROOF: CLIENTES AUDITADOS Y MARCAS OFICIALES ── */}
+      {/* ── SOCIAL PROOF: CLIENTES AUDITADOS Y MARCAS OFICIALES UNIFICADOS ── */}
       <RevealOnScroll>
         <SocialProofSection whatsappNumber={CONTACT.whatsapp} />
       </RevealOnScroll>

@@ -2,18 +2,17 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
-  Scale,
   MapPin,
   Phone,
   Mail,
   Clock,
   ExternalLink,
   ShieldCheck,
-  ArrowRight,
   MessageCircle,
 } from "lucide-react";
-import { CONTACT, NAV_LINKS, COMPANY, BRANDS } from "@/lib/data";
+import { CONTACT, NAV_LINKS, BRANDS } from "@/lib/data";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -68,8 +67,14 @@ export function Footer() {
           {/* Columna 1: Identidad Corporativa y Enlaces */}
           <div className="lg:col-span-4 space-y-4">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-[#991b1b] flex items-center justify-center shadow-xs shrink-0">
-                <Scale size={18} className="text-white" />
+              <div className="w-9 h-9 rounded-lg bg-red-950/70 border border-red-800/60 p-1.5 flex items-center justify-center shadow-xs shrink-0">
+                <Image
+                  src="/images/logo-dialka-symbol-white.svg"
+                  alt="Símbolo Oficial Dialka"
+                  width={28}
+                  height={20}
+                  className="w-full h-auto object-contain"
+                />
               </div>
               <div>
                 <span className="font-extrabold text-white text-sm block leading-tight">

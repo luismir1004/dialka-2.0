@@ -115,8 +115,8 @@ export function MobileMenu({
             <Image
               src="/images/logo-dialka.svg"
               alt="Balanzas y Servicios Dialka, S.A."
-              width={200}
-              height={50}
+              width={182}
+              height={44}
               priority
               className="h-8 w-auto object-contain transition-transform group-hover:scale-105"
             />
@@ -224,9 +224,9 @@ export function MobileMenu({
           </a>
 
           <a
-            href="tel:+582432343360"
+            href={`tel:${mcyPhone.split("/")[0].replace(/\s+/g, "").replace(/-/g, "").replace(/\./g, "")}`}
             className="inline-flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl bg-white border border-slate-200/90 hover:border-red-300 text-slate-800 hover:text-[#991b1b] active:scale-95 transition-all truncate shadow-2xs"
-            title="Llamar a Maracay: 0243-234.33.60"
+            title={`Llamar a Maracay: ${mcyPhone}`}
           >
             <Phone size={13} className="text-[#991b1b] shrink-0" />
             <span>MCY</span>

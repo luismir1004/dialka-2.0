@@ -7,48 +7,33 @@ import { useState, useEffect, useRef } from "react";
 import {
   Menu,
   X,
-  Scale,
   Phone,
-  Clock,
-  Copy,
-  Building2,
   ShieldCheck,
-  ChevronRight,
-  Home,
-  Wrench,
-  Package,
-  HardHat,
-  CalendarDays,
-  Monitor,
-  ExternalLink,
 } from "lucide-react";
 import { NAV_LINKS, CONTACT } from "@/lib/data";
-import { useToast } from "@/context/ToastContext";
 import { MobileMenu } from "@/components/MobileMenu";
 
 export function Header() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
-  const [headerHeight, setHeaderHeight] = useState(96);
-  const { copyToClipboard } = useToast();
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  // Calcular la altura real del header para posicionar el panel móvil
+  // Detección de scroll para Smart Header
   useEffect(() => {
-    const updateHeight = () => {
-      if (headerRef.current) {
-        setHeaderHeight(headerRef.current.offsetHeight);
-      }
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 45);
     };
-    updateHeight();
-    window.addEventListener("resize", updateHeight);
-    return () => window.removeEventListener("resize", updateHeight);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Cierre automático del menú al cambiar de ruta
-  useEffect(() => {
+  // Cierre automático del menú al cambiar de ruta (React 19 pattern)
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
     setMenuOpen(false);
-  }, [pathname]);
+  }
 
   // Bloquear scroll de fondo cuando el menú móvil esté abierto
   useEffect(() => {
@@ -69,38 +54,20 @@ export function Header() {
   const mcyPhone = "0243-234.33.60 / 234.33.72";
   const usaPhone = CONTACT.usa.phone || "+1 (786) 321-4890";
 
-  // Iconos especializados para navegación móvil táctil
-  const getNavIcon = (href: string) => {
-    switch (href) {
-      case "/":
-        return <Home size={18} />;
-      case "/servicios":
-        return <Wrench size={18} />;
-      case "/sencamer":
-        return <ShieldCheck size={18} />;
-      case "/productos":
-        return <Package size={18} />;
-      case "/proyectos":
-        return <HardHat size={18} />;
-      case "/alquiler":
-        return <CalendarDays size={18} />;
-      case "/software":
-        return <Monitor size={18} />;
-      case "/contacto":
-        return <Phone size={18} />;
-      default:
-        return <ChevronRight size={18} />;
-    }
-  };
-
   return (
     <>
-      <header ref={headerRef} className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-xs">
+      <header ref={headerRef} className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-xs transition-shadow">
       {/* ── TOP BAR INSTITUCIONAL (CARACAS, MARACAY, USA Y REDES) ── */}
-      <div className="bg-[#991b1b] text-white text-xs py-2 border-b border-[#7f1d1d]">
+      <div className={`bg-[#991b1b] text-white text-xs border-b border-[#7f1d1d] transition-all duration-300 ${isScrolled ? "md:py-1.5 py-0 border-b-0 md:border-b" : "py-1.5 sm:py-2"}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Vista Móvil (md:hidden): Caracas, Maracay y USA visibles simultáneamente de forma ordenada y legible */}
-          <div className="flex md:hidden flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-[10px] sm:text-[11px] font-bold py-0.5">
+          {/* Vista Móvil (md:hidden): Caracas, Maracay y USA colapsables con el scroll para maximizar pantalla */}
+          <div
+            className={`flex md:hidden flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-[10px] sm:text-[11px] font-bold transition-all duration-300 ease-in-out ${
+              isScrolled
+                ? "max-h-0 opacity-0 -translate-y-1 pointer-events-none py-0 overflow-hidden"
+                : "max-h-24 opacity-100 translate-y-0 py-0.5"
+            }`}
+          >
             {/* Caracas */}
             <a
               href={`tel:${ccsPhone.replace(/\s+/g, "").replace(/[()]/g, "")}`}
@@ -230,8 +197,8 @@ export function Header() {
               <Image
                 src="/images/logo-dialka.svg"
                 alt="Balanzas y Servicios Dialka, S.A."
-                width={200}
-                height={50}
+                width={182}
+                height={44}
                 priority
                 className="h-9 sm:h-10 w-auto object-contain transition-transform group-hover:scale-105 duration-200"
               />

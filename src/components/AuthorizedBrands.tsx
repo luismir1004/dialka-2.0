@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ShieldCheck, Award, Sparkles, Phone, ArrowRight, ExternalLink } from "lucide-react";
+import { ShieldCheck, Award, Sparkles, ArrowRight, ExternalLink } from "lucide-react";
 import { BRANDS, CONTACT } from "@/lib/data";
 
 interface AuthorizedBrandsProps {

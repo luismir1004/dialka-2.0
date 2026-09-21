@@ -8,7 +8,6 @@ import {
   RotateCcw,
   SlidersHorizontal,
   ArrowRight,
-  CheckCircle2,
 } from "lucide-react";
 
 interface SencamerModel {

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { Monitor, Maximize2, CheckCircle2, Sparkles } from "lucide-react";
+import { Monitor, Maximize2, CheckCircle2 } from "lucide-react";
 import { ImageLightbox, type LightboxItem } from "@/components/ImageLightbox";
 
 interface SoftwareBannerLightboxProps {
