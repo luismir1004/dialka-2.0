@@ -485,6 +485,19 @@ export const CATALOG_PRODUCTS: ProductItem[] = [
     featureTag: "Acero Alemán",
   },
   {
+    id: "carn-cuchillas-molino",
+    name: "Cuchillas Profesionales para Molinos Techfood / Lucky",
+    category: "carnicos",
+    categoryName: "Cárnicos",
+    categoryIcon: "🥩",
+    specs: "Acero templado de alta dureza · Medidas para bocas #12, #22 y #32",
+    image: "/images/productos/lucky-cuchillas-molino.png",
+    badge: "Repuesto Genuino",
+    highlight: "Filo autoafilable de alto rendimiento para molienda limpia y sin fricción térmica",
+    icon: Award,
+    featureTag: "Acero Especial",
+  },
+  {
     id: "carn-molde-hamburguesa",
     name: "Prensadora y Moldeadora de Hamburguesas Techfood",
     category: "carnicos",
@@ -673,6 +686,19 @@ export const CATALOG_PRODUCTS: ProductItem[] = [
     featureTag: "Batería 180h",
   },
   {
+    id: "com-techfood-jl918-led",
+    name: "Balanza Comercial de Mostrador Techfood JL-918 LED",
+    category: "comerciales",
+    categoryName: "Comerciales",
+    categoryIcon: "🛒",
+    specs: "15/30 kg · Teclado plano pulsador · Batería 180 hrs · Doble pantalla LED",
+    image: "/images/productos/techfood-jl918-led.png",
+    badge: "Plato Plano Duradero",
+    highlight: "Teclado de pulsadores táctiles de alta durabilidad con 7 memorias de precio directo",
+    icon: Scale,
+    featureTag: "Teclado Pulsador",
+  },
+  {
     id: "com-techfood-ocsp",
     name: "Balanza Colgante con Canasta Inoxidable Techfood OCS-P",
     category: "comerciales",
@@ -750,6 +776,19 @@ export const CATALOG_PRODUCTS: ProductItem[] = [
     icon: Gauge,
     featureTag: "IP68 Inoxidable",
   },
+  {
+    id: "ind-techfood-x1s-abs",
+    name: "Indicador de Peso Digital ABS Techfood X1S",
+    category: "industriales",
+    categoryName: "Industriales",
+    categoryIcon: "🏭",
+    specs: "Carcasa ABS alto impacto · 6 dígitos LED 40 mm · Batería 6V · Puerto RS232",
+    image: "/images/productos/techfood-indicador-x1s-abs.png",
+    badge: "Carcasa ABS",
+    highlight: "Pantalla LED gigante de alta visibilidad con función especial de pesaje animal",
+    icon: Gauge,
+    featureTag: "Pesaje Animal",
+  },
 ];
 
 interface ProductsCatalogProps {
@@ -778,27 +817,28 @@ function ProductCardImage({
   const [hasError, setHasError] = useState(false);
 
   return (
-    <div className="relative aspect-square w-full rounded-xl bg-slate-50/90 group-hover:bg-red-50/20 p-2 border border-slate-100/80 overflow-hidden mb-2.5 sm:mb-3 flex items-center justify-center transition-colors duration-300">
+    <div className="relative aspect-square w-full rounded-xl bg-white p-2.5 border border-slate-200/90 group-hover:border-red-300 shadow-2xs group-hover:shadow-md overflow-hidden mb-2.5 sm:mb-3 flex items-center justify-center transition-all duration-300">
       {!hasError ? (
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-          className="object-cover rounded-lg group-hover:scale-105 transition-transform duration-500"
-          onError={() => setHasError(true)}
-        />
+        <div className="relative w-full h-full flex items-center justify-center">
+          <Image
+            src={src}
+            alt={alt}
+            fill
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+            className="object-contain p-1.5 rounded-lg group-hover:scale-105 transition-transform duration-500"
+            onError={() => setHasError(true)}
+          />
+        </div>
       ) : (
         <div className="flex flex-col items-center justify-center text-slate-400 p-4 text-center">
           <Scale size={32} className="text-[#991b1b]/60 mb-2" />
           <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">{alt}</span>
         </div>
       )}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-50 group-hover:opacity-30 transition-opacity pointer-events-none" />
 
       {/* Insignia Flotante de Categoría */}
       <div className="absolute top-2 left-2 z-10">
-        <span className="inline-flex items-center gap-1 bg-white/95 backdrop-blur-md text-[#991b1b] text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full shadow-2xs border border-white/60">
+        <span className="inline-flex items-center gap-1 bg-white/95 backdrop-blur-md text-[#991b1b] text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full shadow-2xs border border-slate-200/70">
           <span>{categoryIcon}</span>
           <span className="truncate max-w-[70px] sm:max-w-none">{categoryName}</span>
         </span>
@@ -806,7 +846,7 @@ function ProductCardImage({
 
       {/* Badge de garantía / norma */}
       <div className="absolute bottom-2 left-2 right-2 z-10">
-        <span className="inline-block text-[9px] sm:text-[10px] font-bold text-white bg-black/65 backdrop-blur-xs px-2 py-0.5 rounded truncate max-w-full">
+        <span className="inline-block text-[9px] sm:text-[10px] font-bold text-slate-700 bg-slate-100/95 backdrop-blur-xs px-2 py-0.5 rounded-md border border-slate-200/80 text-center w-full truncate shadow-2xs">
           {badge}
         </span>
       </div>

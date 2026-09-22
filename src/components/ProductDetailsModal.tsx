@@ -150,7 +150,7 @@ export function ProductDetailsModal({
           <div className="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6">
             {/* Lado Izquierdo: Fotografía y Acreditación (5 cols) */}
             <div className="md:col-span-5 flex flex-col gap-3.5">
-              <div className="relative aspect-square w-full rounded-2xl bg-slate-50 border border-slate-200/90 overflow-hidden p-3 flex items-center justify-center shadow-inner">
+              <div className="relative aspect-square w-full rounded-2xl bg-white border border-slate-200 overflow-hidden p-3 sm:p-4 flex items-center justify-center shadow-xs">
                 <Image
                   src={product.image}
                   alt={product.name}
@@ -159,13 +159,13 @@ export function ProductDetailsModal({
                   className="object-contain p-2"
                 />
                 <div className="absolute top-2.5 left-2.5">
-                  <span className="inline-flex items-center gap-1 bg-white/95 backdrop-blur-md text-[#991b1b] text-[11px] font-bold px-2.5 py-0.5 rounded-full shadow-2xs border border-white/60">
+                  <span className="inline-flex items-center gap-1 bg-white/95 backdrop-blur-md text-[#991b1b] text-[11px] font-bold px-2.5 py-0.5 rounded-full shadow-2xs border border-slate-200/80">
                     <span>{product.categoryIcon}</span>
                     <span>{product.categoryName}</span>
                   </span>
                 </div>
                 <div className="absolute bottom-2.5 left-2.5 right-2.5">
-                  <span className="inline-block text-[10px] sm:text-[11px] font-bold text-white bg-black/75 backdrop-blur-xs px-2.5 py-1 rounded-md text-center w-full truncate shadow-xs">
+                  <span className="inline-block text-[10px] sm:text-[11px] font-bold text-slate-800 bg-slate-100/95 backdrop-blur-xs px-2.5 py-1 rounded-md text-center w-full truncate border border-slate-200/80 shadow-2xs">
                     {product.badge}
                   </span>
                 </div>
