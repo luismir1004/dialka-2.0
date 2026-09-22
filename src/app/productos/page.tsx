@@ -5,6 +5,7 @@ import { PRODUCT_CATEGORIES, CONTACT } from "@/lib/data";
 import { Package, ChevronRight, Phone, ArrowRight, Scale, Sparkles } from "lucide-react";
 import { ProductsCatalog } from "@/components/ProductsCatalog";
 import { AuthorizedBrands } from "@/components/AuthorizedBrands";
+import { IndustryQuoteWizard } from "@/components/IndustryQuoteWizard";
 
 export const metadata: Metadata = {
   title: "Nuestros Productos | Balanzas y Servicios Dialka",
@@ -112,6 +113,11 @@ export default function ProductosPage() {
           </div>
         </div>
       </section>
+
+      {/* ── COTIZADOR DINÁMICO POR RUBROS COMERCIALES ── */}
+      <div id="cotizador" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 sm:-mt-8 mb-8 sm:mb-12 relative z-20 scroll-mt-24">
+        <IndustryQuoteWizard />
+      </div>
 
       {/* ── CATÁLOGO INTERACTIVO CON BÚSQUEDA Y FILTROS EN TIEMPO REAL ── */}
       <ProductsCatalog

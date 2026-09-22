@@ -157,13 +157,48 @@ export default function HomePage() {
         <MetricsBar />
       </RevealOnScroll>
 
-      {/* ── VITRINA DE PRODUCTOS ESTILO E-COMMERCE (5 LÍNEAS PRINCIPALES) ── */}
+      {/* ── BANNER DESTACADO: COTIZADOR POR RUBROS COMERCIALES ── */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-2 mb-8">
+        <div className="bg-gradient-to-r from-slate-900 via-red-950 to-slate-900 border border-red-800/40 rounded-2xl p-5 sm:p-7 text-white shadow-xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="absolute -right-10 -bottom-10 w-64 h-64 bg-red-600/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="relative z-10 text-center md:text-left">
+            <div className="inline-flex items-center gap-2 bg-red-900/60 border border-red-500/30 px-3 py-1 rounded-full text-red-300 text-xs font-bold uppercase tracking-wider mb-2.5">
+              <Sparkles size={13} className="text-red-400" />
+              <span>Nuevo Configurador por Sector</span>
+            </div>
+            <h3 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
+              ¿Equipando su Carnicería, Supermercado o Agroindustria?
+            </h3>
+            <p className="text-slate-300 text-xs sm:text-sm mt-1.5 max-w-2xl leading-relaxed">
+              Configure en 1 minuto el paquete de balanzas, molinos, etiquetadoras y empacadoras recomendado para su sector comercial. Presupuesto formal emitido al cambio oficial BCV.
+            </p>
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 mt-3 text-xs text-slate-300 font-medium">
+              <span className="bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700">🥩 Carnicerías</span>
+              <span className="bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700">🛒 Supermercados</span>
+              <span className="bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700">🌾 Agroindustria</span>
+              <span className="bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700">🍽️ Gastronomía</span>
+            </div>
+          </div>
+
+          <div className="relative z-10 shrink-0 w-full sm:w-auto text-center">
+            <Link
+              href="/productos#cotizador"
+              className="inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-extrabold px-6 py-3.5 rounded-xl shadow-lg shadow-red-950/50 transition-all active:scale-95 text-sm sm:text-base w-full sm:w-auto"
+            >
+              <span>Abrir Cotizador por Rubro</span>
+              <ArrowRight size={16} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── VITRINA DE PRODUCTOS ESTILO E-COMMERCE (LÍNEAS PRINCIPALES) ── */}
       <ProductsCatalog
         whatsappNumber={CONTACT.whatsapp}
         showHeading={true}
         title="Vitrina Oficial de Balanzas y Sistemas de Pesaje"
-        subtitle="Explore de forma interactiva las 5 líneas comerciales de Dialka con disponibilidad inmediata, calibración SENCAMER y entrega a nivel nacional."
-        initialLimit={6}
+        subtitle="Explore de forma interactiva las líneas comerciales e industriales de Dialka con disponibilidad inmediata, calibración SENCAMER y entrega a nivel nacional."
+        initialLimit={8}
       />
 
       {/* ── FASE 3: SECCIONES DE IDENTIDAD (MISIÓN Y VISIÓN EN PESTAÑAS INTERACTIVAS) ── */}

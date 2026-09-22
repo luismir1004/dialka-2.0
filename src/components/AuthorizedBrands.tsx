@@ -57,6 +57,14 @@ export function AuthorizedBrands({
                   return "bg-amber-50 text-amber-800 border-amber-200/80";
                 case "sky":
                   return "bg-purple-50 text-purple-700 border-purple-200/80";
+                case "rongta":
+                  return "bg-sky-50 text-sky-700 border-sky-200/80";
+                case "techfood":
+                  return "bg-rose-50 text-rose-800 border-rose-200/80";
+                case "abm":
+                  return "bg-emerald-50 text-emerald-800 border-emerald-200/80";
+                case "lucky":
+                  return "bg-slate-100 text-slate-800 border-slate-300";
                 default:
                   return "bg-red-50 text-[#991b1b] border-red-300";
               }
