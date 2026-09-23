@@ -1,8 +1,7 @@
-"use client";
-
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { CONTACT } from "@/lib/data";
+import { SITE_CONFIG } from "@/lib/config";
 import {
   Phone,
   ChevronRight,
@@ -11,15 +10,43 @@ import {
   Truck,
   Zap,
 } from "lucide-react";
-import { useToast } from "@/context/ToastContext";
 import { ContactDepartmentRouter } from "@/components/ContactDepartmentRouter";
 import { ContactDynamicForm } from "@/components/ContactDynamicForm";
 import { ContactSedesDashboard } from "@/components/ContactSedesDashboard";
 import { ContactFAQ } from "@/components/ContactFAQ";
 
-export default function ContactoPage() {
-  const { copyToClipboard } = useToast();
+export const metadata: Metadata = {
+  title: "Contacto, Sedes y Asistencia Técnica | Balanzas y Servicios Dialka",
+  description:
+    "Centro oficial de atención y servicio técnico en Caracas y Maracay. Cotizaciones en menos de 15 minutos, calibración SENCAMER, mantenimiento preventivo y emergencias en planta en toda Venezuela.",
+  alternates: {
+    canonical: "/contacto",
+  },
+  openGraph: {
+    title: "Contacto, Sedes y Asistencia Técnica | Balanzas y Servicios Dialka",
+    description:
+      "Conecte con nuestros ingenieros y talleres en Caracas y Maracay. Cotizaciones inmediatas, calibración con masas patrón SENCAMER y atención técnica industrial.",
+    url: `${SITE_CONFIG.url}/contacto`,
+    siteName: SITE_CONFIG.name,
+    images: [
+      {
+        url: "/images/og-dialka.png",
+        width: 1200,
+        height: 630,
+        alt: "Sedes y Centro de Contacto Dialka en Caracas y Maracay",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contacto y Sedes Oficiales | Balanzas Dialka",
+    description:
+      "Sedes operativas en Caracas y Maracay. Cobertura metrológica nacional y atención técnica industrial.",
+    images: ["/images/og-dialka.png"],
+  },
+};
 
+export default function ContactoPage() {
   return (
     <>
       {/* ── 1. HEADER DE PÁGINA ENRIQUECIDO Y DINÁMICO ── */}
@@ -78,7 +105,7 @@ export default function ContactoPage() {
                 </a>
 
                 <a
-                  href={`https://wa.me/${CONTACT.whatsapp}`}
+                  href={`https://wa.me/${SITE_CONFIG.contact.whatsappNumber}`}
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center gap-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold px-4 py-3 rounded-xl transition-all text-xs sm:text-sm"
@@ -184,7 +211,7 @@ export default function ContactoPage() {
                 </p>
               </div>
 
-              <ContactSedesDashboard onCopy={copyToClipboard} />
+              <ContactSedesDashboard />
             </div>
           </div>
         </div>

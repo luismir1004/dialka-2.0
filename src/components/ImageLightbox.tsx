@@ -12,6 +12,7 @@ import {
   Tag,
   Maximize2,
 } from "lucide-react";
+import { SITE_CONFIG } from "@/lib/config";
 
 export interface LightboxItem {
   id?: string | number;
@@ -40,7 +41,7 @@ export function ImageLightbox({
   items,
   currentIndex,
   onIndexChange,
-  whatsappNumber = "584144510000",
+  whatsappNumber = SITE_CONFIG.contact.whatsappNumber,
 }: ImageLightboxProps) {
   const currentItem = items[currentIndex];
 

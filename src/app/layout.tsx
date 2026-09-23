@@ -5,6 +5,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 import { ToastProvider } from "@/context/ToastContext";
+import { SITE_CONFIG } from "@/lib/config";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -12,7 +13,7 @@ const inter = Inter({
   display: "swap",
 });
 
-const baseUrl = "https://dialka-2-0.vercel.app";
+const baseUrl = SITE_CONFIG.url;
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
@@ -67,8 +68,8 @@ export const metadata: Metadata = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  "name": "Balanzas y Servicios Dialka, S.A.",
-  "alternateName": ["Dialka", "Balanzas Dialka", "Dialka Pesaje Industrial"],
+  "name": SITE_CONFIG.name,
+  "alternateName": [SITE_CONFIG.shortName, "Balanzas Dialka", "Dialka Pesaje Industrial"],
   "url": baseUrl,
   "logo": `${baseUrl}/images/logo-dialka.svg`,
   "image": `${baseUrl}/images/og-dialka.png`,
@@ -76,7 +77,7 @@ const jsonLd = {
     "Líderes en Venezuela desde 2001 en venta, alquiler, calibración trazable y servicio técnico de básculas industriales, comerciales y agropecuarias con acreditación SENCAMER.",
   "foundingDate": "2001",
   "priceRange": "$$",
-  "telephone": "+58-414-2770024",
+  "telephone": `+${SITE_CONFIG.contact.whatsappNumber}`,
   "address": [
     {
       "@type": "PostalAddress",

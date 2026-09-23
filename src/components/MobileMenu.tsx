@@ -9,14 +9,17 @@ import {
   Wrench,
   Scale,
   Package,
+  HardHat,
   CalendarDays,
   Monitor,
   Phone,
   ArrowRight,
   X,
   ExternalLink,
+  type LucideIcon,
 } from "lucide-react";
-import { CONTACT } from "@/lib/data";
+import { NAV_LINKS } from "@/lib/data";
+import { SITE_CONFIG } from "@/lib/config";
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -25,51 +28,41 @@ interface MobileMenuProps {
   mcyPhone?: string;
 }
 
-// Las 7 pantallas principales oficiales de Dialka 2.0
-const MAIN_SCREENS = [
-  {
-    label: "Inicio",
-    href: "/",
+// Metadatos visuales por ruta oficial
+const NAV_ITEM_META: Record<string, { desc: string; icon: LucideIcon }> = {
+  "/": {
     desc: "Portal central y simulador metrológico",
     icon: Home,
   },
-  {
-    label: "Servicio Técnico",
-    href: "/servicios",
+  "/servicios": {
     desc: "Calibración trazable y mantenimiento en planta",
     icon: Wrench,
   },
-  {
-    label: "Equipos SENCAMER",
-    href: "/sencamer",
+  "/sencamer": {
     desc: "Aprobación de modelo legal metrológica",
     icon: Scale,
   },
-  {
-    label: "Catálogo de Productos",
-    href: "/productos",
+  "/productos": {
     desc: "Básculas industriales, comerciales y pesas",
     icon: Package,
   },
-  {
-    label: "Alquiler de Equipos",
-    href: "/alquiler",
+  "/proyectos": {
+    desc: "Galería de montajes y calibración en campo",
+    icon: HardHat,
+  },
+  "/alquiler": {
     desc: "Sistemas portátiles 20T y 40T para zafras",
     icon: CalendarDays,
   },
-  {
-    label: "Software de Pesaje",
-    href: "/software",
+  "/software": {
     desc: "5 sistemas propios para camiones y silos",
     icon: Monitor,
   },
-  {
-    label: "Contactos y Sedes",
-    href: "/contacto",
+  "/contacto": {
     desc: "Sedes operativas en Caracas y Maracay",
     icon: Phone,
   },
-];
+};
 
 export function MobileMenu({
   isOpen,
@@ -132,23 +125,25 @@ export function MobileMenu({
         </button>
       </div>
 
-      {/* ── NAVEGACIÓN COMERCIAL LIMPIA: LAS 7 PANTALLAS PRINCIPALES ── */}
+      {/* ── NAVEGACIÓN COMERCIAL: ENLACES DESDE NAV_LINKS (INCLUYENDO PROYECTOS) ── */}
       <div className="px-4 sm:px-6 py-3 sm:py-4 overflow-y-auto flex-1 space-y-2">
         <nav className="space-y-2" aria-label="Navegación principal">
-          {MAIN_SCREENS.map((screen, idx) => {
+          {NAV_LINKS.map((link, idx) => {
             const isActive =
-              screen.href === "/"
+              link.href === "/"
                 ? pathname === "/"
-                : pathname.startsWith(screen.href);
-            const IconComp = screen.icon;
+                : pathname.startsWith(link.href);
+            const meta = NAV_ITEM_META[link.href];
+            const IconComp = meta?.icon || Home;
+            const desc = meta?.desc || "";
 
             return (
               <Link
-                key={screen.href}
-                href={screen.href}
+                key={link.href}
+                href={link.href}
                 onClick={onClose}
                 style={{
-                  transitionDelay: isOpen ? `${idx * 45}ms` : "0ms",
+                  transitionDelay: isOpen ? `${idx * 40}ms` : "0ms",
                 }}
                 className={`flex items-center justify-between min-h-[52px] p-3 rounded-xl transition-all duration-300 transform active:scale-[0.98] group ${
                   isOpen
@@ -172,11 +167,13 @@ export function MobileMenu({
                   </div>
                   <div className="min-w-0">
                     <div className="text-base sm:text-lg font-semibold leading-tight truncate">
-                      {screen.label}
+                      {link.label}
                     </div>
-                    <p className="text-xs text-slate-500 font-normal truncate mt-0.5">
-                      {screen.desc}
-                    </p>
+                    {desc && (
+                      <p className="text-xs text-slate-500 font-normal truncate mt-0.5">
+                        {desc}
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -198,7 +195,7 @@ export function MobileMenu({
       <div className="p-4 sm:p-5 border-t border-slate-200 bg-gradient-to-b from-slate-50 to-slate-100/90 space-y-3 shrink-0">
         {/* Botón Principal de Cotización Inmediata por WhatsApp con Glow */}
         <a
-          href={`https://wa.me/${CONTACT.whatsapp}`}
+          href={`https://wa.me/${SITE_CONFIG.contact.whatsappNumber}`}
           target="_blank"
           rel="noreferrer"
           className="w-full inline-flex items-center justify-center gap-2.5 min-h-[50px] bg-gradient-to-r from-[#22c55e] via-[#16a34a] to-[#15803d] hover:from-[#16a34a] hover:to-[#15803d] active:scale-[0.98] text-white font-bold py-3.5 px-4 rounded-xl shadow-md shadow-emerald-600/20 text-sm sm:text-base transition-all duration-200 cursor-pointer group"

@@ -78,10 +78,10 @@ export function ToastProvider({ children }: { children: ReactNode }) {
     <ToastContext.Provider value={{ toast, copyToClipboard }}>
       {children}
 
-      {/* ── CONTENEDOR FLOTANTE TOAST ── */}
+      {/* ── CONTENEDOR FLOTANTE TOAST (ESQUINA SUPERIOR DERECHA PARA EVITAR COLISIÓN CON WHATSAPP) ── */}
       <div
         aria-live="assertive"
-        className="fixed bottom-5 right-5 z-50 flex flex-col gap-2.5 max-w-sm w-full pointer-events-none px-4 sm:px-0"
+        className="fixed top-20 right-5 z-50 flex flex-col gap-2.5 max-w-sm w-full pointer-events-none px-4 sm:px-0"
       >
         {toasts.map((t) => (
           <div

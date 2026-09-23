@@ -11,7 +11,8 @@ import {
   ShieldCheck,
   MessageSquare,
 } from "lucide-react";
-import { NAV_LINKS, CONTACT } from "@/lib/data";
+import { NAV_LINKS } from "@/lib/data";
+import { SITE_CONFIG } from "@/lib/config";
 import { MobileMenu } from "@/components/MobileMenu";
 
 export function Header() {
@@ -48,11 +49,8 @@ export function Header() {
     };
   }, [menuOpen]);
 
-  const ccsPhone =
-    ("main" in CONTACT.headquarters[0].phones
-      ? CONTACT.headquarters[0].phones.main
-      : "") || "(+58 414) 277.00.24";
-  const mcyPhone = "0243-234.33.60 / 234.33.72";
+  const ccsPhone = SITE_CONFIG.contact.phones.caracas;
+  const mcyPhone = SITE_CONFIG.contact.phones.maracay;
 
   return (
     <>
@@ -90,7 +88,7 @@ export function Header() {
 
             {/* WhatsApp Directo */}
             <a
-              href="https://wa.me/584142320610"
+              href={`https://wa.me/${SITE_CONFIG.contact.whatsappNumber}`}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-1 text-emerald-200 hover:text-white active:scale-95 transition-all py-0.5 px-2 rounded-md bg-emerald-950/40 border border-emerald-500/30 shrink-0"
@@ -131,14 +129,14 @@ export function Header() {
 
               {/* WhatsApp Oficial */}
               <a
-                href="https://wa.me/584142320610"
+                href={`https://wa.me/${SITE_CONFIG.contact.whatsappNumber}`}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-1.5 text-emerald-300 hover:text-white transition-colors py-0.5 group font-bold"
                 title="WhatsApp Directo Atención Comercial"
               >
                 <MessageSquare size={11} className="text-emerald-400 shrink-0" />
-                <span>WhatsApp: +58 (414) 232.06.10</span>
+                <span>WhatsApp: {ccsPhone}</span>
               </a>
             </div>
 
@@ -236,7 +234,7 @@ export function Header() {
           {/* Botón de Contacto Rápido en Escritorio */}
           <div className="hidden lg:flex items-center gap-3">
             <a
-              href={`https://wa.me/${CONTACT.whatsapp}`}
+              href={`https://wa.me/${SITE_CONFIG.contact.whatsappNumber}`}
               target="_blank"
               rel="noreferrer"
               className="flex items-center gap-2 bg-[#991b1b] hover:bg-[#7f1d1d] text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-all shadow-xs hover:shadow-sm cursor-pointer"

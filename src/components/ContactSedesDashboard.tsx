@@ -15,6 +15,7 @@ import {
   Check,
 } from "lucide-react";
 import { CONTACT } from "@/lib/data";
+import { useToast } from "@/context/ToastContext";
 
 interface SedeStatus {
   isOpen: boolean;
@@ -66,13 +67,15 @@ function computeSedeStatus(): SedeStatus {
 }
 
 interface ContactSedesDashboardProps {
-  onCopy: (text: string, label: string) => void;
+  onCopy?: (text: string, label: string) => void;
 }
 
-export function ContactSedesDashboard({ onCopy }: ContactSedesDashboardProps) {
+export function ContactSedesDashboard({ onCopy }: ContactSedesDashboardProps = {}) {
   const [activeCity, setActiveCity] = useState<"caracas" | "maracay">("caracas");
   const [status, setStatus] = useState<SedeStatus>(computeSedeStatus);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
+  const { copyToClipboard } = useToast();
+  const copyFn = onCopy || copyToClipboard;
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -82,7 +85,7 @@ export function ContactSedesDashboard({ onCopy }: ContactSedesDashboardProps) {
   }, []);
 
   const handleCopyField = (text: string, label: string, key: string) => {
-    onCopy(text, label);
+    copyFn(text, label);
     setCopiedKey(key);
     setTimeout(() => setCopiedKey(null), 2000);
   };

@@ -1,3 +1,5 @@
+import { SITE_CONFIG } from "./config";
+
 // ============================================================
 // DIALKA 2.0 — Fuente Única de Contenido (Inventario Auditado)
 // Fuente: https://www.dialka.com.ve/
@@ -50,19 +52,13 @@ export const CONTACT = {
       schedule: "Lunes a Viernes, 08:00 – 17:00",
     },
   ],
-  whatsapp: "584142320610",
+  whatsapp: SITE_CONFIG.contact.whatsappNumber,
+  whatsappSupport: SITE_CONFIG.contact.whatsappSupport,
   socials: [
-    { name: "TikTok", url: "https://www.tiktok.com/@balanzasyservicios" },
-    { name: "Facebook", url: "https://www.facebook.com/balanzas.dialka.1238" },
     {
       name: "Instagram",
-      url: "https://www.instagram.com/balanzasyserviciosdialka",
+      url: SITE_CONFIG.social.instagram,
     },
-    {
-      name: "YouTube",
-      url: "https://www.youtube.com/channel/UCjFr4xTP8nk2Xgkr0c_G6SQ",
-    },
-    { name: "LinkedIn", url: "https://linkedin.com/in/balanzasdialka" },
   ],
 };
 

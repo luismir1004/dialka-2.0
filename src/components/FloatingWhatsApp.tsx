@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { MessageCircle, X } from "lucide-react";
-import { CONTACT } from "@/lib/data";
+import { SITE_CONFIG } from "@/lib/config";
 
 export function FloatingWhatsApp() {
   const [isVisible, setIsVisible] = useState(false);
@@ -53,12 +53,12 @@ export function FloatingWhatsApp() {
 
       {/* Botón Principal WhatsApp */}
       <a
-        href={`https://wa.me/${CONTACT.whatsapp}?text=Hola%20Dialka,%20estoy%20en%20la%20web%20y%20deseo%20solicitar%20asesor%C3%ADa%20técnica%20o%20cotización`}
+        href={`https://wa.me/${SITE_CONFIG.contact.whatsappNumber}?text=Hola%20Dialka,%20estoy%20en%20la%20web%20y%20deseo%20solicitar%20asesor%C3%ADa%20técnica%20o%20cotización`}
         target="_blank"
         rel="noreferrer"
         className="group relative flex items-center justify-center w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white shadow-xl shadow-emerald-950/30 transition-all duration-200 border-2 border-white/80 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-400"
         aria-label="Chatear por WhatsApp con Balanzas Dialka"
-        title="Atención directa por WhatsApp (+58 414-277.00.24)"
+        title={`Atención directa por WhatsApp (${SITE_CONFIG.contact.phones.caracas})`}
       >
         {/* Pulse ring */}
         <span className="absolute -inset-1 rounded-full bg-emerald-500/30 animate-ping pointer-events-none" />
