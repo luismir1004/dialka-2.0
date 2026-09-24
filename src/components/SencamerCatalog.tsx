@@ -107,7 +107,7 @@ export function SencamerCatalog({
               {(selectedFilter !== "all" || searchQuery !== "") && (
                 <button
                   onClick={handleResetFilters}
-                  className="flex items-center gap-1 text-[#991b1b] hover:text-[#7f1d1d] hover:underline transition-colors px-2 py-1 text-xs cursor-pointer"
+                  className="flex items-center gap-1 text-[#7f1d1d] hover:text-[#450a0a] hover:underline transition-colors px-2 py-1 text-xs cursor-pointer font-bold"
                 >
                   <RotateCcw size={13} />
                   <span>Restablecer</span>
@@ -191,7 +191,7 @@ export function SencamerCatalog({
                           href={`https://wa.me/${whatsappNumber}?text=Hola,%20solicito%20cotización%20del%20equipo%20SENCAMER%20de%20capacidad:%20${encodeURIComponent(model.capacity)}%20(${encodeURIComponent(model.use)})`}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex items-center gap-1 text-xs font-bold text-[#991b1b] hover:text-[#7f1d1d] transition-colors p-1"
+                          className="inline-flex items-center gap-1 text-xs font-bold text-[#7f1d1d] hover:text-[#450a0a] transition-colors p-1"
                         >
                           <span>Cotizar</span>
                           <ArrowRight size={12} />

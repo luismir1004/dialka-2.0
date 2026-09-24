@@ -5,7 +5,11 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 import { ToastProvider } from "@/context/ToastContext";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { SITE_CONFIG } from "@/lib/config";
+
+// PWA manifest link
+const manifestUrl = "/manifest.json";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -120,8 +124,39 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <link rel="manifest" href={manifestUrl} />
+        <meta name="theme-color" content="#991b1b" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="Dialka" />
+        
+        {/* Google Analytics 4 */}
+        <script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-XXXXXXXXXX"}`}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-XXXXXXXXXX"}', {
+                page_title: window.document.title,
+                page_location: window.location.href,
+              });
+            `,
+          }}
+        />
       </head>
       <body className="flex flex-col min-h-screen">
+        {/* Skip Link para accesibilidad WCAG AA */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#991b1b] focus:text-white focus:rounded-lg focus:shadow-lg transition-all"
+        >
+          Saltar al contenido principal
+        </a>
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -133,12 +168,14 @@ export default function RootLayout({
             `,
           }}
         />
-        <ToastProvider>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-          <FloatingWhatsApp />
-        </ToastProvider>
+        <ErrorBoundary>
+          <ToastProvider>
+            <Header />
+            <main id="main-content" className="flex-1">{children}</main>
+            <Footer />
+            <FloatingWhatsApp />
+          </ToastProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );

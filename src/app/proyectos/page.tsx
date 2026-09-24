@@ -1,19 +1,85 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { FIELD_PROJECTS, CONTACT } from "@/lib/data";
-import { HardHat, ChevronRight, Phone, ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
+import { FIELD_PROJECTS, FIELD_VIDEOS, CONTACT } from "@/lib/data";
+import {
+  HardHat,
+  ChevronRight,
+  Phone,
+  ArrowRight,
+  ShieldCheck,
+  Sparkles,
+  Award,
+  Truck,
+  Building2,
+  CheckCircle,
+} from "lucide-react";
 import { ProjectsGallery } from "@/components/ProjectsGallery";
+import { ProjectsVideoGallery } from "@/components/ProjectsVideoGallery";
 
 export const metadata: Metadata = {
   title: "Proyectos y Obras en Campo | Balanzas y Servicios Dialka",
   description:
-    "Galería fotográfica de proyectos ejecutados en Venezuela: calibración con camión patrón en silos, obra civil y montaje de básculas camioneras de 18m, básculas ganaderas y plantas industriales.",
+    "Galería fotográfica y videos reales de proyectos ejecutados en Venezuela: calibración con camión patrón en silos, obra civil y montaje de básculas camioneras de 80TN, salas limpias farmacéuticas y pesaje pecuario.",
 };
 
+const STATS = [
+  {
+    icon: Award,
+    value: "+25 Años",
+    label: "Trayectoria en Campo",
+    sub: "Operando en Venezuela",
+  },
+  {
+    icon: Truck,
+    value: "+180",
+    label: "Básculas Instaladas",
+    sub: "Camioneras y pesadas",
+  },
+  {
+    icon: Building2,
+    value: "14 Estados",
+    label: "Cobertura Nacional",
+    sub: "Sedes Caracas y Maracay",
+  },
+  {
+    icon: CheckCircle,
+    value: "100%",
+    label: "Trazable SENCAMER",
+    sub: "Patrones certificados",
+  },
+];
+
 export default function ProyectosPage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Proyectos y Obras en Campo - Balanzas Dialka",
+    description:
+      "Registro de obras civiles, montaje estructural de básculas camioneras y calibración metrológica en Venezuela.",
+    itemListElement: FIELD_PROJECTS.map((proj, idx) => ({
+      "@type": "ListItem",
+      position: idx + 1,
+      item: {
+        "@type": "CreativeWork",
+        name: proj.title,
+        description: proj.description,
+        locationCreated: {
+          "@type": "Place",
+          name: proj.location,
+        },
+      },
+    })),
+  };
+
   return (
     <>
+      {/* ── JSON-LD SCHEMA STRUCTURED DATA ── */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       {/* ── HEADER DE PÁGINA CON FOTOGRAFÍA INDUSTRIAL ── */}
       <section className="relative bg-gradient-to-b from-slate-50 via-white to-slate-50 border-b border-slate-200 py-8 sm:py-12 md:py-16 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -43,7 +109,7 @@ export default function ProyectosPage() {
               </div>
 
               <p className="text-slate-600 max-w-2xl text-sm sm:text-base lg:text-lg leading-relaxed mb-5 sm:mb-6">
-                Más de dos décadas ejecutando obras civiles especializadas, montaje de plataformas de pesaje pesado y operativos de calibración metrológica con camión patrón en los principales estados agroindustriales de Venezuela.
+                Más de dos décadas ejecutando obras civiles especializadas, montaje de plataformas de pesaje pesado y operativos de calibración metrológica con camión patrón en los principales polos industriales y agropecuarios del país.
               </p>
 
               <div className="flex flex-wrap items-center gap-3">
@@ -71,8 +137,8 @@ export default function ProyectosPage() {
               <div className="relative rounded-2xl bg-white p-2.5 sm:p-3 border border-slate-200/90 shadow-xl shadow-slate-200/50 group">
                 <div className="relative aspect-16/10 sm:aspect-4/3 w-full rounded-xl overflow-hidden bg-slate-100">
                   <Image
-                    src="/images/proyectos/montaje-camionera.jpg"
-                    alt="Montaje de Báscula Camionera Dialka en Campo"
+                    src="/images/proyectos/bascula-camionera-sobresuelo-2.jpg"
+                    alt="Báscula Camionera Sobresuelo con Técnicos Dialka en Campo"
                     fill
                     priority
                     sizes="(max-width: 1024px) 100vw, 40vw"
@@ -112,7 +178,42 @@ export default function ProyectosPage() {
         </div>
       </section>
 
-      {/* ── GALERÍA DE PROYECTOS CON FILTROS ── */}
+      {/* ── BARRA DE MÉTRICAS Y CREDIBILIDAD B2B ── */}
+      <section className="bg-slate-900 text-white border-b border-slate-800 py-8 sm:py-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+            {STATS.map((stat, i) => {
+              const Icon = stat.icon;
+              return (
+                <div
+                  key={i}
+                  className="flex items-center gap-3.5 p-3 rounded-xl bg-slate-800/40 border border-slate-700/60"
+                >
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-red-950/80 border border-red-500/30 flex items-center justify-center shrink-0">
+                    <Icon className="text-red-400 w-5 h-5 sm:w-6 sm:h-6" />
+                  </div>
+                  <div>
+                    <div className="text-lg sm:text-2xl font-black text-white leading-tight">
+                      {stat.value}
+                    </div>
+                    <div className="text-xs font-bold text-slate-300">
+                      {stat.label}
+                    </div>
+                    <div className="text-[11px] text-slate-400">
+                      {stat.sub}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ── REGISTRO AUDIOVISUAL: VIDEOS DE OPERATIVOS EN CAMPO ── */}
+      <ProjectsVideoGallery videos={FIELD_VIDEOS} />
+
+      {/* ── GALERÍA DE PROYECTOS CON FILTROS AVANZADOS ── */}
       <ProjectsGallery
         projects={FIELD_PROJECTS}
         whatsappNumber={CONTACT.whatsapp}

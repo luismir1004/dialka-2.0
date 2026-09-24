@@ -62,6 +62,8 @@ export const CONTACT = {
   ],
 };
 
+export type HeadquarterInfo = (typeof CONTACT.headquarters)[number];
+
 export const NAV_LINKS = [
   { label: "Inicio", href: "/" },
   { label: "Servicios", href: "/servicios" },
@@ -72,117 +74,165 @@ export const NAV_LINKS = [
   { label: "Software", href: "/software" },
   { label: "Contacto", href: "/contacto" },
 ];
+export const FIELD_VIDEOS = [
+  {
+    id: "video-montaje-modulos",
+    title: "Montaje de Módulos de Báscula Camionera",
+    description:
+      "Operativo de instalación de módulos de plataforma de pesaje vehicular sobresuelo con equipo técnico Dialka en campo.",
+    src: "/videos/bascula-camionera-1.mp4",
+    poster: "/images/proyectos/bascula-camionera-volvo-frontal.jpg",
+  },
+  {
+    id: "video-calibracion-celdas",
+    title: "Calibración de Celdas de Carga en Fosa",
+    description:
+      "Verificación y ajuste metrológico de celdas de carga de compresión en las tapas de acceso de la báscula camionera.",
+    src: "/videos/bascula-camionera-2.mp4",
+    poster: "/images/proyectos/bascula-camionera-celdas-detalle.jpg",
+  },
+  {
+    id: "video-prueba-pesaje",
+    title: "Prueba de Pesaje con Gandola Volvo",
+    description:
+      "Prueba de funcionamiento y calibración con gandola Volvo cargada sobre la báscula camionera sobresuelo recién instalada.",
+    src: "/videos/bascula-camionera-3.mp4",
+    poster: "/images/proyectos/bascula-camionera-sobresuelo-1.jpg",
+  },
+];
 
 export const FIELD_PROJECTS = [
   {
     id: "calibracion-silos-portuguesa",
-    title: "Calibración con Camión Patrón en Silos de Grano",
+    title: "Calibración con Camión Patrón y Grúa Hidráulica en Silos",
     category: "Calibración y Metrología",
     location: "Acarigua, Edo. Portuguesa",
     state: "Portuguesa",
     description:
       "Operativo de calibración y certificación metrológica utilizando camión dotado de grúa hidráulica y masas patrón certificadas de 500 kg y 1.000 kg en complejo de silos agroindustriales.",
     image: "/images/proyectos/camion-calibrador.jpg",
-    specs: ["Pesas patrón 1.000 kg", "Grúa hidráulica articulada", "Trazabilidad SENCAMER"],
+    specs: ["Pesas patrón certificadas 1.000 kg", "Grúa hidráulica articulada", "Trazabilidad SENCAMER"],
   },
   {
     id: "montaje-camionera-aragua",
-    title: "Obra Civil y Montaje de Báscula Camionera 18m",
+    title: "Obra Civil y Montaje de Báscula Camionera Sobresuelo 80TN",
     category: "Pesaje Vehicular Pesado",
     location: "Cagua, Edo. Aragua",
     state: "Aragua",
     description:
-      "Construcción de fosa de concreto armado, colocación de vigas I-Beam estructurales y montaje de plataforma de pesaje vehicular de 18 metros con celdas de carga de compresión de alta capacidad.",
-    image: "/images/proyectos/montaje-camionera.jpg",
-    specs: ["Plataforma 18 metros", "Vigas estructurales I-Beam", "Capacidad 80 Toneladas"],
+      "Construcción e instalación de báscula camionera sobresuelo con módulos de acero con recubrimiento antideslizante, barandas de seguridad y tapas de acceso a celdas de carga para mantenimiento.",
+    image: "/images/proyectos/bascula-camionera-sobresuelo-1.jpg",
+    specs: ["Plataforma modular antideslizante", "Barandas industriales de seguridad", "Capacidad 80 Toneladas"],
+  },
+  {
+    id: "pesaje-camionera-volvo-pruebas",
+    title: "Prueba de Carga y Calibración con Gandola Volvo 80TN",
+    category: "Pesaje Vehicular Pesado",
+    location: "Guatire, Edo. Miranda",
+    state: "Miranda",
+    description:
+      "Prueba de calibración y verificación de lectura de peso con gandola Volvo cargada sobre báscula camionera sobresuelo. Verificación dinámica de distribución de carga por ejes.",
+    image: "/images/proyectos/bascula-camionera-volvo-plataforma.jpg",
+    specs: ["Prueba en carga real con gandola", "Verificación dinámica de ejes", "Lectura en tiempo real"],
+  },
+  {
+    id: "instalacion-grua-modulos",
+    title: "Montaje Estructural de Módulos de Pesaje con Grúa Pluma",
+    category: "Pesaje Vehicular Pesado",
+    location: "Valencia, Edo. Carabobo",
+    state: "Carabobo",
+    description:
+      "Descarga e instalación de módulos de plataforma de pesaje vehicular utilizando grúa articulada sobre camión. Ensamble de vigas principales y nivelación estructural en patio industrial.",
+    image: "/images/proyectos/bascula-camionera-instalacion-grua.jpg",
+    specs: ["Maniobra de izamiento con grúa", "Ensamble estructural de acero", "Nivelación milimétrica"],
+  },
+  {
+    id: "planta-farmaceutica-dosificacion",
+    title: "Celdas de Carga en Tanques de Dosificación Farmacéutica SN-1000L",
+    category: "Control Industrial y Tanques",
+    location: "Caracas, Distrito Capital",
+    state: "Distrito Capital",
+    description:
+      "Instalación y calibración de celdas de carga en tanques de dosificación SN-1000L (1 m³) de acero inoxidable en área limpia bajo certificación BPM con sistema de ósmosis y agitadores industriales.",
+    image: "/images/proyectos/planta-farmaceutica-tanque-dosificacion.jpg",
+    specs: ["Tanques SN-1000L · 1 m³", "Sala limpia bajo norma BPM", "Calibración de dosificación"],
+  },
+  {
+    id: "tecnico-area-limpia-bioseguridad",
+    title: "Ajuste Metrológico de Reactores en Sala Limpia Certificada",
+    category: "Control Industrial y Tanques",
+    location: "Guarenas, Edo. Miranda",
+    state: "Miranda",
+    description:
+      "Protocolo de calibración y ajuste de balanzas y celdas de pesaje en ambiente aséptico controlado. Ejecutado por personal técnico Dialka con indumentaria de bioseguridad Tyvek bajo normativa GMP.",
+    image: "/images/proyectos/tecnico-area-limpia.jpg",
+    specs: ["Protocolo de bioseguridad Tyvek", "Celdas herméticas IP68", "Certificación GMP / BPM"],
+  },
+  {
+    id: "calibracion-celdas-fosa",
+    title: "Nivelación y Calibración de Celdas de Carga en Fosa",
+    category: "Calibración y Metrología",
+    location: "Barquisimeto, Edo. Lara",
+    state: "Lara",
+    description:
+      "Verificación metrológica, ecualización de esquinas en caja sumadora y ajuste de celdas de compresión a través de las tapas de inspección de la plataforma de pesaje vehicular.",
+    image: "/images/proyectos/bascula-camionera-calibracion-celdas.jpg",
+    specs: ["Ajuste en tapas de acceso", "Ecualización de caja sumadora", "Prueba de excentricidad"],
+  },
+  {
+    id: "modernizacion-camionera-techada",
+    title: "Modernización Electrónica de Romana a Báscula Camionera Digital",
+    category: "Pesaje Vehicular Pesado",
+    location: "Maracay, Edo. Aragua",
+    state: "Aragua",
+    description:
+      "Conversión de antigua romana mecánica a sistema full electrónico con celdas de compresión canister de 30 toneladas, caja sumadora hermética IP68 y terminal digital en galpón industrial techado.",
+    image: "/images/proyectos/bascula-camionera-techada.jpg",
+    specs: ["Conversión mecánica a digital", "Celdas Canister 30TN IP68", "Repetidor remoto LED"],
   },
   {
     id: "bascula-ganadera-guarico",
-    title: "Instalación de Báscula Ganadera en Finca",
+    title: "Instalación de Báscula Ganadera en Manga de Manejo Pecuario",
     category: "Pesaje Agropecuario",
     location: "Calabozo, Edo. Guárico",
     state: "Guárico",
     description:
       "Suministro y montaje de báscula ganadera para pesaje individual y colectivo de ganado vacuno en manga de manejo, equipada con indicador digital hermético para intemperie.",
     image: "/images/proyectos/bascula-ganadera.jpg",
-    specs: ["Estructura galvanizada", "Indicador IP65 intemperie", "Capacidad 3.000 kg"],
-  },
-  {
-    id: "metrologia-silos-carabobo",
-    title: "Inspección y Ajuste Metrológico en Planta Industrial",
-    category: "Control Industrial",
-    location: "Valencia, Edo. Carabobo",
-    state: "Carabobo",
-    description:
-      "Servicio técnico especializado en ajuste de celdas de carga y verificación de sistemas electrónicos de pesaje en tolvas de dosificación y tanques de almacenamiento industrial.",
-    image: "/images/proyectos/inspeccion-planta.jpg",
-    specs: ["Celdas de carga herméticas", "Terminal digital industrial", "Prueba de repetibilidad"],
+    specs: ["Estructura reforzada galvanizada", "Indicador IP65 intemperie", "Capacidad 3.000 kg"],
   },
   {
     id: "calibracion-masas-barinas",
-    title: "Certificación Metrológica de Báscula de Camiones 60TN",
+    title: "Mantenimiento Preventivo y Certificación en Central Azucarero",
     category: "Calibración y Metrología",
     location: "Barinas, Edo. Barinas",
     state: "Barinas",
     description:
-      "Verificación de excentricidad, repetibilidad y linealidad con pesas patrón clase M1 en central azucarero del estado Barinas, emitiendo informe técnico de calibración.",
-    image: "/images/servicios/calibracion-masas.jpg",
-    specs: ["Tolerancia COVENIN 2548", "Masas patrón clase M1", "Informe SENCAMER"],
+      "Verificación de excentricidad, repetibilidad y linealidad con pesas patrón clase M1 en central azucarero del estado Barinas, emitiendo informe técnico y certificado de calibración.",
+    image: "/images/proyectos/bascula-camionera-mantenimiento.jpg",
+    specs: ["Norma COVENIN 2548", "Masas patrón clase M1", "Informe técnico SENCAMER"],
   },
   {
-    id: "pesaje-ejes-zulia",
-    title: "Sistema de Pesaje de Ejes Portátil en Puerto Comercial",
-    category: "Pesaje Vehicular Pesado",
-    location: "Maracaibo, Edo. Zulia",
-    state: "Zulia",
+    id: "bateria-tanques-carabobo",
+    title: "Pesaje Continuo en Batería de Tanques de Almacenamiento",
+    category: "Control Industrial y Tanques",
+    location: "San Diego, Edo. Carabobo",
+    state: "Carabobo",
     description:
-      "Puesta en marcha de plataformas portátiles de pesaje por eje para control de sobrecarga de gandolas de carga pesada y contenedores en zona portuaria del Lago de Maracaibo.",
-    image: "/images/alquiler/ejes-portatil.jpg",
-    specs: ["Capacidad 40 TN por eje", "Inalámbrico RF", "Software de Pesaje Ejes"],
+      "Montaje de módulos de pesaje con celdas de carga autocentrantes bajo batería de 4 tanques industriales de proceso continuo y tolvas de dosificación con enlace a pantalla de control central.",
+    image: "/images/proyectos/planta-farmaceutica-tanques-panoramica.jpg",
+    specs: ["Batería de 4 tanques de proceso", "Módulos de pesaje autocentrantes", "Monitoreo continuo 24/7"],
   },
   {
-    id: "automatizacion-silos-miranda",
-    title: "Automatización y Software de Tolvas en Planta Procesadora",
-    category: "Software y Automatización",
-    location: "Guatire, Edo. Miranda",
-    state: "Miranda",
-    description:
-      "Integración de celdas de carga con indicador inteligente y software Dialka WeighMaster para dosificación automática de mezclas en seco y control de inventarios.",
-    image: "/images/software/software-camiones.jpg",
-    specs: ["Conectividad RS-485 / Ethernet", "Dosificación automática", "Reportes en Excel"],
-  },
-  {
-    id: "modernizacion-camionera-caracas",
-    title: "Modernización Electrónica de Báscula Camionera 80TN",
-    category: "Pesaje Vehicular Pesado",
-    location: "Caracas, Distrito Capital",
-    state: "Distrito Capital",
-    description:
-      "Conversión de antigua romana mecánica a sistema full electrónico con celdas de compresión canister de 30 toneladas, caja sumadora hermética IP68 y terminal digital.",
-    image: "/images/proyectos/montaje-camionera.jpg",
-    specs: ["Celdas Canister IP68", "Supresores de transitorios", "Doble visor LED remoto"],
-  },
-  {
-    id: "celdas-tanques-lara",
-    title: "Pesaje Electrónico de Silos Verticales de Harina",
-    category: "Control Industrial",
-    location: "Barquisimeto, Edo. Lara",
-    state: "Lara",
-    description:
-      "Montaje de módulos de pesaje con celdas de carga autocentrantes bajo 4 silos verticales de 60 toneladas de capacidad en importante molino harinero larense.",
-    image: "/images/proyectos/inspeccion-planta.jpg",
-    specs: ["Módulos autocentrantes", "Protección contra viento/sismo", "Lectura continua 24/7"],
-  },
-  {
-    id: "laboratorio-calibracion-anzoategui",
-    title: "Calibración de Balanzas de Precisión en Complejo Químico",
+    id: "metrologia-industrial-yaracuy",
+    title: "Inspección Técnica Integral y Puesta a Punto en Planta de Harina",
     category: "Calibración y Metrología",
-    location: "Barcelona, Edo. Anzoátegui",
-    state: "Anzoátegui",
+    location: "San Felipe, Edo. Yaracuy",
+    state: "Yaracuy",
     description:
-      "Mantenimiento preventivo, ajuste fino con masas patrón clase E2 y calibración trazable SENCAMER para balanzas analíticas en laboratorios de control de calidad.",
-    image: "/images/sencamer/balanza-certificada.jpg",
-    specs: ["Patrones clase E2/F1", "Certificado de calibración", "Control de excentricidad"],
+      "Servicio técnico especializado en ajuste de celdas de carga, verificación de derivas electrónicas y calibración con masas certificadas en tolvas y básculas de recepción de materia prima.",
+    image: "/images/proyectos/tecnico-dialka-industrial.jpg",
+    specs: ["Revisión de cableado apantallado", "Ajuste de cero y span", "Etiquetado metrológico"],
   },
 ];
 

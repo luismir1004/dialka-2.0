@@ -218,11 +218,12 @@ export function Header() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className={`px-3.5 py-2 rounded-lg text-sm font-semibold transition-all duration-150 ${
+                    className={`px-3.5 py-2 rounded-lg text-sm font-semibold transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-[#991b1b] focus:ring-offset-2 ${
                       isActive
                         ? "bg-red-50 text-[#991b1b]"
                         : "text-slate-700 hover:text-[#991b1b] hover:bg-slate-50"
                     }`}
+                    aria-current={isActive ? "page" : undefined}
                   >
                     {link.label}
                   </Link>
@@ -248,7 +249,7 @@ export function Header() {
           <button
             type="button"
             onClick={() => setMenuOpen(!menuOpen)}
-            className="lg:hidden min-h-[44px] min-w-[44px] w-11 h-11 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 hover:text-[#991b1b] hover:bg-red-50 hover:border-red-200 active:scale-90 transition-all flex items-center justify-center cursor-pointer shadow-2xs"
+            className="lg:hidden min-h-[44px] min-w-[44px] w-11 h-11 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 hover:text-[#991b1b] hover:bg-red-50 hover:border-red-200 active:scale-90 transition-all flex items-center justify-center cursor-pointer shadow-2xs focus:outline-none focus:ring-2 focus:ring-[#991b1b] focus:ring-offset-2"
             aria-label={menuOpen ? "Cerrar menú de navegación" : "Abrir menú de navegación móvil"}
             aria-expanded={menuOpen}
             aria-controls="mobile-nav-panel"

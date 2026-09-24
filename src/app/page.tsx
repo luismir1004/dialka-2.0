@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import {
   ArrowRight,
   Phone,
@@ -11,12 +12,23 @@ import {
 import { COMPANY, CONTACT, FIELD_PROJECTS } from "@/lib/data";
 import { RevealOnScroll } from "@/components/RevealOnScroll";
 import { ProjectsGallery } from "@/components/ProjectsGallery";
-import { LiveWeighingSimulator } from "@/components/LiveWeighingSimulator";
 import { SocialProofSection } from "@/components/SocialProofSection";
 import { HeroTextRotator } from "@/components/HeroTextRotator";
 import { MetricsBar } from "@/components/MetricsBar";
 import { MissionVisionTabs } from "@/components/MissionVisionTabs";
 import { ProductsCatalog } from "@/components/ProductsCatalog";
+
+// Dynamic imports para code splitting de componentes pesados
+const LiveWeighingSimulator = dynamic(() => import("@/components/LiveWeighingSimulator").then(mod => ({ default: mod.LiveWeighingSimulator })), {
+  loading: () => (
+    <div className="bg-slate-900 border border-slate-800 rounded-2xl p-10 text-center">
+      <div className="animate-pulse flex flex-col items-center gap-4">
+        <div className="w-16 h-16 bg-slate-800 rounded-full animate-spin border-4 border-slate-700 border-t-red-500" />
+        <p className="text-slate-400 text-sm">Cargando simulador metrológico...</p>
+      </div>
+    </div>
+  ),
+});
 
 export const metadata: Metadata = {
   title: "Inicio | Balanzas y Servicios Dialka",
@@ -37,8 +49,8 @@ export default function HomePage() {
             {/* Columna Izquierda: Mensaje Central y CTAs */}
             <div className="lg:col-span-7">
               <div>
-                {/* Status Badge Oficial con Antigüedad Exacta */}
-                <div className="inline-flex items-center gap-2 bg-red-50 border border-red-200/80 text-red-900 text-xs font-semibold px-3.5 sm:px-4 py-1.5 rounded-full mb-3 sm:mb-5 shadow-2xs max-w-full">
+                {/* Status Badge Oficial con Antigüedad Exacta - Mejorado contraste */}
+                <div className="inline-flex items-center gap-2 bg-red-50 border border-red-200/80 text-[#7f1d1d] text-xs font-semibold px-3.5 sm:px-4 py-1.5 rounded-full mb-3 sm:mb-5 shadow-2xs max-w-full">
                   <span className="relative flex h-2 w-2 shrink-0">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-red-700"></span>
@@ -101,6 +113,7 @@ export default function HomePage() {
                     fill
                     priority
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    quality={85}
                     className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
                   />
 

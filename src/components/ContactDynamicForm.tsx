@@ -1,104 +1,31 @@
 "use client";
 
-import { useState, useId } from "react";
-import {
-  Send,
-  Sparkles,
-  ShieldCheck,
-  CheckCircle2,
-  Copy,
-  Mail,
-  Phone,
-  RotateCcw,
-  MessageSquare,
-  Check,
-  CheckCheck,
-} from "lucide-react";
+import React, { useState, useId } from "react";
+import { Send, ShieldCheck } from "lucide-react";
 import { CONTACT } from "@/lib/data";
 import { useToast } from "@/context/ToastContext";
-
-interface PresetChip {
-  id: string;
-  label: string;
-  emoji: string;
-  urgency: "Normal" | "Prioritaria" | "Emergencia";
-  asunto: string;
-  mensajeTemplate: string;
-}
-
-const PRESET_CHIPS: PresetChip[] = [
-  {
-    id: "emergencia",
-    label: "Báscula Detenida / Emergencia",
-    emoji: "🚨",
-    urgency: "Emergencia",
-    asunto: "Emergencia en Planta (Báscula Detenida)",
-    mensajeTemplate:
-      "Báscula/balanza industrial detenida en planta por falla de celda o indicador. Requerimos visita técnica urgente para restablecer pesaje operativo.",
-  },
-  {
-    id: "sencamer",
-    label: "Calibración SENCAMER",
-    emoji: "⚖️",
-    urgency: "Prioritaria",
-    asunto: "Calibración Oficial & Certificado SENCAMER",
-    mensajeTemplate:
-      "Solicito cotización de servicio de calibración metrológica trazable SENCAMER para básculas/balanzas en nuestra planta con emisión de certificado.",
-  },
-  {
-    id: "compra",
-    label: "Cotizar Báscula o Balanza",
-    emoji: "📦",
-    urgency: "Normal",
-    asunto: "Cotización de Equipos Nuevos",
-    mensajeTemplate:
-      "Deseo asesoría y cotización para la adquisición de un nuevo equipo de pesaje (indicar modelo aproximado o capacidad requerida en kg o toneladas).",
-  },
-  {
-    id: "alquiler",
-    label: "Alquiler para Cosecha / Zafra",
-    emoji: "🚜",
-    urgency: "Normal",
-    asunto: "Alquiler de Báscula Portátil",
-    mensajeTemplate:
-      "Requerimos alquilar una báscula portátil por ejes (20T / 40T) para período de zafra/cosecha durante aproximadamente [X] meses.",
-  },
-  {
-    id: "software",
-    label: "Software WeighMaster",
-    emoji: "💻",
-    urgency: "Normal",
-    asunto: "Software de Pesaje de Camiones",
-    mensajeTemplate:
-      "Solicito información sobre el software Dialka WeighMaster para control de pesaje vehicular, tickets de romana y reportes de inventario.",
-  },
-  {
-    id: "mantenimiento",
-    label: "Mantenimiento Preventivo",
-    emoji: "🔧",
-    urgency: "Normal",
-    asunto: "Mantenimiento Preventivo de Balanzas",
-    mensajeTemplate:
-      "Deseamos agendar una jornada de inspección técnica, limpieza de fosas y mantenimiento preventivo para los equipos de pesaje de nuestra empresa.",
-  },
-];
+import { ContactPresetChips, type PresetChip } from "./contact/ContactPresetChips";
+import { WhatsAppLivePreview, type ContactFormState } from "./contact/WhatsAppLivePreview";
+import { ContactFormSuccess } from "./contact/ContactFormSuccess";
+import { sanitizeInput, validateEmail, validateVenezuelanPhone } from "./contact/validation";
 
 export function ContactDynamicForm() {
   const [selectedPreset, setSelectedPreset] = useState<string | null>(null);
   const [sent, setSent] = useState(false);
-  const [copiedFallback, setCopiedFallback] = useState(false);
   const { toast, copyToClipboard } = useToast();
 
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<ContactFormState>({
     nombre: "",
     empresa: "",
     telefono: "",
     email: "",
     ciudad: "",
     asunto: "",
-    urgencia: "Normal" as "Normal" | "Prioritaria" | "Emergencia",
+    urgencia: "Normal",
     mensaje: "",
   });
+
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   const nombreId = useId();
   const empresaId = useId();
@@ -142,7 +69,31 @@ export function ContactDynamicForm() {
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+
+    // Limpiar error en tiempo real si el usuario lo corrige
+    if (fieldErrors[name]) {
+      setFieldErrors((prev) => {
+        const updated = { ...prev };
+        delete updated[name];
+        return updated;
+      });
+    }
+  };
+
+  const handleBlur = (field: "email" | "telefono") => {
+    if (field === "email" && form.email.trim()) {
+      const emailRes = validateEmail(form.email);
+      if (!emailRes.valid && emailRes.error) {
+        setFieldErrors((prev) => ({ ...prev, email: emailRes.error! }));
+      }
+    } else if (field === "telefono" && form.telefono.trim()) {
+      const phoneRes = validateVenezuelanPhone(form.telefono);
+      if (!phoneRes.valid && phoneRes.error) {
+        setFieldErrors((prev) => ({ ...prev, telefono: phoneRes.error! }));
+      }
+    }
   };
 
   const handleUrgencyChange = (val: "Normal" | "Prioritaria" | "Emergencia") => {
@@ -151,6 +102,36 @@ export function ContactDynamicForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    const errors: Record<string, string> = {};
+
+    // Validaciones estrictas y sanitización
+    const sanitizedNombre = sanitizeInput(form.nombre);
+    const sanitizedEmpresa = sanitizeInput(form.empresa);
+    const sanitizedCiudad = sanitizeInput(form.ciudad);
+    const sanitizedAsunto = sanitizeInput(form.asunto);
+    const sanitizedMensaje = sanitizeInput(form.mensaje);
+
+    if (!sanitizedNombre) errors.nombre = "El nombre es obligatorio.";
+    if (!sanitizedCiudad) errors.ciudad = "La ciudad y estado son obligatorios.";
+    if (!sanitizedAsunto) errors.asunto = "El asunto es obligatorio.";
+    if (!sanitizedMensaje) errors.mensaje = "El detalle del requerimiento es obligatorio.";
+
+    const emailRes = validateEmail(form.email);
+    if (!emailRes.valid && emailRes.error) errors.email = emailRes.error;
+
+    const phoneRes = validateVenezuelanPhone(form.telefono);
+    if (!phoneRes.valid && phoneRes.error) errors.telefono = phoneRes.error;
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      toast({
+        title: "Revise los campos del formulario",
+        description: "Existen datos requeridos o con formato incorrecto.",
+        type: "warning",
+      });
+      return;
+    }
 
     const urgencyIcon =
       form.urgencia === "Emergencia"
@@ -162,13 +143,13 @@ export function ContactDynamicForm() {
     const text = encodeURIComponent(
       `*Consulta Web - Dialka 2.0*\n` +
         `${urgencyIcon}\n\n` +
-        `👤 *Nombre:* ${form.nombre}\n` +
-        `🏢 *Empresa:* ${form.empresa || "Particular / No especificado"}\n` +
+        `👤 *Nombre:* ${sanitizedNombre}\n` +
+        `🏢 *Empresa:* ${sanitizedEmpresa || "Particular / No especificado"}\n` +
         `📞 *Teléfono:* ${form.telefono}\n` +
         `📧 *Email:* ${form.email}\n` +
-        `📍 *Ubicación:* ${form.ciudad}\n` +
-        `📌 *Asunto:* ${form.asunto}\n\n` +
-        `💬 *Detalle del Requerimiento:*\n${form.mensaje}`
+        `📍 *Ubicación:* ${sanitizedCiudad}\n` +
+        `📌 *Asunto:* ${sanitizedAsunto}\n\n` +
+        `💬 *Detalle del Requerimiento:*\n${sanitizedMensaje}`
     );
 
     window.open(`https://wa.me/${CONTACT.whatsapp}?text=${text}`, "_blank");
@@ -184,6 +165,7 @@ export function ContactDynamicForm() {
   const resetForm = () => {
     setSent(false);
     setSelectedPreset(null);
+    setFieldErrors({});
     setForm({
       nombre: "",
       empresa: "",
@@ -199,100 +181,18 @@ export function ContactDynamicForm() {
   return (
     <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 lg:p-10 shadow-xl shadow-slate-200/40">
       {sent ? (
-        /* ── PANTALLA DE CONFIRMACIÓN Y RESPALDO MULTICANALES ── */
-        <div className="flex flex-col items-center justify-center py-6 text-center max-w-lg mx-auto animate-fadeIn">
-          <div className="w-16 h-16 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center justify-center mb-4 shadow-sm">
-            <CheckCircle2 size={36} className="text-emerald-600" />
-          </div>
-
-          <span className="text-xs font-bold uppercase tracking-widest text-emerald-700 bg-emerald-100/70 px-3 py-1 rounded-full mb-2">
-            Solicitud Enrutada Correctamente
-          </span>
-
-          <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight">
-            ¡Su consulta está lista para envío!
-          </h3>
-
-          <p className="text-slate-600 text-xs sm:text-sm mt-2 leading-relaxed">
-            Hemos preparado la conversación oficial para el WhatsApp corporativo de Dialka con toda su información estructurada.
-          </p>
-
-          <div className="w-full flex flex-col gap-2.5 pt-6">
-            <a
-              href={`https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(
-                `*Consulta Web Dialka 2.0*\n` +
-                  `Prioridad: ${form.urgencia}\n` +
-                  `Nombre: ${form.nombre}\n` +
-                  `Empresa: ${form.empresa || "N/A"}\n` +
-                  `Teléfono: ${form.telefono}\n` +
-                  `Email: ${form.email}\n` +
-                  `Ciudad: ${form.ciudad}\n` +
-                  `Asunto: ${form.asunto}\n\n` +
-                  `Requerimiento:\n${form.mensaje}`
-              )}`}
-              target="_blank"
-              rel="noreferrer"
-              className="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 active:scale-98 text-white font-bold py-3.5 px-4 rounded-xl text-sm transition-all shadow-md shadow-emerald-600/20"
-            >
-              <Phone size={16} />
-              <span>Abrir WhatsApp Manualmente</span>
-            </a>
-
-            <button
-              type="button"
-              onClick={() => {
-                copyToClipboard(
-                  `Consulta Dialka 2.0\nPrioridad: ${form.urgencia}\nNombre: ${form.nombre}\nEmpresa: ${form.empresa}\nTeléfono: ${form.telefono}\nEmail: ${form.email}\nCiudad: ${form.ciudad}\nAsunto: ${form.asunto}\n\nMensaje:\n${form.mensaje}`,
-                  "Datos copiados al portapapeles"
-                );
-                setCopiedFallback(true);
-                setTimeout(() => setCopiedFallback(false), 2500);
-              }}
-              className="w-full flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold py-3 px-4 rounded-xl text-xs sm:text-sm border border-slate-300 transition-all cursor-pointer"
-            >
-              {copiedFallback ? (
-                <>
-                  <Check size={16} className="text-emerald-600" />
-                  <span>¡Datos copiados al portapapeles!</span>
-                </>
-              ) : (
-                <>
-                  <Copy size={16} />
-                  <span>Copiar Mensaje Completo</span>
-                </>
-              )}
-            </button>
-
-            <a
-              href={`mailto:${CONTACT.headquarters[0].email}?subject=${encodeURIComponent(
-                `[Web Dialka] ${form.urgencia}: ${form.asunto} - ${form.nombre}`
-              )}&body=${encodeURIComponent(
-                `Nombre: ${form.nombre}\nEmpresa: ${form.empresa}\nTeléfono: ${form.telefono}\nCiudad: ${form.ciudad}\n\nMensaje:\n${form.mensaje}`
-              )}`}
-              className="w-full flex items-center justify-center gap-2 bg-white hover:bg-slate-50 text-slate-700 font-medium py-2.5 px-4 rounded-xl text-xs border border-slate-200 transition-all"
-            >
-              <Mail size={14} />
-              <span>Enviar por Correo a {CONTACT.headquarters[0].email}</span>
-            </a>
-          </div>
-
-          <button
-            type="button"
-            onClick={resetForm}
-            className="mt-6 inline-flex items-center gap-1.5 text-xs text-[#991b1b] hover:text-[#7f1d1d] font-bold underline transition-colors cursor-pointer"
-          >
-            <RotateCcw size={13} />
-            <span>Redactar una nueva consulta</span>
-          </button>
-        </div>
+        <ContactFormSuccess
+          form={form}
+          onReset={resetForm}
+          copyToClipboard={copyToClipboard}
+        />
       ) : (
-        /* ── EXPERIENCIA INTERACTIVA COMPLETA DE FORMULARIO & SIMULADOR EN VIVO ── */
         <div className="space-y-8">
           {/* Cabecera del Formulario y Barra de Progreso */}
           <div>
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
               <div>
-                <span className="text-[11px] font-bold uppercase tracking-widest text-[#991b1b] block">
+                <span className="text-[11px] font-bold uppercase tracking-widest text-[#7f1d1d] block">
                   Despacho Inmediato
                 </span>
                 <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
@@ -305,7 +205,7 @@ export function ContactDynamicForm() {
                 <span className="text-slate-500 font-medium">Progreso:</span>
                 <span
                   className={`font-bold ${
-                    progressPercent === 100 ? "text-emerald-600" : "text-[#991b1b]"
+                    progressPercent === 100 ? "text-emerald-600" : "text-[#7f1d1d]"
                   }`}
                 >
                   {progressPercent}%
@@ -326,46 +226,15 @@ export function ContactDynamicForm() {
             </p>
           </div>
 
-          {/* ── 1. PRESETS RÁPIDOS (1-CLICK CHIPS) ── */}
-          <div className="space-y-2.5">
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
-              <Sparkles size={14} className="text-[#991b1b]" />
-              <span>Plantillas Rápidas (1 Toque para Autocompletar):</span>
-            </label>
+          {/* 1. Presets Rápidos (1-Click Chips) */}
+          <ContactPresetChips
+            selectedPreset={selectedPreset}
+            onApplyPreset={handleApplyPreset}
+          />
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-              {PRESET_CHIPS.map((chip) => {
-                const isSelected = selectedPreset === chip.id;
-                return (
-                  <button
-                    key={chip.id}
-                    type="button"
-                    onClick={() => handleApplyPreset(chip)}
-                    className={`p-2.5 rounded-xl border text-left transition-all duration-200 flex items-start gap-2 cursor-pointer ${
-                      isSelected
-                        ? "bg-red-50/90 border-red-400 text-[#991b1b] shadow-xs scale-[1.01]"
-                        : "bg-slate-50/70 hover:bg-white border-slate-200 hover:border-slate-300 text-slate-800"
-                    }`}
-                  >
-                    <span className="text-base shrink-0">{chip.emoji}</span>
-                    <div className="min-w-0">
-                      <span className="block text-xs font-bold leading-snug truncate">
-                        {chip.label}
-                      </span>
-                      <span className="text-[10px] text-slate-500 font-medium">
-                        Prioridad: {chip.urgency}
-                      </span>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* ── 2. CAMPOS Y SIMULADOR EN VIVO DE WHATSAPP ── */}
+          {/* 2. Formulario y Simulador de WhatsApp */}
           <div className="grid lg:grid-cols-12 gap-8 items-start">
-            {/* Columna Izquierda: Formulario (7 cols) */}
-            <form onSubmit={handleSubmit} className="lg:col-span-7 space-y-4">
+            <form onSubmit={handleSubmit} className="lg:col-span-7 space-y-4" noValidate>
               {/* Selector de Nivel de Urgencia */}
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1.5">
@@ -421,8 +290,15 @@ export function ContactDynamicForm() {
                     onChange={handleChange}
                     required
                     placeholder="Ej: Ing. Carlos Pérez"
-                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2 text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:border-[#991b1b] focus:ring-1 focus:ring-[#991b1b] transition-all"
+                    className={`w-full bg-slate-50 border rounded-xl px-3.5 py-2 text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none transition-all ${
+                      fieldErrors.nombre
+                        ? "border-red-500 focus:ring-1 focus:ring-red-500"
+                        : "border-slate-300 focus:border-[#991b1b] focus:ring-1 focus:ring-[#991b1b]"
+                    }`}
                   />
+                  {fieldErrors.nombre && (
+                    <p className="text-[11px] text-red-600 font-medium mt-1">{fieldErrors.nombre}</p>
+                  )}
                 </div>
                 <div>
                   <label htmlFor={empresaId} className="block text-xs font-bold text-slate-700 mb-1">
@@ -434,12 +310,12 @@ export function ContactDynamicForm() {
                     value={form.empresa}
                     onChange={handleChange}
                     placeholder="Ej: Alimentos del Centro, C.A."
-                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2 text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:border-[#991b1b] focus:ring-1 focus:ring-[#991b1b] transition-all"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2 text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:border-[#991b1b] focus:ring-1 focus:ring-[#991b1b] focus:outline-none transition-all"
                   />
                 </div>
               </div>
 
-              {/* Teléfono y Email */}
+              {/* Teléfono y Email con Validación */}
               <div className="grid sm:grid-cols-2 gap-3.5">
                 <div>
                   <label htmlFor={telefonoId} className="block text-xs font-bold text-slate-700 mb-1">
@@ -450,10 +326,18 @@ export function ContactDynamicForm() {
                     name="telefono"
                     value={form.telefono}
                     onChange={handleChange}
+                    onBlur={() => handleBlur("telefono")}
                     required
-                    placeholder="0414-123.45.67"
-                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2 text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:border-[#991b1b] focus:ring-1 focus:ring-[#991b1b] transition-all"
+                    placeholder="Ej: 0414-1234567"
+                    className={`w-full bg-slate-50 border rounded-xl px-3.5 py-2 text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none transition-all ${
+                      fieldErrors.telefono
+                        ? "border-red-500 focus:ring-1 focus:ring-red-500"
+                        : "border-slate-300 focus:border-[#991b1b] focus:ring-1 focus:ring-[#991b1b]"
+                    }`}
                   />
+                  {fieldErrors.telefono && (
+                    <p className="text-[11px] text-red-600 font-medium mt-1">{fieldErrors.telefono}</p>
+                  )}
                 </div>
                 <div>
                   <label htmlFor={emailId} className="block text-xs font-bold text-slate-700 mb-1">
@@ -465,10 +349,18 @@ export function ContactDynamicForm() {
                     type="email"
                     value={form.email}
                     onChange={handleChange}
+                    onBlur={() => handleBlur("email")}
                     required
                     placeholder="contacto@empresa.com"
-                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2 text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:border-[#991b1b] focus:ring-1 focus:ring-[#991b1b] transition-all"
+                    className={`w-full bg-slate-50 border rounded-xl px-3.5 py-2 text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none transition-all ${
+                      fieldErrors.email
+                        ? "border-red-500 focus:ring-1 focus:ring-red-500"
+                        : "border-slate-300 focus:border-[#991b1b] focus:ring-1 focus:ring-[#991b1b]"
+                    }`}
                   />
+                  {fieldErrors.email && (
+                    <p className="text-[11px] text-red-600 font-medium mt-1">{fieldErrors.email}</p>
+                  )}
                 </div>
               </div>
 
@@ -485,8 +377,15 @@ export function ContactDynamicForm() {
                     onChange={handleChange}
                     required
                     placeholder="Ej: Valencia, Carabobo"
-                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2 text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:border-[#991b1b] focus:ring-1 focus:ring-[#991b1b] transition-all"
+                    className={`w-full bg-slate-50 border rounded-xl px-3.5 py-2 text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none transition-all ${
+                      fieldErrors.ciudad
+                        ? "border-red-500 focus:ring-1 focus:ring-red-500"
+                        : "border-slate-300 focus:border-[#991b1b] focus:ring-1 focus:ring-[#991b1b]"
+                    }`}
                   />
+                  {fieldErrors.ciudad && (
+                    <p className="text-[11px] text-red-600 font-medium mt-1">{fieldErrors.ciudad}</p>
+                  )}
                 </div>
                 <div>
                   <label htmlFor={asuntoId} className="block text-xs font-bold text-slate-700 mb-1">
@@ -499,8 +398,15 @@ export function ContactDynamicForm() {
                     onChange={handleChange}
                     required
                     placeholder="Ej: Cotización Báscula 80TN"
-                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2 text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:border-[#991b1b] focus:ring-1 focus:ring-[#991b1b] transition-all"
+                    className={`w-full bg-slate-50 border rounded-xl px-3.5 py-2 text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none transition-all ${
+                      fieldErrors.asunto
+                        ? "border-red-500 focus:ring-1 focus:ring-red-500"
+                        : "border-slate-300 focus:border-[#991b1b] focus:ring-1 focus:ring-[#991b1b]"
+                    }`}
                   />
+                  {fieldErrors.asunto && (
+                    <p className="text-[11px] text-red-600 font-medium mt-1">{fieldErrors.asunto}</p>
+                  )}
                 </div>
               </div>
 
@@ -522,8 +428,15 @@ export function ContactDynamicForm() {
                   required
                   rows={4}
                   placeholder="Describa el equipo, capacidad requerida, falla o detalles específicos..."
-                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2 text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:border-[#991b1b] focus:ring-1 focus:ring-[#991b1b] transition-all resize-none"
+                  className={`w-full bg-slate-50 border rounded-xl px-3.5 py-2 text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none transition-all resize-none ${
+                    fieldErrors.mensaje
+                      ? "border-red-500 focus:ring-1 focus:ring-red-500"
+                      : "border-slate-300 focus:border-[#991b1b] focus:ring-1 focus:ring-[#991b1b]"
+                  }`}
                 />
+                {fieldErrors.mensaje && (
+                  <p className="text-[11px] text-red-600 font-medium mt-1">{fieldErrors.mensaje}</p>
+                )}
               </div>
 
               {/* Botón Principal de Envío */}
@@ -543,148 +456,13 @@ export function ContactDynamicForm() {
 
             {/* Columna Derecha: SIMULADOR EN VIVO DE WHATSAPP (5 cols) */}
             <div className="lg:col-span-5">
-              <div className="sticky top-28 bg-[#efeae2] border border-slate-300/80 rounded-3xl overflow-hidden shadow-lg shadow-slate-300/50">
-                {/* Barra superior de WhatsApp */}
-                <div className="bg-[#075e54] text-white px-4 py-3 flex items-center justify-between">
-                  <div className="flex items-center gap-2.5 min-w-0">
-                    <div className="relative w-9 h-9 rounded-full bg-white flex items-center justify-center text-[#991b1b] font-bold text-xs shrink-0 shadow-xs border border-white/20">
-                      <span>DK</span>
-                      <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-[#075e54]" />
-                    </div>
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-1">
-                        <span className="font-bold text-xs sm:text-sm truncate">
-                          Balanzas Dialka
-                        </span>
-                        <CheckCircle2 size={12} className="text-emerald-300 shrink-0" />
-                      </div>
-                      <span className="text-[10px] text-emerald-200 block">En línea</span>
-                    </div>
-                  </div>
-
-                  <div className="text-[10px] bg-black/20 px-2 py-0.5 rounded-md font-mono text-emerald-100">
-                    Simulador en Vivo
-                  </div>
-                </div>
-
-                {/* Área de Mensajes */}
-                <div className="p-4 sm:p-5 space-y-3 min-h-[290px] max-h-[380px] overflow-y-auto text-xs sm:text-[13px] leading-relaxed">
-                  {/* Mensaje de Bienvenida del Asesor */}
-                  <div className="flex items-start">
-                    <div className="bg-white rounded-2xl rounded-tl-xs p-3 shadow-xs max-w-[85%] text-slate-800 border border-slate-200/60">
-                      <p className="font-semibold text-slate-900 text-xs mb-1">
-                        Balanzas y Servicios Dialka
-                      </p>
-                      <p className="text-xs text-slate-600">
-                        ¡Hola! Bienvenido a Dialka. Completa el formulario de la izquierda y verás cómo se redacta tu solicitud en tiempo real.
-                      </p>
-                      <div className="text-[10px] text-slate-400 text-right mt-1 font-mono">
-                        08:00 AM
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Burbuja del Cliente Redactada en Tiempo Real */}
-                  <div className="flex items-end justify-end">
-                    <div className="bg-[#d9fdd3] text-slate-900 rounded-2xl rounded-tr-xs p-3.5 shadow-xs max-w-[92%] border border-emerald-200/60 space-y-1.5 animate-fadeIn">
-                      <div className="font-bold text-emerald-900 text-xs border-b border-emerald-300/50 pb-1 flex items-center justify-between">
-                        <span>Consulta Web Dialka 2.0</span>
-                        <span
-                          className={`text-[9px] font-bold px-1.5 py-0.2 rounded ${
-                            form.urgencia === "Emergencia"
-                              ? "bg-red-500 text-white"
-                              : form.urgencia === "Prioritaria"
-                              ? "bg-amber-500 text-white"
-                              : "bg-emerald-200 text-emerald-900"
-                          }`}
-                        >
-                          {form.urgencia}
-                        </span>
-                      </div>
-
-                      <div className="space-y-0.5 text-[11px] sm:text-xs">
-                        <div>
-                          <strong className="text-slate-900">Nombre:</strong>{" "}
-                          <span className="text-slate-800">
-                            {form.nombre || "—"}
-                          </span>
-                        </div>
-                        {form.empresa && (
-                          <div>
-                            <strong className="text-slate-900">Empresa:</strong>{" "}
-                            <span className="text-slate-800">{form.empresa}</span>
-                          </div>
-                        )}
-                        <div>
-                          <strong className="text-slate-900">Tel:</strong>{" "}
-                          <span className="text-slate-800">
-                            {form.telefono || "—"}
-                          </span>
-                        </div>
-                        <div>
-                          <strong className="text-slate-900">Email:</strong>{" "}
-                          <span className="text-slate-800">
-                            {form.email || "—"}
-                          </span>
-                        </div>
-                        <div>
-                          <strong className="text-slate-900">Ciudad:</strong>{" "}
-                          <span className="text-slate-800">
-                            {form.ciudad || "—"}
-                          </span>
-                        </div>
-                        <div>
-                          <strong className="text-slate-900">Asunto:</strong>{" "}
-                          <span className="text-slate-800">
-                            {form.asunto || "—"}
-                          </span>
-                        </div>
-                      </div>
-
-                      {form.mensaje && (
-                        <div className="pt-1.5 border-t border-emerald-300/40 text-[11px] sm:text-xs leading-relaxed text-slate-800 whitespace-pre-wrap">
-                          <strong className="text-slate-900 block mb-0.5">
-                            Detalle:
-                          </strong>
-                          {form.mensaje}
-                        </div>
-                      )}
-
-                      <div className="flex items-center justify-end gap-1 text-[10px] text-emerald-800 pt-1 font-mono">
-                        <span>Ahora</span>
-                        <CheckCheck size={13} className="text-sky-600" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Pie del Simulador con Botón de Envío Inmediato */}
-                <div className="bg-slate-100 p-3 border-t border-slate-200 text-center">
-                  <p className="text-[11px] text-slate-500 mb-2">
-                    {filledCount === 6
-                      ? "✅ Todos los campos listos para despachar."
-                      : `Faltan ${6 - filledCount} campo(s) obligatorio(s).`}
-                  </p>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      if (filledCount < 6) {
-                        toast({
-                          title: "Campos incompletos",
-                          description: "Por favor complete los campos obligatorios del formulario.",
-                          type: "warning",
-                        });
-                        return;
-                      }
-                      handleSubmit(e);
-                    }}
-                    className="w-full inline-flex items-center justify-center gap-2 bg-[#25d366] hover:bg-[#20bd5a] text-white font-bold py-2.5 px-4 rounded-xl text-xs transition-all cursor-pointer shadow-xs"
-                  >
-                    <MessageSquare size={14} />
-                    <span>Conectar vía WhatsApp</span>
-                  </button>
-                </div>
-              </div>
+              <WhatsAppLivePreview
+                form={form}
+                filledCount={filledCount}
+                totalRequired={requiredFields.length}
+                onSubmit={handleSubmit}
+                isFormValid={filledCount === requiredFields.length && Object.keys(fieldErrors).length === 0}
+              />
             </div>
           </div>
         </div>

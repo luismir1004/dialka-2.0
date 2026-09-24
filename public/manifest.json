@@ -1,0 +1,51 @@
+{
+  "name": "Balanzas y Servicios Dialka",
+  "short_name": "Dialka",
+  "description": "25 años siendo líderes en Venezuela en venta, alquiler y servicio técnico de equipos de pesaje industriales, comerciales y agropecuarios.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#991b1b",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/images/logo-dialka-symbol.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/logo-dialka-symbol.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "industrial", "engineering"],
+  "lang": "es",
+  "dir": "ltr",
+  "scope": "/",
+  "shortcuts": [
+    {
+      "name": "Catálogo de Productos",
+      "short_name": "Productos",
+      "description": "Ver catálogo completo de balanzas y equipos de pesaje",
+      "url": "/productos",
+      "icons": [{ "src": "/images/logo-dialka-symbol.svg", "sizes": "192x192" }]
+    },
+    {
+      "name": "Servicio Técnico",
+      "short_name": "Servicios",
+      "description": "Calibración y mantenimiento de equipos de pesaje",
+      "url": "/servicios",
+      "icons": [{ "src": "/images/logo-dialka-symbol.svg", "sizes": "192x192" }]
+    },
+    {
+      "name": "Contacto",
+      "short_name": "Contacto",
+      "description": "Contactar con sedes en Caracas y Maracay",
+      "url": "/contacto",
+      "icons": [{ "src": "/images/logo-dialka-symbol.svg", "sizes": "192x192" }]
+    }
+  ]
+}

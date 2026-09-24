@@ -211,7 +211,7 @@ export function ProductDetailsModal({
               <div className="md:col-span-7 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center gap-2 mb-2 flex-wrap">
-                    <span className="text-xs font-bold uppercase tracking-wider text-[#991b1b] bg-red-50 border border-red-200/80 px-2.5 py-0.5 rounded-md">
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#7f1d1d] bg-red-50 border border-red-200/80 px-2.5 py-0.5 rounded-md">
                       {product.featureTag}
                     </span>
                     <span className="text-xs text-slate-500 font-medium">

@@ -9,6 +9,10 @@
   --color-dialka-800: #991b1b;
   --color-dialka-900: #7f1d1d;
   --color-dialka-950: #450a0a;
+  /* Colores mejorados para contraste WCAG AA */
+  --color-dialka-text-high: #7f1d1d; /* Para texto sobre fondos claros - contraste mejorado */
+  --color-dialka-text-medium: #991b1b; /* Para texto mediano */
+  --color-dialka-bg-high-contrast: #fee2e2; /* Fondo más claro para contraste */
 }
 
 :root {
@@ -22,6 +26,10 @@
   --color-border: #e2e8f0;
   --color-text-main: #0f172a;
   --color-text-muted: #64748b;
+  /* Variables de accesibilidad WCAG AA */
+  --color-text-high-contrast: #1e293b; /* Para texto sobre fondos rojos claros */
+  --color-focus-ring: #dc2626; /* Anillo de foco más visible */
+  --color-skip-link: #991b1b; /* Color para skip links */
 }
 
 html {
@@ -238,6 +246,19 @@ textarea:focus-visible {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* ---- Skip Link Utility for WCAG AA ---- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
 /* ---- Print Optimization for Official Technical Sheets ---- */

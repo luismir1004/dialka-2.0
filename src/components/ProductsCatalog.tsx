@@ -15,6 +15,7 @@ import {
   MoveDown,
   FileText,
   Tag,
+  ArrowUpDown,
 } from "lucide-react";
 import { ProductDetailsModal } from "./ProductDetailsModal";
 import { SITE_CONFIG } from "@/lib/config";
@@ -27,6 +28,28 @@ import {
 
 export type { ProductItem, CategoryItem };
 export { CATALOG_CATEGORIES, CATALOG_PRODUCTS };
+
+// Sinónimos industriales comunes para optimizar la búsqueda
+const INDUSTRIAL_SYNONYMS: Record<string, string[]> = {
+  romana: ["camionera", "pesaje", "báscula", "plataforma"],
+  camion: ["camionera", "ejes", "vehicular", "chuto"],
+  camiones: ["camionera", "ejes", "vehicular"],
+  ganado: ["agropecuaria", "ganadera", "brete", "animales"],
+  vaca: ["agropecuaria", "ganadera", "brete"],
+  vacas: ["agropecuaria", "ganadera", "brete"],
+  toro: ["agropecuaria", "ganadera", "brete"],
+  toros: ["agropecuaria", "ganadera", "brete"],
+  animal: ["agropecuaria", "ganadera"],
+  animales: ["agropecuaria", "ganadera"],
+  cerdo: ["agropecuaria", "ganadera"],
+  cerdos: ["agropecuaria", "ganadera"],
+  laboratorio: ["analítica", "analitica", "precisión", "precision", "gramera"],
+  gramera: ["analítica", "analitica", "precisión", "precision", "comercial"],
+  pesa: ["balanza", "báscula", "bascula", "indicador"],
+  fosa: ["camionera", "metálica", "instalación"],
+  colgante: ["grúa", "gancho", "dinamómetro"],
+  pesaje: ["balanza", "báscula", "indicador", "celda"],
+};
 
 interface ProductsCatalogProps {
   categories?: { id: string; name: string }[];
@@ -75,7 +98,7 @@ function ProductCardImage({
 
       {/* Insignia Flotante de Categoría */}
       <div className="absolute top-2 left-2 z-10">
-        <span className="inline-flex items-center gap-1 bg-white/95 backdrop-blur-md text-[#991b1b] text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full shadow-2xs border border-slate-200/70">
+        <span className="inline-flex items-center gap-1 bg-white/95 backdrop-blur-md text-[#7f1d1d] text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full shadow-2xs border border-slate-200/70">
           <span>{categoryIcon}</span>
           <span className="truncate max-w-[70px] sm:max-w-none">{categoryName}</span>
         </span>
@@ -101,6 +124,7 @@ export function ProductsCatalog({
 }: ProductsCatalogProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [sortBy, setSortBy] = useState<"featured" | "name-asc" | "name-desc" | "category">("featured");
   const [showAll, setShowAll] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<ProductItem | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -115,39 +139,63 @@ export function ProductsCatalog({
     setSelectedProduct(null);
   };
 
-  // Filtrado reactivo en tiempo real
+  // Filtrado reactivo en tiempo real con sinónimos industriales y tokens múltiples
   const filteredProducts = useMemo(() => {
-    const query = searchQuery.trim().toLowerCase();
+    const rawTokens = searchQuery.trim().toLowerCase().split(/\s+/).filter(Boolean);
 
     return CATALOG_PRODUCTS.filter((product) => {
       // Filtro por categoría
       const matchesCategory =
         selectedCategory === "all" || product.category === selectedCategory;
 
-      // Filtro por búsqueda
-      const matchesSearch =
-        !query ||
-        product.name.toLowerCase().includes(query) ||
-        product.specs.toLowerCase().includes(query) ||
-        product.highlight.toLowerCase().includes(query) ||
-        product.categoryName.toLowerCase().includes(query) ||
-        product.featureTag.toLowerCase().includes(query);
+      if (!matchesCategory) return false;
+      if (rawTokens.length === 0) return true;
 
-      return matchesCategory && matchesSearch;
+      // Concatenar todos los atributos del producto para búsqueda exhaustiva
+      const searchableContent = [
+        product.name,
+        product.specs,
+        product.highlight,
+        product.categoryName,
+        product.featureTag,
+      ]
+        .join(" ")
+        .toLowerCase();
+
+      // Cada token ingresado debe coincidir directamente o por sinónimo industrial
+      return rawTokens.every((token) => {
+        if (searchableContent.includes(token)) return true;
+        const syns = INDUSTRIAL_SYNONYMS[token];
+        return syns ? syns.some((syn) => searchableContent.includes(syn)) : false;
+      });
     });
   }, [selectedCategory, searchQuery]);
 
-  // Lista a mostrar: limitada inicialmente en el Home a initialLimit si no se ha expandido
-  const displayedProducts = useMemo(() => {
-    if (initialLimit && !showAll && !searchQuery && selectedCategory === "all") {
-      return filteredProducts.slice(0, initialLimit);
+  // Ordenamiento de productos según criterio seleccionado
+  const sortedProducts = useMemo(() => {
+    const list = [...filteredProducts];
+    if (sortBy === "name-asc") {
+      list.sort((a, b) => a.name.localeCompare(b.name, "es"));
+    } else if (sortBy === "name-desc") {
+      list.sort((a, b) => b.name.localeCompare(a.name, "es"));
+    } else if (sortBy === "category") {
+      list.sort((a, b) => a.categoryName.localeCompare(b.categoryName, "es"));
     }
-    return filteredProducts;
-  }, [filteredProducts, initialLimit, showAll, searchQuery, selectedCategory]);
+    return list;
+  }, [filteredProducts, sortBy]);
+
+  // Lista a mostrar: limitada inicialmente en el Home a initialLimit si no se ha expandido ni ordenado
+  const displayedProducts = useMemo(() => {
+    if (initialLimit && !showAll && !searchQuery && selectedCategory === "all" && sortBy === "featured") {
+      return sortedProducts.slice(0, initialLimit);
+    }
+    return sortedProducts;
+  }, [sortedProducts, initialLimit, showAll, searchQuery, selectedCategory, sortBy]);
 
   const handleReset = () => {
     setSelectedCategory("all");
     setSearchQuery("");
+    setSortBy("featured");
     setShowAll(false);
   };
 
@@ -157,7 +205,7 @@ export function ProductsCatalog({
         {/* Encabezado Opcional de la Vitrina */}
         {showHeading && (
           <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
-            <div className="inline-flex items-center gap-2 bg-red-50 border border-red-200/80 px-4 py-1.5 rounded-full text-[#991b1b] text-xs font-bold uppercase tracking-wider mb-3 shadow-2xs">
+            <div className="inline-flex items-center gap-2 bg-red-50 border border-red-200/80 px-4 py-1.5 rounded-full text-[#7f1d1d] text-xs font-bold uppercase tracking-wider mb-3 shadow-2xs">
               <Package size={14} className="text-[#991b1b]" />
               <span>Tienda Oficial · Vitrina de Equipos</span>
             </div>
@@ -187,7 +235,7 @@ export function ProductsCatalog({
               <button
                 type="button"
                 onClick={() => setSearchQuery("")}
-                className="p-1.5 mr-1 text-slate-400 hover:text-slate-700 transition-colors shrink-0"
+                className="p-1.5 mr-1 text-slate-400 hover:text-slate-700 transition-colors shrink-0 cursor-pointer"
                 aria-label="Borrar búsqueda"
               >
                 <X size={18} />
@@ -199,24 +247,44 @@ export function ProductsCatalog({
           </div>
         </div>
 
-        {/* ── FASE 1: CARRUSEL DE CATEGORÍAS VISUALES (CHIPS DESLIZANTES) ── */}
+        {/* ── FASE 1: BARRA DE CONTROL DE CATEGORÍAS Y ORDENAMIENTO ── */}
         <div className="mb-8 sm:mb-10">
-          <div className="flex items-center justify-between mb-3 px-1">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3 px-1">
             <div className="flex items-center gap-2">
               <SlidersHorizontal size={14} className="text-[#991b1b]" />
               <span className="text-xs sm:text-sm font-bold text-slate-800 uppercase tracking-wider">
                 Líneas Especializadas:
               </span>
-            </div>
-            <div className="flex items-center gap-2">
               <span className="text-xs font-semibold text-slate-500">
-                {filteredProducts.length} {filteredProducts.length === 1 ? "equipo" : "equipos"}
+                ({filteredProducts.length} {filteredProducts.length === 1 ? "equipo" : "equipos"})
               </span>
-              {(selectedCategory !== "all" || searchQuery !== "") && (
+            </div>
+
+            <div className="flex items-center gap-3 justify-between sm:justify-end">
+              {/* Selector de Ordenamiento */}
+              <div className="flex items-center gap-1.5 bg-white border border-slate-200/90 rounded-xl px-2.5 py-1 shadow-2xs">
+                <ArrowUpDown size={13} className="text-[#991b1b]" />
+                <label htmlFor="sort-catalog-select" className="sr-only">
+                  Ordenar catálogo
+                </label>
+                <select
+                  id="sort-catalog-select"
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value as "featured" | "name-asc" | "name-desc" | "category")}
+                  className="bg-transparent text-xs font-bold text-slate-700 focus:outline-none cursor-pointer py-0.5"
+                >
+                  <option value="featured">Destacados</option>
+                  <option value="name-asc">Nombre (A – Z)</option>
+                  <option value="name-desc">Nombre (Z – A)</option>
+                  <option value="category">Por Categoría</option>
+                </select>
+              </div>
+
+              {(selectedCategory !== "all" || searchQuery !== "" || sortBy !== "featured") && (
                 <button
                   type="button"
                   onClick={handleReset}
-                  className="inline-flex items-center gap-1 text-[#991b1b] hover:text-[#7f1d1d] font-bold text-xs hover:underline cursor-pointer ml-2"
+                  className="inline-flex items-center gap-1 text-[#7f1d1d] hover:text-[#450a0a] font-bold text-xs hover:underline cursor-pointer"
                 >
                   <RotateCcw size={12} />
                   <span>Restablecer</span>
@@ -397,7 +465,7 @@ export function ProductsCatalog({
                 </button>
                 <Link
                   href="/productos"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white hover:bg-red-50 active:scale-[0.98] text-[#991b1b] border border-red-200 hover:border-red-300 font-bold py-3.5 px-6 rounded-xl text-xs sm:text-sm shadow-2xs hover:shadow-sm transition-all text-center"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white hover:bg-red-50 active:scale-[0.98] text-[#7f1d1d] border border-red-200 hover:border-red-300 font-bold py-3.5 px-6 rounded-xl text-xs sm:text-sm shadow-2xs hover:shadow-sm transition-all text-center"
                 >
                   <span>Explorar Catálogo Completo (20 equipos)</span>
                   <ArrowRight size={15} />
@@ -406,22 +474,59 @@ export function ProductsCatalog({
             )}
           </>
         ) : (
-          /* ── ESTADO VACÍO (SIN RESULTADOS) ── */
-          <div className="bg-white border border-dashed border-slate-300 rounded-2xl p-10 sm:p-14 text-center max-w-md mx-auto animate-fadeIn shadow-xs">
-            <div className="w-14 h-14 rounded-2xl bg-red-50 border border-red-100 flex items-center justify-center mx-auto mb-3.5 text-[#991b1b]">
+          /* ── ESTADO VACÍO (SIN RESULTADOS) CON CHIPS DE SUGERENCIA ── */
+          <div className="bg-white border border-dashed border-slate-300 rounded-3xl p-8 sm:p-12 text-center max-w-lg mx-auto animate-fadeIn shadow-xs">
+            <div className="w-14 h-14 rounded-2xl bg-red-50 border border-red-100 flex items-center justify-center mx-auto mb-3.5 text-[#7f1d1d]">
               <Package size={28} />
             </div>
             <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-1.5">
               No se encontraron equipos
             </h3>
-            <p className="text-xs sm:text-sm text-slate-500 mb-5 leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-500 mb-4 leading-relaxed">
               No encontramos ningún modelo que coincida con{" "}
               {searchQuery ? `"${searchQuery}"` : "el filtro seleccionado"}.
             </p>
+
+            <div className="mb-6">
+              <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-2">
+                Líneas recomendadas:
+              </span>
+              <div className="flex flex-wrap gap-1.5 justify-center">
+                <button
+                  type="button"
+                  onClick={() => { setSelectedCategory("camioneras"); setSearchQuery(""); }}
+                  className="px-3 py-1.5 text-xs font-semibold rounded-xl bg-slate-100 hover:bg-red-50 text-slate-700 hover:text-[#7f1d1d] border border-slate-200 hover:border-red-200 cursor-pointer transition-colors"
+                >
+                  🚛 Camioneras
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { setSelectedCategory("comerciales"); setSearchQuery(""); }}
+                  className="px-3 py-1.5 text-xs font-semibold rounded-xl bg-slate-100 hover:bg-red-50 text-slate-700 hover:text-[#7f1d1d] border border-slate-200 hover:border-red-200 cursor-pointer transition-colors"
+                >
+                  🏪 Comerciales
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { setSelectedCategory("agropecuarias"); setSearchQuery(""); }}
+                  className="px-3 py-1.5 text-xs font-semibold rounded-xl bg-slate-100 hover:bg-red-50 text-slate-700 hover:text-[#7f1d1d] border border-slate-200 hover:border-red-200 cursor-pointer transition-colors"
+                >
+                  🐄 Agropecuarias
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { setSelectedCategory("analiticas"); setSearchQuery(""); }}
+                  className="px-3 py-1.5 text-xs font-semibold rounded-xl bg-slate-100 hover:bg-red-50 text-slate-700 hover:text-[#7f1d1d] border border-slate-200 hover:border-red-200 cursor-pointer transition-colors"
+                >
+                  🔬 Analíticas
+                </button>
+              </div>
+            </div>
+
             <button
               type="button"
               onClick={handleReset}
-              className="inline-flex items-center gap-2 bg-[#991b1b] hover:bg-[#7f1d1d] text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-2xs cursor-pointer"
+              className="inline-flex items-center gap-2 bg-[#991b1b] hover:bg-[#7f1d1d] active:scale-95 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-2xs cursor-pointer"
             >
               <RotateCcw size={13} />
               <span>Ver todos los equipos</span>

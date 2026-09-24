@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import { Award, Users, Code2, ThumbsUp } from "lucide-react";
 import { AnimatedCounter } from "@/components/AnimatedCounter";

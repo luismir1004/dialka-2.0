@@ -54,7 +54,7 @@ export function ContactFAQ() {
     <section className="py-14 sm:py-20 bg-slate-50 border-t border-slate-200">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-100 text-[#991b1b] text-xs font-bold uppercase tracking-wider mb-3">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-100/90 text-[#7f1d1d] text-xs font-bold uppercase tracking-wider mb-3 border border-red-200/60">
             <HelpCircle size={13} />
             <span>Preguntas Frecuentes de Clientes</span>
           </div>
@@ -86,7 +86,7 @@ export function ContactFAQ() {
                   aria-expanded={isOpen}
                 >
                   <div className="flex-1 pr-2">
-                    <span className="inline-block text-[10px] font-bold uppercase tracking-wider text-[#991b1b] bg-red-50 px-2 py-0.5 rounded-md mb-1.5">
+                    <span className="inline-block text-[10px] font-bold uppercase tracking-wider text-[#7f1d1d] bg-red-50 border border-red-200/60 px-2 py-0.5 rounded-md mb-1.5">
                       {faq.tag}
                     </span>
                     <h3 className="text-sm sm:text-base font-bold text-slate-900 leading-snug">

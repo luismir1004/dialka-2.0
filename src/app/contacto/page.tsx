@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { SITE_CONFIG } from "@/lib/config";
 import {
   Phone,
@@ -11,9 +12,20 @@ import {
   Zap,
 } from "lucide-react";
 import { ContactDepartmentRouter } from "@/components/ContactDepartmentRouter";
-import { ContactDynamicForm } from "@/components/ContactDynamicForm";
 import { ContactSedesDashboard } from "@/components/ContactSedesDashboard";
 import { ContactFAQ } from "@/components/ContactFAQ";
+
+// Dynamic import para ContactDynamicForm (componente pesado)
+const ContactDynamicForm = dynamic(() => import("@/components/ContactDynamicForm").then(mod => ({ default: mod.ContactDynamicForm })), {
+  loading: () => (
+    <div className="bg-white border border-slate-200 rounded-3xl p-8 text-center">
+      <div className="animate-pulse flex flex-col items-center gap-4">
+        <div className="w-12 h-12 bg-slate-200 rounded-full animate-spin border-4 border-slate-300 border-t-red-500" />
+        <p className="text-slate-500 text-sm">Cargando formulario de contacto...</p>
+      </div>
+    </div>
+  ),
+});
 
 export const metadata: Metadata = {
   title: "Contacto, Sedes y Asistencia Técnica | Balanzas y Servicios Dialka",

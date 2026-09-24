@@ -44,11 +44,11 @@ export function HeroTextRotator() {
       {/* Indicador de píldora de categoría viva */}
       <div className="flex items-center gap-2 mb-2">
         <span
-          className={`inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-red-100/80 text-[#991b1b] border border-red-200/60 transition-all duration-300 ${
+          className={`inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-red-100/90 text-[#7f1d1d] border border-red-200/80 transition-all duration-300 ${
             fadeState === "in" ? "opacity-100 scale-100" : "opacity-0 scale-95"
           }`}
         >
-          <Sparkles size={12} className="text-[#991b1b] animate-pulse" />
+          <Sparkles size={12} className="text-[#7f1d1d] animate-pulse" />
           <span>{current.tag}</span>
         </span>
 

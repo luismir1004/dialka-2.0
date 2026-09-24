@@ -151,8 +151,8 @@ export function MobileMenu({
                     : "translate-x-6 opacity-0"
                 } ${
                   isActive
-                    ? "bg-red-50/90 text-[#991b1b] border-l-4 border-[#991b1b] shadow-2xs font-bold"
-                    : "text-slate-800 hover:bg-slate-50 hover:text-[#991b1b] border-l-4 border-transparent hover:border-red-200"
+                    ? "bg-red-50/95 text-[#7f1d1d] border-l-4 border-[#991b1b] shadow-2xs font-bold"
+                    : "text-slate-800 hover:bg-slate-50 hover:text-[#7f1d1d] border-l-4 border-transparent hover:border-red-200"
                 }`}
               >
                 <div className="flex items-center gap-3 min-w-0">
