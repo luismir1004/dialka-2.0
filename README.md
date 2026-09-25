@@ -1,55 +1,69 @@
 # Balanzas y Servicios Dialka C.A. — Dialka 2.0
 
-> Plataforma web integral de metrología industrial, automatización comercial y soporte técnico especializado en Venezuela. Desarrollada con **Next.js 16**, **React 19**, **Tailwind CSS v4** y **Vitest**.
+[![Production](https://img.shields.io/badge/Status-En_Producci%C3%B3n-success?style=for-the-badge&logo=vercel)](https://dialka-2-0.vercel.app)
+[![Next.js](https://img.shields.io/badge/Next.js-16.3.5_(Turbopack)-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19.2.8-blue?style=for-the-badge&logo=react)](https://react.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38bdf8?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
+[![Tests](https://img.shields.io/badge/Tests-20%2F20_Passing-emerald?style=for-the-badge&logo=vitest)](https://vitest.dev/)
+
+> **Plataforma web integral de metrología industrial, automatización comercial y soporte técnico especializado en Venezuela.**  
+> URL en Producción: **[https://dialka-2-0.vercel.app](https://dialka-2-0.vercel.app)**
 
 ---
 
 ## 🌟 Características Principales
 
-### 1. Simulador Metrológico Interactivo (`src/components/simulator/`)
-* **Dial analógico en tiempo real** con aguja dinámica, divisiones de escala y amortiguación de lectura.
-* **Display digital de alta luminosidad** estilo indicador industrial LED con tara, cero y sobrecarga metrológica.
-* **Visualizador de báscula camionera** con detección de carga distribuida en fosa/sobresuelo y representación de vehículos industriales (Gandola Chuto + Batea, Camión 350, Volqueta, etc.).
-* **Controles por presets de vehículos** y perturbación aleatoria de pesaje calibrado.
+### 1. Simulador Metrológico Interactivo en Tiempo Real (`src/components/simulator/`)
+* **Dial analógico de precisión**: Aguja dinámica con divisiones de escala y amortiguación de lectura.
+* **Display digital de alta luminosidad LED**: Indicador de pesaje con modos Bruto / Neto, Cero (`>0<`), Estabilidad y detección de sobrecarga metrológica.
+* **Visualizador de báscula camionera**: Simulación gráfica de báscula de fosa/sobresuelo con deformación elástica de celdas de carga y distribución de peso vehicular (Gandola Chuto + Batea, Camión 350, Volqueta, etc.).
+* **Controles por presets de vehículos** y persistencia de HUD digital en dispositivos móviles para interacción táctil fluida.
 
-### 2. Configurador de Presupuestos por Sector (`src/components/wizard/`)
-* **6 sectores industriales venezolanos**:
+### 2. Catálogo Oficial Homologado SENCAMER (`src/components/SencamerCatalog.tsx`)
+* **Filtros en tiempo real**: Búsqueda instantánea por capacidad máxima, división ($e=d$) o ámbito de uso (comercial, industrial, laboratorios, agropecuario).
+* **Diseño híbrido responsive**:
+  * **Móvil (`sm:hidden`)**: Tarjetas táctiles verticales con especificaciones claras y botón de cotización directa por WhatsApp.
+  * **Escritorio (`hidden sm:block`)**: Tabla comparativa corporativa con sellos de acreditación oficial.
+
+### 3. Registro Audiovisual y Obras en Campo (`src/components/ProjectsVideoGallery.tsx` y `ProjectsGallery.tsx`)
+* **Videos reales de instalaciones**: Registros audiovisuales de montajes de básculas camioneras, obras civiles y calibraciones en campo.
+* **Carrusel táctil con `snap-x`**: Desplazamiento horizontal fluido en smartphones con aspect ratio adaptativo (`4/5` en móvil, `9/14` en desktop).
+* **Lightbox de alta resolución táctil**: Modal con soporte de gestos touch (swipe con el dedo), navegación por teclado y fichas técnicas completas.
+
+### 4. Cotizador Inteligente por Sector Industrial (`src/components/wizard/`)
+* **6 sectores productivos venezolanos**:
   1. Carnicerías, Charcuterías & Frigoríficos
   2. Supermercados, Bodegones & Minimarkets
   3. Agroindustria, Silos & Ganadería
   4. Restaurantes, Panaderías & Gastronomía
   5. Laboratorios, Farmacias & Química
   6. Industria Pesada, Almacenes & Logística
-* Selección interactiva de paquetes de equipamiento con validación de cantidades (1 a 50 unidades).
-* Generador de mensajes con cotización estructurada directa a **WhatsApp** al cambio oficial BCV.
+* Cálculo de paquetes recomendados con validación de cantidades (1 a 50 unidades).
+* **Sticky Bottom Bar móvil**: Barra flotante inferior de cotización en smartphones para un embudo de conversión sin fricción hacia WhatsApp.
 
-### 3. Catálogo Inteligente con Búsqueda por Sinónimos (`src/components/ProductsCatalog.tsx`)
+### 5. Catálogo Inteligente con Búsqueda por Sinónimos (`src/components/ProductsCatalog.tsx`)
 * **Diccionario de sinónimos industriales venezolanos**: Búsquedas automáticas para términos comunes (*"romana"*, *"brete"*, *"gramera"*, *"fosa"*, *"ganado"*, *"colgante"*, etc.).
-* **Selector de ordenamiento**: Por destacados, nombre ascendente (A-Z), descendente (Z-A) y categoría.
-* **Chips de sugerencia interactivos** cuando no se encuentran resultados exactos.
+* **Botonera táctica móvil**: Tarjetas condensadas en móvil con botón principal expandido de WhatsApp y acceso directo a ficha técnica sin saturar la pantalla.
+* **Selector de ordenamiento**: Por destacados, nombre alfabético (A-Z / Z-A) y categoría.
 
-### 4. Formulario de Contacto Seguro (`src/components/contact/`)
-* **Sanitización anti-XSS** en entradas de texto para prevenir inyecciones maliciosas.
-* **Validación estricta de telefonía venezolana**: Acepta formatos nacionales móviles y fijos (`0414`, `0424`, `0412`, `0416`, `0426`, `0212`, etc., con o sin prefijo internacional `+58`).
-* **WhatsApp Live Preview**: Previsualización instantánea del mensaje que recibirá el asesor técnico.
-
-### 5. Accesibilidad & Calidad Visual
-* Relación de contraste de color optimizada para cumplimiento **WCAG AAA (> 7:1)** en elementos informativos.
-* Arquitectura híbrida **Server Components + Client Components** para tiempos de carga ultrarrápidos y mínimo JavaScript en el cliente.
+### 6. Formulario de Contacto Seguro & Validación Antifraude (`src/components/contact/`)
+* **Sanitización anti-XSS**: Protección en entradas de texto para prevenir inyecciones maliciosas.
+* **Validación estricta de telefonía venezolana**: Formatos móviles y fijos (`0414`, `0424`, `0412`, `0416`, `0426`, `0212`, `0243`, etc., con o sin prefijo internacional `+58`).
+* **WhatsApp Live Preview**: Previsualización en tiempo real del mensaje que recibirá el asesor técnico.
 
 ---
 
 ## 🛠️ Stack Tecnológico
 
-| Componente | Tecnología | Versión |
-| :--- | :--- | :--- |
-| **Framework** | Next.js (App Router, Turbopack) | `16.3.5` |
-| **Biblioteca UI** | React / React DOM | `19.2.8` |
-| **Estilos** | Tailwind CSS | `v4` |
-| **Iconografía** | Lucide React | `^1.16.0` |
-| **Testing** | Vitest + Testing Library + jsdom | `^5.0.1` |
-| **Tipado** | TypeScript (Strict Mode) | `^5` |
-| **Linter** | ESLint + Flat Config | `^9` |
+| Capa | Herramienta | Versión | Propósito |
+| :--- | :--- | :--- | :--- |
+| **Framework** | Next.js (App Router, Turbopack) | `16.3.5` | Arquitectura moderna con Server & Client Components |
+| **Librería UI** | React / React DOM | `19.2.8` | Interfaz reactiva con soporte para Server Actions |
+| **Estilos** | Tailwind CSS | `v4` | Motor de estilos de alto rendimiento |
+| **Iconografía** | Lucide React | `^1.16.0` | Iconos vectoriales limpios y accesibles |
+| **Testing** | Vitest + Testing Library + jsdom | `^5.0.1` | Pruebas unitarias de componentes, lógica y formularios |
+| **Tipado** | TypeScript (Strict Mode) | `^5` | Seguridad de tipos en todo el código |
+| **Despliegue** | Vercel Edge Network | Global | CI/CD automático, CDN global y SSL automático |
 
 ---
 
@@ -59,41 +73,45 @@
 dialka-2.0/
 ├── src/
 │   ├── app/                         # App Router de Next.js 16
-│   │   ├── layout.tsx               # Layout raíz con SEO, JSON-LD y fuentes
-│   │   ├── page.tsx                 # Página principal (Home)
-│   │   ├── productos/               # Catálogo de balanzas y equipos
-│   │   ├── servicios/               # Calibración, mantenimiento y pesaje
-│   │   ├── sencamer/                # Información regulatoria y acreditación
+│   │   ├── layout.tsx               # Layout raíz con SEO, metadatos PWA y JSON-LD
+│   │   ├── page.tsx                 # Página principal (Home comercial optimizado)
+│   │   ├── productos/               # Catálogo completo de balanzas y equipos
+│   │   ├── servicios/               # Calibración, mantenimiento y pesaje continuo
+│   │   ├── sencamer/                # Catálogo interactivo de modelos homologados
 │   │   ├── software/                # Software de pesaje vehicular WeighMaster
 │   │   ├── alquiler/                # Alquiler de básculas para zafra e inventarios
-│   │   ├── proyectos/               # Obras y montajes industriales realizados
+│   │   ├── proyectos/               # Galería de obras y videos de campo reales
 │   │   └── contacto/                # Formulario dinámico y sedes en Venezuela
 │   ├── components/                  # Componentes modulares
-│   │   ├── simulator/               # Simulador de pesaje metrológico
-│   │   ├── wizard/                  # Cotizador por sectores comerciales
-│   │   ├── contact/                 # Formulario, validación anti-XSS y preview
-│   │   ├── ProductsCatalog.tsx      # Catálogo con sinónimos y ordenamiento
-│   │   ├── Footer.tsx               # Server Component del pie de página
-│   │   ├── FooterSedes.tsx          # Selector de sedes interactivo
-│   │   └── ...                      # Modales, contadores animados, etc.
+│   │   ├── simulator/               # Simulador de pesaje metrológico (dial, LED, camiones)
+│   │   ├── wizard/                  # Cotizador interactivo por industria con sticky bar
+│   │   ├── contact/                 # Validación de formularios y WhatsApp preview
+│   │   ├── ProductsCatalog.tsx      # Vitrina de productos con sinónimos y ordenamiento
+│   │   ├── SencamerCatalog.tsx      # Catálogo SENCAMER con vista híbrida móvil/desktop
+│   │   ├── ProjectsVideoGallery.tsx # Galería de videos con carrusel táctil snap-x
+│   │   ├── ImageLightbox.tsx        # Visor modal con soporte de gestos táctiles (swipe)
+│   │   ├── FloatingWhatsApp.tsx     # Botón flotante proactivo con bloqueo en modales
+│   │   └── Header.tsx / Footer.tsx  # Navegación y pie de página institucional
 │   ├── context/                     # Contextos globales (ToastContext)
-│   └── lib/                         # Datos del negocio, tipos y analytics
-├── public/                          # Activos estáticos, imágenes de productos y logos
+│   └── lib/                         # Configuración (teléfonos, sedes), datos y analytics
+├── public/                          # Activos estáticos, fotografías de obras y videos
 ├── vitest.config.mts                # Configuración de Vitest para React 19
-├── vitest.setup.ts                  # Setup de entorno y mocks (IntersectionObserver)
+├── vitest.setup.ts                  # Entorno de pruebas y mocks (IntersectionObserver)
 └── package.json
 ```
 
 ---
 
-## 🚀 Guía de Desarrollo
+## 🚀 Guía de Instalación y Desarrollo
 
 ### Requisitos previos
 * **Node.js** v20+ o v22+
 * **npm** v10+
 
-### 1. Instalación de dependencias
+### 1. Clonar el repositorio e instalar dependencias
 ```bash
+git clone https://github.com/luismir1004/dialka-2.0.git
+cd dialka-2.0
 npm install
 ```
 
@@ -103,31 +121,29 @@ npm run dev
 ```
 La aplicación estará disponible en [http://localhost:3000](http://localhost:3000).
 
-### 3. Ejecutar la suite de pruebas automatizadas (Vitest)
+### 3. Ejecutar las pruebas automatizadas (Vitest)
 ```bash
-# Ejecutar todas las pruebas una vez
+# Ejecutar todas las pruebas una vez (20/20)
 npm test
 
 # Modo interactivo con watch
 npx vitest
 ```
 
-### 4. Análisis estático y linter
-```bash
-npm run lint
-```
-
-### 5. Compilación para producción (Build)
+### 4. Compilación para producción (Build)
 ```bash
 npm run build
 ```
-Genera las rutas estáticas prerenderizadas en `.next` mediante Turbopack.
+Genera las 14 rutas estáticas prerenderizadas en `.next` mediante Turbopack con 0 errores de compilación.
 
 ---
 
-## ⚖️ Metrología Legal y Soporte en Venezuela
+## ⚖️ Metrología Legal y Sedes en Venezuela
 
-Dialka ofrece equipos y servicios conformes con las regulaciones de la República Bolivariana de Venezuela:
-* **SENCAMER**: Homologación y control metrológico de instrumentos de pesar para uso en transacciones comerciales.
-* **Trazabilidad**: Calibraciones referenciadas con masas patrón clase F1 y M1.
-* **Cobertura nacional**: Sedes y asistencia técnica en Caracas, Valencia y Barquisimeto.
+**Balanzas y Servicios Dialka, C.A.** opera conforme al marco normativo metrológico de la República Bolivariana de Venezuela:
+* **Acreditación SENCAMER**: Cumplimiento de la norma **COVENIN 2548** para instrumentos de pesar de funcionamiento no automático.
+* **Trazabilidad Metrológica**: Patrones de masa certificados con trazabilidad internacional clase F1 y M1.
+* **Presencia Física**:
+  * **Sede Central Caracas**: Av. Ppal de Boleíta Norte, Edif. Centro Industrial. Central: `(0212) 238-2322`.
+  * **Sede Centro Maracay**: Zona Industrial San Vicente, Calle G. Atención técnica: `(0414) 250-7170`.
+  * **Atención y despacho**: Cobertura operativa a nivel nacional en las 24 entidades federales.
