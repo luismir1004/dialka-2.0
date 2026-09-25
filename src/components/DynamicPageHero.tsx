@@ -31,6 +31,7 @@ export interface DynamicPageHeroProps {
   statNumber?: string;
   statLabel?: string;
   statSubtext?: string;
+  rightContent?: React.ReactNode;
 }
 
 export function DynamicPageHero({
@@ -48,6 +49,7 @@ export function DynamicPageHero({
   statNumber = "25 Años",
   statLabel = "Liderazgo Metrológico",
   statSubtext = "Acreditación Nacional SENCAMER",
+  rightContent,
 }: DynamicPageHeroProps) {
   const whatsappUrl = `https://wa.me/${SITE_CONFIG.contact.whatsappNumber}?text=${encodeURIComponent(
     primaryCtaWhatsappMessage
@@ -75,9 +77,9 @@ export function DynamicPageHero({
           <span className="text-[#991b1b] font-bold truncate">{breadcrumbCurrent}</span>
         </nav>
 
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          {/* ── COLUMNA PRINCIPAL (8 COLS) ── */}
-          <div className="lg:col-span-8 space-y-4 sm:space-y-5">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+          {/* ── COLUMNA PRINCIPAL (7 u 8 COLS) ── */}
+          <div className={`${rightContent ? "lg:col-span-7" : "lg:col-span-8"} space-y-4 sm:space-y-5`}>
             {/* Badge de Sección con Efecto Shimmer en Fondo Rojo Claro */}
             <div className="inline-flex items-center gap-2 bg-red-50 border border-red-200 text-[#7f1d1d] px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-2xs badge-shimmer">
               <span className="relative flex h-2 w-2">
@@ -145,36 +147,40 @@ export function DynamicPageHero({
             </div>
           </div>
 
-          {/* ── COLUMNA LATERAL HUD TECNOLÓGICA LUMINOSA (4 COLS) ── */}
-          <div className="lg:col-span-4 hidden lg:block">
-            <div className="bg-white/95 backdrop-blur-md rounded-2xl p-6 relative border border-slate-200/90 shadow-xl shadow-slate-200/50 laser-glow-card">
-              <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
-                <span className="text-[11px] font-mono uppercase tracking-widest text-slate-500 font-bold">
-                  ESTÁNDAR METROLÓGICO
-                </span>
-                <span className="inline-flex items-center gap-1 bg-emerald-50 border border-emerald-200 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-2xs">
-                  <ShieldCheck size={11} className="text-emerald-600" />
-                  <span>Activo VET</span>
-                </span>
-              </div>
+          {/* ── COLUMNA LATERAL (MOCKUP O TARJETA HUD) ── */}
+          <div className={`${rightContent ? "lg:col-span-5" : "lg:col-span-4 hidden lg:block"}`}>
+            {rightContent ? (
+              rightContent
+            ) : (
+              <div className="bg-white/95 backdrop-blur-md rounded-2xl p-6 relative border border-slate-200/90 shadow-xl shadow-slate-200/50 laser-glow-card">
+                <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
+                  <span className="text-[11px] font-mono uppercase tracking-widest text-slate-500 font-bold">
+                    ESTÁNDAR METROLÓGICO
+                  </span>
+                  <span className="inline-flex items-center gap-1 bg-emerald-50 border border-emerald-200 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-2xs">
+                    <ShieldCheck size={11} className="text-emerald-600" />
+                    <span>Activo VET</span>
+                  </span>
+                </div>
 
-              <div className="space-y-1.5">
-                <span className="text-4xl lg:text-5xl font-black text-slate-900 tracking-tight block">
-                  {statNumber}
-                </span>
-                <span className="text-sm font-bold text-[#991b1b] block">
-                  {statLabel}
-                </span>
-                <p className="text-xs text-slate-500 leading-relaxed pt-1">
-                  {statSubtext}
-                </p>
-              </div>
+                <div className="space-y-1.5">
+                  <span className="text-4xl lg:text-5xl font-black text-slate-900 tracking-tight block">
+                    {statNumber}
+                  </span>
+                  <span className="text-sm font-bold text-[#991b1b] block">
+                    {statLabel}
+                  </span>
+                  <p className="text-xs text-slate-500 leading-relaxed pt-1">
+                    {statSubtext}
+                  </p>
+                </div>
 
-              <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-mono">
-                <span>SEDE CARACAS · MARACAY</span>
-                <span className="text-[#991b1b] font-bold">COVENIN / OIML</span>
+                <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-mono">
+                  <span>SEDE CARACAS · MARACAY</span>
+                  <span className="text-[#991b1b] font-bold">COVENIN / OIML</span>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

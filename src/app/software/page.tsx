@@ -3,7 +3,8 @@ import Link from "next/link";
 import { SOFTWARE_SYSTEMS, CONTACT } from "@/lib/data";
 import { Monitor, Phone, ArrowRight, Code2, Cpu, CheckCircle2, Layers, Sparkles } from "lucide-react";
 import { SoftwareScreenshotsShowcase } from "@/components/SoftwareScreenshotsShowcase";
-import { SoftwareBannerLightbox } from "@/components/SoftwareBannerLightbox";
+import { SoftwareHeroMockup } from "@/components/SoftwareHeroMockup";
+import { SoftwareArchitectureFlow } from "@/components/SoftwareArchitectureFlow";
 import { DynamicPageHero } from "@/components/DynamicPageHero";
 
 export const metadata: Metadata = {
@@ -38,7 +39,7 @@ const TECH_FEATURES = [
 export default function SoftwarePage() {
   return (
     <>
-      {/* ── HEADER INMERSIVO INDUSTRIAL DINÁMICO ── */}
+      {/* ── HEADER INMERSIVO INDUSTRIAL DINÁMICO CON MOCKUP DE ALTA GAMA ── */}
       <DynamicPageHero
         badgeText="Desarrollo Propio Dialka · Industria 4.0"
         title="Software de Pesaje Industrial"
@@ -56,13 +57,11 @@ export default function SoftwarePage() {
         primaryCtaWhatsappMessage="Hola Dialka, solicito información y demostración del Software de Pesaje Industrial"
         secondaryCtaText="Ver Módulos del Sistema"
         secondaryCtaHref="#modulos-software"
-        statNumber="+307"
-        statLabel="Instalaciones Activas"
-        statSubtext="Operando en silos, puertos y plantas agroindustriales del país"
+        rightContent={<SoftwareHeroMockup whatsappNumber={CONTACT.whatsapp} />}
       />
 
-      {/* ── BANNER VISUAL DE SOFTWARE EN EJECUCIÓN CON LIGHTBOX ── */}
-      <SoftwareBannerLightbox whatsappNumber={CONTACT.whatsapp} />
+      {/* ── ARQUITECTURA DE CONECTIVIDAD INDUSTRIAL 4.0 ── */}
+      <SoftwareArchitectureFlow />
 
       {/* ── MÓDULOS DEL SISTEMA DE SOFTWARE EN VIVO ── */}
       <section id="modulos-software" className="bg-slate-50 py-10 sm:py-14 md:py-16 text-slate-900 border-b border-slate-200">
