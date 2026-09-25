@@ -6,6 +6,7 @@ import { Package, Phone, ArrowRight, ShieldCheck, Sparkles, CheckCircle2, Truck 
 import { ProductsCatalog } from "@/components/ProductsCatalog";
 import { AuthorizedBrands } from "@/components/AuthorizedBrands";
 import { DynamicPageHero } from "@/components/DynamicPageHero";
+import { ProductsHeroMockup } from "@/components/ProductsHeroMockup";
 
 // Dynamic import para IndustryQuoteWizard (componente pesado)
 const IndustryQuoteWizard = dynamic(() => import("@/components/wizard/IndustryQuoteWizard").then(mod => ({ default: mod.IndustryQuoteWizard })), {
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
 export default function ProductosPage() {
   return (
     <>
-      {/* ── HEADER INMERSIVO INDUSTRIAL DINÁMICO ── */}
+      {/* ── HEADER INMERSIVO INDUSTRIAL DINÁMICO CON DESPIECE DE BÁSCULAS ── */}
       <DynamicPageHero
         badgeText="Catálogo Oficial de Equipos"
         title="Sistemas de Pesaje & Equipos"
@@ -46,9 +47,7 @@ export default function ProductosPage() {
         primaryCtaWhatsappMessage="Hola Dialka, deseo solicitar cotización técnica de equipos del catálogo oficial"
         secondaryCtaText="Configurador por Sectores"
         secondaryCtaHref="#cotizador"
-        statNumber="53+"
-        statLabel="Equipos Homologados"
-        statSubtext="Líneas comerciales, industriales, agropecuarias y analíticas"
+        rightContent={<ProductsHeroMockup whatsappNumber={CONTACT.whatsapp} />}
       />
 
       {/* ── COTIZADOR DINÁMICO POR RUBROS COMERCIALES ── */}

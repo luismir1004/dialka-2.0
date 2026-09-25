@@ -15,6 +15,8 @@ import {
 import { ProjectsGallery } from "@/components/ProjectsGallery";
 import { ProjectsVideoGallery } from "@/components/ProjectsVideoGallery";
 import { DynamicPageHero } from "@/components/DynamicPageHero";
+import { ProjectsHeroMockup } from "@/components/ProjectsHeroMockup";
+import { ProjectsMethodologyFlow } from "@/components/ProjectsMethodologyFlow";
 
 export const metadata: Metadata = {
   title: "Proyectos y Obras en Campo",
@@ -79,7 +81,7 @@ export default function ProyectosPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* ── HEADER INMERSIVO INDUSTRIAL DINÁMICO ── */}
+      {/* ── HEADER INMERSIVO INDUSTRIAL DINÁMICO CON CONSOLA DE OBRAS ── */}
       <DynamicPageHero
         badgeText="Ingeniería & Obras Civiles en Campo"
         title="Proyectos y Obras en Campo"
@@ -97,10 +99,11 @@ export default function ProyectosPage() {
         primaryCtaWhatsappMessage="Hola Dialka, solicito asesoría técnica y visita en campo para un proyecto de pesaje industrial"
         secondaryCtaText="Ver Registro en Video"
         secondaryCtaHref="#videos-campo"
-        statNumber="+180"
-        statLabel="Básculas Camioneras"
-        statSubtext="Instaladas y calibradas en los 14 estados productivos del país"
+        rightContent={<ProjectsHeroMockup whatsappNumber={CONTACT.whatsapp} />}
       />
+
+      {/* ── METODOLOGÍA DE EJECUCIÓN DE OBRAS LLAVE EN MANO ── */}
+      <ProjectsMethodologyFlow />
 
       {/* ── BARRA DE MÉTRICAS Y CREDIBILIDAD B2B (LUMINOSA) ── */}
       <section className="bg-white border-b border-slate-200 py-8 sm:py-10">
