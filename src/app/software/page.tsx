@@ -65,16 +65,16 @@ export default function SoftwarePage() {
       <SoftwareBannerLightbox whatsappNumber={CONTACT.whatsapp} />
 
       {/* ── MÓDULOS DEL SISTEMA DE SOFTWARE EN VIVO ── */}
-      <section id="modulos-software" className="bg-slate-950 py-10 sm:py-14 md:py-16 text-white border-b border-slate-800">
+      <section id="modulos-software" className="bg-slate-50 py-10 sm:py-14 md:py-16 text-slate-900 border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-8">
-            <span className="text-xs font-bold uppercase tracking-widest text-red-400 bg-red-950/80 border border-red-500/30 px-3 py-1 rounded-full">
+            <span className="text-xs font-bold uppercase tracking-widest text-[#7f1d1d] bg-red-50 border border-red-200/90 px-3.5 py-1 rounded-full shadow-2xs badge-shimmer">
               Demostración Interactiva del Sistema
             </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white mt-2.5 mb-2 tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2.5 mb-2 tracking-tight">
               Interfaz y Módulos de Pesaje en Vivo
             </h2>
-            <p className="text-slate-400 text-xs sm:text-sm">
+            <p className="text-slate-600 text-xs sm:text-sm">
               Explore los módulos operativos de pesaje vehicular, emisión de comprobantes COVENIN, streaming RS-232 y reportes gerenciales.
             </p>
           </div>

@@ -122,24 +122,25 @@ export function IndustryQuoteWizard() {
   );
 
   return (
-    <section className="bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-white py-12 sm:py-16 rounded-3xl overflow-hidden border border-slate-700 shadow-2xl relative">
-      {/* Luces de fondo decorativas */}
-      <div className="absolute top-0 right-1/4 w-96 h-96 bg-red-600/20 rounded-full blur-3xl pointer-events-none -z-0" />
-      <div className="absolute bottom-0 left-10 w-80 h-80 bg-red-950/40 rounded-full blur-2xl pointer-events-none -z-0" />
+    <section className="bg-slate-50/90 text-slate-900 py-10 sm:py-14 rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm relative">
+      {/* Luces sutiles y mallas de ingeniería */}
+      <div className="absolute inset-0 industrial-grid-light opacity-60 pointer-events-none" />
+      <div className="absolute top-0 right-1/4 w-96 h-96 bg-red-100/30 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-10 w-80 h-80 bg-slate-200/40 rounded-full blur-2xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Cabecera del Cotizador */}
-        <div className="text-center max-w-3xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-950/60 border border-red-500/30 text-xs font-bold uppercase tracking-wider text-red-300 mb-3 shadow-sm">
-            <Sparkles size={14} className="text-red-400" />
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-50 border border-red-200/90 text-xs font-bold uppercase tracking-wider text-[#7f1d1d] mb-3 shadow-2xs badge-shimmer">
+            <Sparkles size={14} className="text-[#991b1b]" />
             <span>Configurador de Paquetes por Sector Comercial</span>
           </div>
 
-          <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white leading-tight">
+          <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-900 leading-tight">
             ¿Cuál es el rubro de su empresa?
           </h2>
 
-          <p className="text-slate-300 text-xs sm:text-sm md:text-base mt-2 leading-relaxed">
+          <p className="text-slate-600 text-xs sm:text-sm md:text-base mt-2 leading-relaxed">
             Seleccione su tipo de negocio. Nuestro sistema le desplegará el conjunto de equipos certificados recomendados para configurar su cotización en segundos al cambio oficial BCV.
           </p>
         </div>
@@ -152,31 +153,31 @@ export function IndustryQuoteWizard() {
         />
 
         {/* ── 2. PANEL INTERACTIVO DE CONFIGURACIÓN DEL RUBRO ACTIVO ── */}
-        <div className="bg-slate-800/90 border border-slate-700 rounded-3xl p-5 sm:p-7 lg:p-8 backdrop-blur-md shadow-xl">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6 border-b border-slate-700/80">
+        <div className="bg-white border border-slate-200/90 rounded-3xl p-5 sm:p-7 lg:p-8 shadow-sm">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6 border-b border-slate-200">
             <div>
               <div className="flex items-center gap-2 mb-1">
                 <span className="text-xl">{currentRubro.emoji}</span>
-                <span className="text-xs font-bold text-red-400 uppercase tracking-wider">
+                <span className="text-xs font-bold text-[#991b1b] uppercase tracking-wider">
                   Solución Especializada para
                 </span>
               </div>
-              <h3 className="text-xl sm:text-2xl font-extrabold text-white">
+              <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900">
                 {currentRubro.title}
               </h3>
-              <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-2xl">
+              <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl">
                 {currentRubro.description}
               </p>
             </div>
 
             {/* Contador de Equipos Marcados */}
-            <div className="self-start lg:self-auto bg-slate-900/80 border border-slate-700 px-4 py-2.5 rounded-2xl flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-red-950/70 border border-red-500/30 flex items-center justify-center text-red-400 font-extrabold text-base">
+            <div className="self-start lg:self-auto bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-2xl flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-red-50 border border-red-200 flex items-center justify-center text-[#991b1b] font-extrabold text-base">
                 {selectedItems.length}
               </div>
               <div className="text-xs">
-                <div className="font-bold text-white">Equipos en su cotización</div>
-                <div className="text-slate-400 text-[10px]">
+                <div className="font-bold text-slate-900">Equipos en su cotización</div>
+                <div className="text-slate-500 text-[10px]">
                   {selectedItems.length > 0
                     ? "Listos para cotizar por WhatsApp"
                     : "Marque las casillas de abajo"}
@@ -188,15 +189,15 @@ export function IndustryQuoteWizard() {
           {/* Grid de Equipos del Rubro */}
           <div className="py-6">
             <div className="flex items-center justify-between mb-4">
-              <p className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-                <Package size={14} className="text-red-400" />
+              <p className="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
+                <Package size={14} className="text-[#991b1b]" />
                 <span>Equipos Recomendados para este Rubro (Seleccione los requeridos):</span>
               </p>
 
               <button
                 type="button"
                 onClick={handleToggleAll}
-                className="text-xs text-red-400 hover:text-red-300 font-semibold underline cursor-pointer"
+                className="text-xs text-[#991b1b] hover:text-[#7f1d1d] font-bold underline cursor-pointer"
               >
                 {isAllSelected ? "Deseleccionar todos" : "Marcar todos"}
               </button>

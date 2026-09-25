@@ -102,28 +102,28 @@ export default function ProyectosPage() {
         statSubtext="Instaladas y calibradas en los 14 estados productivos del país"
       />
 
-      {/* ── BARRA DE MÉTRICAS Y CREDIBILIDAD B2B ── */}
-      <section className="bg-slate-900 text-white border-b border-slate-800 py-8 sm:py-10">
+      {/* ── BARRA DE MÉTRICAS Y CREDIBILIDAD B2B (LUMINOSA) ── */}
+      <section className="bg-white border-b border-slate-200 py-8 sm:py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
             {STATS.map((stat, i) => {
               const Icon = stat.icon;
               return (
                 <div
                   key={i}
-                  className="flex items-center gap-3.5 p-3 rounded-xl bg-slate-800/40 border border-slate-700/60"
+                  className="flex items-center gap-3.5 p-3.5 sm:p-4 rounded-2xl bg-slate-50/90 border border-slate-200/90 shadow-2xs laser-glow-card transition-all"
                 >
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-red-950/80 border border-red-500/30 flex items-center justify-center shrink-0">
-                    <Icon className="text-red-400 w-5 h-5 sm:w-6 sm:h-6" />
+                  <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-red-50 border border-red-200 flex items-center justify-center shrink-0">
+                    <Icon className="text-[#991b1b] w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
                   <div>
-                    <div className="text-lg sm:text-2xl font-black text-white leading-tight">
+                    <div className="text-xl sm:text-2xl font-black text-slate-900 leading-tight">
                       {stat.value}
                     </div>
-                    <div className="text-xs font-bold text-slate-300">
+                    <div className="text-xs font-bold text-[#991b1b]">
                       {stat.label}
                     </div>
-                    <div className="text-[11px] text-slate-400">
+                    <div className="text-[11px] text-slate-500">
                       {stat.sub}
                     </div>
                   </div>

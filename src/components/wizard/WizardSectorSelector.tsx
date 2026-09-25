@@ -23,10 +23,10 @@ export function WizardSectorSelector({
             key={rubro.id}
             type="button"
             onClick={() => onSelectSector(rubro.id)}
-            className={`p-3 sm:p-3.5 rounded-2xl border text-left transition-all duration-300 flex flex-col justify-between cursor-pointer active:scale-95 group ${
+            className={`p-3 sm:p-3.5 rounded-2xl border text-left transition-all duration-300 flex flex-col justify-between cursor-pointer active:scale-95 group shadow-2xs ${
               isActive
-                ? "bg-gradient-to-b from-[#991b1b] to-[#7f1d1d] border-red-400 text-white shadow-lg shadow-red-950/50 scale-[1.03]"
-                : "bg-slate-800/70 hover:bg-slate-800 border-slate-700/80 hover:border-slate-500 text-slate-300"
+                ? "bg-gradient-to-b from-[#991b1b] to-[#7f1d1d] border-[#991b1b] text-white shadow-md shadow-red-950/20 scale-[1.03]"
+                : "bg-white hover:bg-slate-50 border-slate-200 hover:border-red-200 text-slate-800 hover:text-[#991b1b]"
             }`}
             aria-pressed={isActive}
           >
@@ -39,7 +39,9 @@ export function WizardSectorSelector({
               </h3>
             </div>
 
-            <div className="mt-3 flex items-center justify-between text-[10px] font-semibold opacity-80 pt-2 border-t border-white/10">
+            <div className={`mt-3 flex items-center justify-between text-[10px] font-semibold pt-2 border-t ${
+              isActive ? "border-white/20 text-red-100" : "border-slate-100 text-slate-500"
+            }`}>
               <span>{rubro.equipment.length} equipos</span>
               <span>{isActive ? "● Activo" : "Elegir"}</span>
             </div>
