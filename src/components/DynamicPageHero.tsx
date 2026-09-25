@@ -54,52 +54,52 @@ export function DynamicPageHero({
   )}`;
 
   return (
-    <section className="relative bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 border-b border-slate-800 text-white overflow-hidden py-10 sm:py-14 lg:py-18">
-      {/* ── MALLA DEGRADADA Y PATRÓN TÉCNICO DE INGENIERÍA ── */}
-      <div className="absolute inset-0 industrial-grid-dark opacity-40 pointer-events-none" />
-      <div className="absolute top-0 right-1/4 w-96 h-96 bg-red-600/15 rounded-full blur-3xl pointer-events-none -z-10" />
-      <div className="absolute bottom-0 left-1/3 w-80 h-80 bg-slate-800/40 rounded-full blur-2xl pointer-events-none -z-10" />
+    <section className="relative bg-gradient-to-b from-slate-50 via-white to-slate-50 border-b border-slate-200 text-slate-900 overflow-hidden py-10 sm:py-14 lg:py-16">
+      {/* ── MALLA TÉCNICA CLARA DE INGENIERÍA Y DESTELLO SUTIL ── */}
+      <div className="absolute inset-0 industrial-grid-light opacity-70 pointer-events-none" />
+      <div className="absolute top-0 right-1/4 w-96 h-96 bg-red-100/40 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute bottom-0 left-1/3 w-80 h-80 bg-slate-200/30 rounded-full blur-2xl pointer-events-none -z-10" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
-        {/* ── BREADCRUMBS INTERACTIVOS Y RÁPIDOS ── */}
-        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-slate-400 mb-5">
+        {/* ── BREADCRUMBS LUMINOSOS ── */}
+        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-slate-500 mb-4 sm:mb-5">
           <Link
             href="/"
-            className="flex items-center gap-1 text-slate-400 hover:text-white transition-colors"
+            className="flex items-center gap-1 text-slate-500 hover:text-[#991b1b] transition-colors"
             title="Ir al inicio"
           >
             <Home size={13} />
             <span>Inicio</span>
           </Link>
-          <ChevronRight size={13} className="text-slate-600" />
-          <span className="text-red-400 font-semibold truncate">{breadcrumbCurrent}</span>
+          <ChevronRight size={13} className="text-slate-400" />
+          <span className="text-[#991b1b] font-bold truncate">{breadcrumbCurrent}</span>
         </nav>
 
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* ── COLUMNA PRINCIPAL (8 COLS) ── */}
           <div className="lg:col-span-8 space-y-4 sm:space-y-5">
-            {/* Badge de Sección con Efecto Shimmer y Punto Pulsante */}
-            <div className="inline-flex items-center gap-2 bg-red-950/70 border border-red-500/40 px-3.5 py-1.5 rounded-full text-red-300 text-xs font-bold uppercase tracking-wider shadow-sm badge-shimmer">
+            {/* Badge de Sección con Efecto Shimmer en Fondo Rojo Claro */}
+            <div className="inline-flex items-center gap-2 bg-red-50 border border-red-200 text-[#7f1d1d] px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-2xs badge-shimmer">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-red-700"></span>
               </span>
-              <Icon size={14} className="text-red-400" />
+              <Icon size={14} className="text-[#991b1b]" />
               <span>{badgeText}</span>
             </div>
 
-            {/* Título Principal con Acento Dinámico */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-extrabold tracking-tight text-white leading-[1.15]">
+            {/* Título Principal con Acento Rojo Corporativo Dialka */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-extrabold tracking-tight text-slate-900 leading-[1.15]">
               {title}{" "}
               {titleHighlight && (
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-red-300 to-amber-200">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#991b1b] via-[#dc2626] to-[#7f1d1d]">
                   {titleHighlight}
                 </span>
               )}
             </h1>
 
             {/* Descripción Técnica con Alto Contraste */}
-            <p className="text-sm sm:text-base md:text-lg text-slate-300 max-w-2xl leading-relaxed font-normal">
+            <p className="text-sm sm:text-base md:text-lg text-slate-600 max-w-2xl leading-relaxed font-normal">
               {description}
             </p>
 
@@ -111,9 +111,9 @@ export function DynamicPageHero({
                   return (
                     <span
                       key={idx}
-                      className="inline-flex items-center gap-1.5 bg-slate-800/80 border border-slate-700/80 hover:border-red-500/40 text-slate-200 text-xs font-medium px-3 py-1.5 rounded-xl transition-all shadow-xs"
+                      className="inline-flex items-center gap-1.5 bg-white border border-slate-200/90 hover:border-red-200 text-slate-700 hover:text-[#991b1b] text-xs font-semibold px-3 py-1.5 rounded-xl transition-all shadow-2xs"
                     >
-                      <ChipIcon size={13} className="text-red-400 shrink-0" />
+                      <ChipIcon size={13} className="text-[#991b1b] shrink-0" />
                       <span>{chip.label}</span>
                     </span>
                   );
@@ -127,7 +127,7 @@ export function DynamicPageHero({
                 href={whatsappUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#991b1b] via-[#dc2626] to-[#991b1b] hover:from-[#7f1d1d] hover:to-[#991b1b] active:scale-[0.98] text-white font-extrabold px-6 py-3.5 rounded-xl shadow-lg shadow-red-950/50 hover:shadow-red-950/80 transition-all text-sm sm:text-base cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 bg-[#991b1b] hover:bg-[#7f1d1d] active:scale-[0.98] text-white font-bold px-6 py-3.5 rounded-xl shadow-sm hover:shadow-md transition-all text-sm sm:text-base cursor-pointer"
               >
                 <Phone size={16} />
                 <span>{primaryCtaText}</span>
@@ -136,7 +136,7 @@ export function DynamicPageHero({
               {secondaryCtaText && secondaryCtaHref && (
                 <Link
                   href={secondaryCtaHref}
-                  className="inline-flex items-center justify-center gap-2 bg-slate-800/80 hover:bg-slate-700/90 active:scale-[0.98] border border-slate-700 text-slate-200 hover:text-white font-semibold px-5 py-3.5 rounded-xl transition-all text-sm sm:text-base"
+                  className="inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-50 active:scale-[0.98] border border-slate-300 text-slate-800 font-semibold px-5 py-3.5 rounded-xl transition-all text-sm sm:text-base shadow-2xs"
                 >
                   <span>{secondaryCtaText}</span>
                   <ArrowRight size={15} />
@@ -145,34 +145,34 @@ export function DynamicPageHero({
             </div>
           </div>
 
-          {/* ── COLUMNA LATERAL HUD TECNOLÓGICA (4 COLS) ── */}
+          {/* ── COLUMNA LATERAL HUD TECNOLÓGICA LUMINOSA (4 COLS) ── */}
           <div className="lg:col-span-4 hidden lg:block">
-            <div className="glass-panel-dark rounded-2xl p-6 relative laser-glow-card">
-              <div className="flex items-center justify-between pb-4 border-b border-slate-700/60 mb-4">
-                <span className="text-[11px] font-mono uppercase tracking-widest text-slate-400">
+            <div className="bg-white/95 backdrop-blur-md rounded-2xl p-6 relative border border-slate-200/90 shadow-xl shadow-slate-200/50 laser-glow-card">
+              <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
+                <span className="text-[11px] font-mono uppercase tracking-widest text-slate-500 font-bold">
                   ESTÁNDAR METROLÓGICO
                 </span>
-                <span className="inline-flex items-center gap-1 bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 text-[10px] font-bold px-2 py-0.5 rounded-full">
-                  <ShieldCheck size={11} className="text-emerald-400" />
+                <span className="inline-flex items-center gap-1 bg-emerald-50 border border-emerald-200 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-2xs">
+                  <ShieldCheck size={11} className="text-emerald-600" />
                   <span>Activo VET</span>
                 </span>
               </div>
 
-              <div className="space-y-2">
-                <span className="text-4xl lg:text-5xl font-black text-white tracking-tight block">
+              <div className="space-y-1.5">
+                <span className="text-4xl lg:text-5xl font-black text-slate-900 tracking-tight block">
                   {statNumber}
                 </span>
-                <span className="text-sm font-bold text-red-400 block">
+                <span className="text-sm font-bold text-[#991b1b] block">
                   {statLabel}
                 </span>
-                <p className="text-xs text-slate-400 leading-relaxed pt-1">
+                <p className="text-xs text-slate-500 leading-relaxed pt-1">
                   {statSubtext}
                 </p>
               </div>
 
-              <div className="mt-5 pt-4 border-t border-slate-700/60 flex items-center justify-between text-[11px] text-slate-400 font-mono">
+              <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-mono">
                 <span>SEDE CARACAS · MARACAY</span>
-                <span className="text-red-400 font-bold">COVENIN / OIML</span>
+                <span className="text-[#991b1b] font-bold">COVENIN / OIML</span>
               </div>
             </div>
           </div>
