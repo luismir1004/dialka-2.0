@@ -18,17 +18,6 @@ import { MetricsBar } from "@/components/MetricsBar";
 import { MissionVisionTabs } from "@/components/MissionVisionTabs";
 import { ProductsCatalog } from "@/components/ProductsCatalog";
 
-// Dynamic imports para code splitting de componentes pesados
-const LiveWeighingSimulator = dynamic(() => import("@/components/LiveWeighingSimulator").then(mod => ({ default: mod.LiveWeighingSimulator })), {
-  loading: () => (
-    <div className="bg-slate-900 border border-slate-800 rounded-2xl p-10 text-center">
-      <div className="animate-pulse flex flex-col items-center gap-4">
-        <div className="w-16 h-16 bg-slate-800 rounded-full animate-spin border-4 border-slate-700 border-t-red-500" />
-        <p className="text-slate-400 text-sm">Cargando simulador metrológico...</p>
-      </div>
-    </div>
-  ),
-});
 
 export const metadata: Metadata = {
   title: "Inicio | Balanzas y Servicios Dialka",
@@ -214,32 +203,7 @@ export default function HomePage() {
         initialLimit={8}
       />
 
-      {/* ── SIMULADOR DE PESAJE INTERACTIVO (DIAL Y DISPLAY VIVO) ── */}
-      <section className="bg-slate-950 py-10 sm:py-16 md:py-20 border-b border-slate-850 text-white relative overflow-hidden">
-        {/* Ambient lighting effect */}
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-red-900/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-slate-800/30 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <RevealOnScroll>
-            <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
-              <span className="inline-block text-xs font-bold uppercase tracking-widest text-red-400 bg-red-950/80 border border-red-500/30 px-3 py-1 rounded-full mb-2.5 shadow-xs">
-                Tecnología e Interactividad Metrológica
-              </span>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight mb-2.5">
-                Simulador de Pesaje en Vivo (0 a 80 Toneladas)
-              </h2>
-              <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
-                Interactúe con nuestro simulador de terminal industrial. Desplace el control numérico de toneladas para simular el pesaje vehicular y compruebe la respuesta en tiempo real del display digital LED, el dial con aguja viva y los estados de estabilización y sobrecarga.
-              </p>
-            </div>
-          </RevealOnScroll>
-
-          <RevealOnScroll delay={150}>
-            <LiveWeighingSimulator />
-          </RevealOnScroll>
-        </div>
-      </section>
 
       {/* ── PROYECTOS Y OBRAS EN CAMPO (AUTENTICIDAD LOCAL) ── */}
       <RevealOnScroll>

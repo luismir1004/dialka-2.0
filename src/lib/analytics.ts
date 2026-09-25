@@ -25,10 +25,6 @@ export const ANALYTICS_EVENTS = {
   // Formularios
   FORM_SUBMIT: "form_submit",
   FORM_ERROR: "form_error",
-  
-  // Simulador
-  SIMULATOR_USE: "simulator_use",
-  SIMULATOR_PRESET: "simulator_preset",
 } as const;
 
 // Declaración de tipos para Google Analytics 4

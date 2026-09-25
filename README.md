@@ -13,24 +13,18 @@
 
 ## 🌟 Características Principales
 
-### 1. Simulador Metrológico Interactivo en Tiempo Real (`src/components/simulator/`)
-* **Dial analógico de precisión**: Aguja dinámica con divisiones de escala y amortiguación de lectura.
-* **Display digital de alta luminosidad LED**: Indicador de pesaje con modos Bruto / Neto, Cero (`>0<`), Estabilidad y detección de sobrecarga metrológica.
-* **Visualizador de báscula camionera**: Simulación gráfica de báscula de fosa/sobresuelo con deformación elástica de celdas de carga y distribución de peso vehicular (Gandola Chuto + Batea, Camión 350, Volqueta, etc.).
-* **Controles por presets de vehículos** y persistencia de HUD digital en dispositivos móviles para interacción táctil fluida.
-
-### 2. Catálogo Oficial Homologado SENCAMER (`src/components/SencamerCatalog.tsx`)
+### 1. Catálogo Oficial Homologado SENCAMER (`src/components/SencamerCatalog.tsx`)
 * **Filtros en tiempo real**: Búsqueda instantánea por capacidad máxima, división ($e=d$) o ámbito de uso (comercial, industrial, laboratorios, agropecuario).
 * **Diseño híbrido responsive**:
   * **Móvil (`sm:hidden`)**: Tarjetas táctiles verticales con especificaciones claras y botón de cotización directa por WhatsApp.
   * **Escritorio (`hidden sm:block`)**: Tabla comparativa corporativa con sellos de acreditación oficial.
 
-### 3. Registro Audiovisual y Obras en Campo (`src/components/ProjectsVideoGallery.tsx` y `ProjectsGallery.tsx`)
+### 2. Registro Audiovisual y Obras en Campo (`src/components/ProjectsVideoGallery.tsx` y `ProjectsGallery.tsx`)
 * **Videos reales de instalaciones**: Registros audiovisuales de montajes de básculas camioneras, obras civiles y calibraciones en campo.
 * **Carrusel táctil con `snap-x`**: Desplazamiento horizontal fluido en smartphones con aspect ratio adaptativo (`4/5` en móvil, `9/14` en desktop).
 * **Lightbox de alta resolución táctil**: Modal con soporte de gestos touch (swipe con el dedo), navegación por teclado y fichas técnicas completas.
 
-### 4. Cotizador Inteligente por Sector Industrial (`src/components/wizard/`)
+### 3. Cotizador Inteligente por Sector Industrial (`src/components/wizard/`)
 * **6 sectores productivos venezolanos**:
   1. Carnicerías, Charcuterías & Frigoríficos
   2. Supermercados, Bodegones & Minimarkets
@@ -41,12 +35,12 @@
 * Cálculo de paquetes recomendados con validación de cantidades (1 a 50 unidades).
 * **Sticky Bottom Bar móvil**: Barra flotante inferior de cotización en smartphones para un embudo de conversión sin fricción hacia WhatsApp.
 
-### 5. Catálogo Inteligente con Búsqueda por Sinónimos (`src/components/ProductsCatalog.tsx`)
+### 4. Catálogo Inteligente con Búsqueda por Sinónimos (`src/components/ProductsCatalog.tsx`)
 * **Diccionario de sinónimos industriales venezolanos**: Búsquedas automáticas para términos comunes (*"romana"*, *"brete"*, *"gramera"*, *"fosa"*, *"ganado"*, *"colgante"*, etc.).
 * **Botonera táctica móvil**: Tarjetas condensadas en móvil con botón principal expandido de WhatsApp y acceso directo a ficha técnica sin saturar la pantalla.
 * **Selector de ordenamiento**: Por destacados, nombre alfabético (A-Z / Z-A) y categoría.
 
-### 6. Formulario de Contacto Seguro & Validación Antifraude (`src/components/contact/`)
+### 5. Formulario de Contacto Seguro & Validación Antifraude (`src/components/contact/`)
 * **Sanitización anti-XSS**: Protección en entradas de texto para prevenir inyecciones maliciosas.
 * **Validación estricta de telefonía venezolana**: Formatos móviles y fijos (`0414`, `0424`, `0412`, `0416`, `0426`, `0212`, `0243`, etc., con o sin prefijo internacional `+58`).
 * **WhatsApp Live Preview**: Previsualización en tiempo real del mensaje que recibirá el asesor técnico.
@@ -83,7 +77,6 @@ dialka-2.0/
 │   │   ├── proyectos/               # Galería de obras y videos de campo reales
 │   │   └── contacto/                # Formulario dinámico y sedes en Venezuela
 │   ├── components/                  # Componentes modulares
-│   │   ├── simulator/               # Simulador de pesaje metrológico (dial, LED, camiones)
 │   │   ├── wizard/                  # Cotizador interactivo por industria con sticky bar
 │   │   ├── contact/                 # Validación de formularios y WhatsApp preview
 │   │   ├── ProductsCatalog.tsx      # Vitrina de productos con sinónimos y ordenamiento
