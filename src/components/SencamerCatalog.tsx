@@ -8,6 +8,7 @@ import {
   RotateCcw,
   SlidersHorizontal,
   ArrowRight,
+  Phone,
 } from "lucide-react";
 
 interface SencamerModel {
@@ -142,67 +143,118 @@ export function SencamerCatalog({
           </div>
         </div>
 
-        {/* ── TABLA DINÁMICA CON TRANSICIONES SUAVES Y SCROLL RESPONSIVO ── */}
+        {/* ── LISTADO DINÁMICO: TARJETAS TÁCTILES EN MÓVIL Y TABLA EN DESKTOP ── */}
         {filteredModels.length > 0 ? (
-          <div className="overflow-hidden rounded-2xl border border-slate-200 shadow-sm bg-white animate-fadeIn">
-            {/* Indicador táctil para pantallas móviles */}
-            <div className="sm:hidden flex items-center justify-between px-4 py-2.5 bg-slate-50 border-b border-slate-200 text-[11px] text-slate-500 font-semibold">
-              <span>Modelos homologados</span>
-              <span className="text-[#991b1b] flex items-center gap-1">
-                Desliza horizontalmente →
-              </span>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[620px] text-left border-collapse">
-                <thead>
-                  <tr className="bg-slate-100/90 border-b border-slate-200 text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-700">
-                    <th className="px-4 sm:px-6 py-3.5 sm:py-4">Capacidad Máxima</th>
-                    <th className="px-4 sm:px-6 py-3.5 sm:py-4">División (e = d)</th>
-                    <th className="px-4 sm:px-6 py-3.5 sm:py-4">Campo de Aplicación</th>
-                    <th className="px-4 sm:px-6 py-3.5 sm:py-4">Estatus Legal</th>
-                    <th className="px-4 sm:px-6 py-3.5 sm:py-4 text-right">Acción</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100 text-xs sm:text-sm">
-                  {filteredModels.map((model) => (
-                    <tr
-                      key={model.capacity}
-                      className="hover:bg-slate-50/90 transition-colors animate-fadeIn"
-                    >
-                      <td className="px-4 sm:px-6 py-3 sm:py-4 font-bold text-slate-900">
+          <>
+            {/* 1. VISTA MÓVIL (sm:hidden): Tarjetas táctiles verticales con CTA directo */}
+            <div className="sm:hidden space-y-3.5 animate-fadeIn">
+              {filteredModels.map((model) => (
+                <div
+                  key={model.capacity}
+                  className="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs hover:border-red-200 transition-all flex flex-col justify-between"
+                >
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <div>
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
+                        Capacidad Máxima
+                      </span>
+                      <span className="text-base font-extrabold text-slate-900">
                         {model.capacity}
-                      </td>
-                      <td className="px-4 sm:px-6 py-3 sm:py-4 font-medium text-slate-700">
+                      </span>
+                    </div>
+                    <span className="inline-flex items-center gap-1 bg-emerald-50 border border-emerald-200/90 text-emerald-800 text-[10px] font-bold px-2.5 py-1 rounded-full shrink-0 shadow-2xs">
+                      <ShieldCheck size={12} className="text-emerald-700" />
+                      SENCAMER
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 mb-3.5 bg-slate-50/80 p-2.5 rounded-xl border border-slate-100 text-xs">
+                    <div>
+                      <span className="text-[10px] font-medium text-slate-500 block">
+                        División (e = d):
+                      </span>
+                      <span className="font-semibold text-slate-800">
                         {model.division}
-                      </td>
-                      <td className="px-4 sm:px-6 py-3 sm:py-4 text-slate-600">
-                        <span className="inline-block bg-slate-100 px-2.5 py-1 rounded-md text-xs font-medium text-slate-700">
-                          {model.use}
-                        </span>
-                      </td>
-                      <td className="px-4 sm:px-6 py-3 sm:py-4">
-                        <span className="inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200/90 text-emerald-800 text-[11px] sm:text-xs font-bold px-2.5 sm:px-3 py-1 rounded-full shadow-2xs">
-                          <ShieldCheck size={13} className="text-emerald-700" />
-                          Certificado SENCAMER
-                        </span>
-                      </td>
-                      <td className="px-4 sm:px-6 py-3 sm:py-4 text-right">
-                        <a
-                          href={`https://wa.me/${whatsappNumber}?text=Hola,%20solicito%20cotización%20del%20equipo%20SENCAMER%20de%20capacidad:%20${encodeURIComponent(model.capacity)}%20(${encodeURIComponent(model.use)})`}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-flex items-center gap-1 text-xs font-bold text-[#7f1d1d] hover:text-[#450a0a] transition-colors p-1"
-                        >
-                          <span>Cotizar</span>
-                          <ArrowRight size={12} />
-                        </a>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-medium text-slate-500 block">
+                        Aplicación:
+                      </span>
+                      <span className="font-semibold text-slate-800 truncate block">
+                        {model.use}
+                      </span>
+                    </div>
+                  </div>
+
+                  <a
+                    href={`https://wa.me/${whatsappNumber}?text=Hola,%20solicito%20cotización%20del%20equipo%20SENCAMER%20de%20capacidad:%20${encodeURIComponent(model.capacity)}%20(${encodeURIComponent(model.use)})`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="w-full inline-flex items-center justify-center gap-1.5 bg-[#991b1b] hover:bg-[#7f1d1d] active:scale-[0.98] text-white font-bold py-2.5 px-3 rounded-xl text-xs transition-all shadow-xs"
+                  >
+                    <Phone size={13} />
+                    <span>Cotizar por WhatsApp</span>
+                    <ArrowRight size={13} />
+                  </a>
+                </div>
+              ))}
             </div>
-          </div>
+
+            {/* 2. VISTA TABLET Y ESCRITORIO (hidden sm:block): Tabla comparativa */}
+            <div className="hidden sm:block overflow-hidden rounded-2xl border border-slate-200 shadow-sm bg-white animate-fadeIn">
+              <div className="overflow-x-auto">
+                <table className="w-full min-w-[620px] text-left border-collapse">
+                  <thead>
+                    <tr className="bg-slate-100/90 border-b border-slate-200 text-xs font-bold uppercase tracking-wider text-slate-700">
+                      <th className="px-6 py-4">Capacidad Máxima</th>
+                      <th className="px-6 py-4">División (e = d)</th>
+                      <th className="px-6 py-4">Campo de Aplicación</th>
+                      <th className="px-6 py-4">Estatus Legal</th>
+                      <th className="px-6 py-4 text-right">Acción</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100 text-sm">
+                    {filteredModels.map((model) => (
+                      <tr
+                        key={model.capacity}
+                        className="hover:bg-slate-50/90 transition-colors animate-fadeIn"
+                      >
+                        <td className="px-6 py-4 font-bold text-slate-900">
+                          {model.capacity}
+                        </td>
+                        <td className="px-6 py-4 font-medium text-slate-700">
+                          {model.division}
+                        </td>
+                        <td className="px-6 py-4 text-slate-600">
+                          <span className="inline-block bg-slate-100 px-2.5 py-1 rounded-md text-xs font-medium text-slate-700">
+                            {model.use}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4">
+                          <span className="inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200/90 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full shadow-2xs">
+                            <ShieldCheck size={13} className="text-emerald-700" />
+                            Certificado SENCAMER
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 text-right">
+                          <a
+                            href={`https://wa.me/${whatsappNumber}?text=Hola,%20solicito%20cotización%20del%20equipo%20SENCAMER%20de%20capacidad:%20${encodeURIComponent(model.capacity)}%20(${encodeURIComponent(model.use)})`}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-1 text-xs font-bold text-[#7f1d1d] hover:text-[#450a0a] transition-colors p-1"
+                          >
+                            <span>Cotizar</span>
+                            <ArrowRight size={12} />
+                          </a>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </>
         ) : (
           /* ── ESTADO VACÍO (SIN RESULTADOS) ── */
           <div className="bg-slate-50 border border-dashed border-slate-300 rounded-2xl p-12 text-center max-w-lg mx-auto animate-fadeIn">

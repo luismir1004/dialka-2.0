@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import {
   X,
@@ -44,6 +44,7 @@ export function ImageLightbox({
   whatsappNumber = SITE_CONFIG.contact.whatsappNumber,
 }: ImageLightboxProps) {
   const currentItem = items[currentIndex];
+  const touchStartX = useRef<number | null>(null);
 
   const handlePrev = useCallback(() => {
     onIndexChange(currentIndex === 0 ? items.length - 1 : currentIndex - 1);
@@ -52,6 +53,23 @@ export function ImageLightbox({
   const handleNext = useCallback(() => {
     onIndexChange(currentIndex === items.length - 1 ? 0 : currentIndex + 1);
   }, [currentIndex, items.length, onIndexChange]);
+
+  // Touch swipe gestures for mobile
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX.current - touchEndX;
+    if (diff > 45) {
+      handleNext();
+    } else if (diff < -45) {
+      handlePrev();
+    }
+    touchStartX.current = null;
+  };
 
   // Keyboard navigation
   useEffect(() => {
@@ -84,30 +102,34 @@ export function ImageLightbox({
       role="dialog"
       aria-modal="true"
       aria-label={currentItem.title}
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 md:p-8 bg-black/90 backdrop-blur-md animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-6 md:p-8 bg-black/90 backdrop-blur-md animate-in fade-in duration-200"
     >
       {/* Background click to close */}
       <div className="absolute inset-0" onClick={onClose} />
 
       {/* Modal Container */}
-      <div className="relative z-10 w-full max-w-5xl max-h-[90vh] bg-slate-900 border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row">
+      <div className="relative z-10 w-full max-w-5xl max-h-[92vh] sm:max-h-[90vh] bg-slate-900 border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row">
         {/* Close Button */}
         <button
           onClick={onClose}
           aria-label="Cerrar ventana modal"
-          className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-slate-800/90 hover:bg-red-600 text-white flex items-center justify-center transition-colors shadow-lg border border-slate-600 focus:outline-none"
+          className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-800/90 hover:bg-red-600 text-white flex items-center justify-center transition-colors shadow-lg border border-slate-600 focus:outline-none"
         >
-          <X size={20} />
+          <X size={18} />
         </button>
 
-        {/* Left / Top: High-Res Image with Nav Buttons */}
-        <div className="relative md:w-3/5 bg-black flex items-center justify-center min-h-[300px] sm:min-h-[400px] md:min-h-[500px]">
+        {/* Left / Top: High-Res Image with Nav Buttons and Touch Gestures */}
+        <div
+          className="relative w-full md:w-3/5 bg-black flex items-center justify-center h-48 sm:h-64 md:h-auto md:min-h-[500px] shrink-0 touch-pan-y"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
           <Image
             src={currentItem.image}
             alt={currentItem.title}
             fill
             sizes="(max-width: 768px) 100vw, 60vw"
-            className="object-contain p-2 sm:p-4"
+            className="object-contain p-2 sm:p-4 select-none pointer-events-none"
             priority
           />
 
@@ -147,18 +169,18 @@ export function ImageLightbox({
         </div>
 
         {/* Right / Bottom: Specifications and Technical Details */}
-        <div className="md:w-2/5 p-6 sm:p-8 flex flex-col justify-between overflow-y-auto bg-slate-900 text-white border-t md:border-t-0 md:border-l border-slate-800">
+        <div className="md:w-2/5 p-4 sm:p-6 md:p-8 flex flex-col justify-between overflow-y-auto bg-slate-900 text-white border-t md:border-t-0 md:border-l border-slate-800">
           <div>
             {/* Tag & Location */}
-            <div className="flex flex-wrap items-center gap-2 mb-3">
+            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-2 sm:mb-3">
               {currentItem.tag && (
-                <span className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-red-300 bg-red-950/80 border border-red-500/40 px-2.5 py-0.5 rounded-full">
+                <span className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-red-300 bg-red-950/80 border border-red-500/40 px-2 sm:px-2.5 py-0.5 rounded-full">
                   <Tag size={11} />
                   <span>{currentItem.tag}</span>
                 </span>
               )}
               {currentItem.location && (
-                <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-slate-400 bg-slate-800/80 px-2.5 py-0.5 rounded-full">
+                <span className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-semibold text-slate-400 bg-slate-800/80 px-2 sm:px-2.5 py-0.5 rounded-full">
                   <MapPin size={11} className="text-red-400" />
                   <span>{currentItem.location}</span>
                 </span>
@@ -166,24 +188,24 @@ export function ImageLightbox({
             </div>
 
             {/* Title & Subtitle */}
-            <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight mb-1">
+            <h3 className="text-lg sm:text-2xl font-black text-white tracking-tight mb-0.5 sm:mb-1">
               {currentItem.title}
             </h3>
             {currentItem.subtitle && (
-              <p className="text-xs font-semibold text-red-400 uppercase tracking-wider mb-4">
+              <p className="text-[11px] sm:text-xs font-semibold text-red-400 uppercase tracking-wider mb-2.5 sm:mb-4">
                 {currentItem.subtitle}
               </p>
             )}
 
             {/* Description */}
-            <p className="text-sm text-slate-300 leading-relaxed mb-6 font-normal">
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-3 sm:mb-5 font-normal">
               {currentItem.description}
             </p>
 
             {/* Technical Specifications */}
             {currentItem.specs && currentItem.specs.length > 0 && (
-              <div className="mb-6 bg-slate-950/80 border border-slate-800 rounded-xl p-4">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-1.5">
+              <div className="mb-4 sm:mb-6 bg-slate-950/80 border border-slate-800 rounded-xl p-3 sm:p-4">
+                <h4 className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 sm:mb-3 flex items-center gap-1.5">
                   <CheckCircle2 size={13} className="text-emerald-400" />
                   <span>Especificaciones Técnicas</span>
                 </h4>

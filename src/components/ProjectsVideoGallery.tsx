@@ -34,15 +34,23 @@ export function ProjectsVideoGallery({ videos }: ProjectsVideoGalleryProps) {
           </p>
         </div>
 
-        {/* Video Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        {/* Indicador táctil para mobile */}
+        <div className="sm:hidden flex items-center justify-between mb-3 text-[11px] text-slate-400 font-medium">
+          <span>{videos.length} videos en campo</span>
+          <span className="text-red-400 font-bold flex items-center gap-1">
+            Desliza para ver más →
+          </span>
+        </div>
+
+        {/* Video Grid / Carrusel Táctil */}
+        <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-3 overflow-x-auto sm:overflow-visible snap-x snap-mandatory gap-4 sm:gap-6 lg:gap-8 pb-4 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0">
           {videos.map((video) => (
             <div
               key={video.id}
-              className="group bg-slate-800/80 border border-slate-700/80 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl hover:border-red-500/40 transition-all duration-300"
+              className="w-[84vw] max-w-[320px] shrink-0 sm:w-auto sm:max-w-none snap-center group bg-slate-800/80 border border-slate-700/80 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl hover:border-red-500/40 transition-all duration-300 flex flex-col justify-between"
             >
               {/* Video Player */}
-              <div className="relative w-full aspect-[9/16] sm:aspect-[9/14] bg-black">
+              <div className="relative w-full aspect-[4/5] sm:aspect-[9/14] bg-black">
                 <video
                   className="w-full h-full object-cover"
                   poster={video.poster}
@@ -64,13 +72,15 @@ export function ProjectsVideoGallery({ videos }: ProjectsVideoGalleryProps) {
               </div>
 
               {/* Video Info */}
-              <div className="p-4 sm:p-5">
-                <h3 className="text-sm sm:text-base font-bold text-white leading-snug mb-1.5">
-                  {video.title}
-                </h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  {video.description}
-                </p>
+              <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+                <div>
+                  <h3 className="text-sm sm:text-base font-bold text-white leading-snug mb-1.5">
+                    {video.title}
+                  </h3>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    {video.description}
+                  </p>
+                </div>
               </div>
             </div>
           ))}

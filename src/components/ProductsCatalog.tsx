@@ -421,7 +421,36 @@ export function ProductsCatalog({
                     </div>
 
                     {/* Acciones de la Tarjeta: Ficha Técnica + WhatsApp */}
-                    <div className="pt-2 sm:pt-2.5 border-t border-slate-100 space-y-1.5">
+                    {/* Versión Móvil: Ficha Iconográfica + Botón Principal Cotizar */}
+                    <div className="pt-2 border-t border-slate-100 sm:hidden flex items-center gap-1.5">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleOpenModal(product);
+                        }}
+                        className="p-2 bg-slate-100 active:bg-red-50 text-slate-700 active:text-[#991b1b] rounded-xl border border-slate-200 transition-colors shrink-0"
+                        title={`Ver ficha técnica de ${product.name}`}
+                        aria-label={`Ver ficha técnica de ${product.name}`}
+                      >
+                        <FileText size={14} className="text-[#991b1b]" />
+                      </button>
+
+                      <a
+                        href={`https://wa.me/${whatsappNumber}?text=Hola%20Dialka,%20deseo%20cotizar%20el%20equipo:%20${encodeURIComponent(product.name)}%20(${encodeURIComponent(product.specs)})`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex-1 inline-flex items-center justify-center gap-1 bg-[#991b1b] hover:bg-[#7f1d1d] active:scale-[0.98] text-white font-bold py-2 px-2.5 rounded-xl text-[11px] transition-all shadow-xs"
+                        title={`Cotizar ${product.name}`}
+                      >
+                        <Phone size={12} className="shrink-0" />
+                        <span className="truncate">Cotizar WhatsApp</span>
+                        <ArrowRight size={11} className="shrink-0" />
+                      </a>
+                    </div>
+
+                    {/* Versión Tablet y Desktop: Dos botones completos apilados */}
+                    <div className="hidden sm:block pt-2.5 border-t border-slate-100 space-y-1.5">
                       <button
                         type="button"
                         onClick={(e) => {

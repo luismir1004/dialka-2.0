@@ -205,6 +205,47 @@ export function LiveWeighingSimulator({
         </div>
       </div>
 
+      {/* ── MÓVIL: DISPLAY DIGITAL LED PERSISTENTE (FEEDBACK EN TIEMPO REAL EN CUALQUIER TAB) ── */}
+      <div className="lg:hidden relative z-10 px-4 py-2.5 bg-slate-950/95 border-b border-slate-800/90 flex items-center justify-between gap-3">
+        <div className="flex items-center gap-2">
+          <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400">
+            {isNetMode ? "NETO:" : "BRUTO:"}
+          </span>
+          <span
+            className={`font-mono font-black text-sm sm:text-base tracking-tight ${
+              isOverload
+                ? "text-red-500 animate-pulse"
+                : isWarning
+                ? "text-amber-400"
+                : "text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]"
+            }`}
+          >
+            {isOverload ? "--- E E E ---" : `${displayedKg.toLocaleString("es-VE")} kg`}
+          </span>
+          <span className="text-[10px] font-bold text-slate-400 font-mono">
+            ({displayedTons} t)
+          </span>
+        </div>
+
+        <div className="flex items-center gap-1.5">
+          <div className="w-16 sm:w-20 bg-slate-800 rounded-full h-1.5 overflow-hidden">
+            <div
+              className={`h-full transition-all duration-300 ${
+                isOverload
+                  ? "bg-red-500"
+                  : isWarning
+                  ? "bg-amber-500"
+                  : "bg-emerald-500"
+              }`}
+              style={{ width: `${percentage}%` }}
+            />
+          </div>
+          <span className="text-[10px] font-mono font-bold text-slate-400">
+            {Math.round(percentage)}%
+          </span>
+        </div>
+      </div>
+
       {/* ── MÓVIL: SELECTOR DE PESTAÑAS TÁCTILES ── */}
       <div className="lg:hidden relative z-10 px-3 py-2 border-b border-slate-800/80 bg-slate-950/75 flex items-center gap-2">
         <button
