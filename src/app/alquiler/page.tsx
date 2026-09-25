@@ -4,6 +4,8 @@ import { RENTAL_EQUIPMENT, CONTACT } from "@/lib/data";
 import { CalendarDays, Phone, ArrowRight, Truck, ShieldCheck, Clock } from "lucide-react";
 import { RentalCatalog } from "@/components/RentalCatalog";
 import { DynamicPageHero } from "@/components/DynamicPageHero";
+import { RentalHeroMockup } from "@/components/RentalHeroMockup";
+import { RentalProcessFlow } from "@/components/RentalProcessFlow";
 
 export const metadata: Metadata = {
   title: "Alquiler de Equipos de Pesaje",
@@ -37,7 +39,7 @@ const RENTAL_ADVANTAGES = [
 export default function AlquilerPage() {
   return (
     <>
-      {/* ── HEADER INMERSIVO INDUSTRIAL DINÁMICO ── */}
+      {/* ── HEADER INMERSIVO INDUSTRIAL DINÁMICO CON FLOTA DE ALQUILER ── */}
       <DynamicPageHero
         badgeText="Arrendamiento y Soluciones Temporales"
         title="Alquiler de Básculas y Equipos"
@@ -55,10 +57,11 @@ export default function AlquilerPage() {
         primaryCtaWhatsappMessage="Hola Dialka, solicito cotización para alquiler de equipos de pesaje industrial"
         secondaryCtaText="Ver Catálogo de Alquiler"
         secondaryCtaHref="#catalogo-alquiler"
-        statNumber="20T / 40T"
-        statLabel="Capacidad por Eje"
-        statSubtext="Sistemas móviles para pesaje vehicular continuo de flotas"
+        rightContent={<RentalHeroMockup whatsappNumber={CONTACT.whatsapp} />}
       />
+
+      {/* ── PROCESO DE ALQUILER EXPRESS ── */}
+      <RentalProcessFlow />
 
       {/* ── TARJETAS DE EQUIPOS EN ALQUILER CON LIGHTBOX ── */}
       <section id="catalogo-alquiler" className="bg-white py-10 sm:py-14 md:py-16">

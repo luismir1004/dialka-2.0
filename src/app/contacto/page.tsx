@@ -11,6 +11,7 @@ import { ContactDepartmentRouter } from "@/components/ContactDepartmentRouter";
 import { ContactSedesDashboard } from "@/components/ContactSedesDashboard";
 import { ContactFAQ } from "@/components/ContactFAQ";
 import { DynamicPageHero } from "@/components/DynamicPageHero";
+import { ContactHeroMockup } from "@/components/ContactHeroMockup";
 
 // Dynamic import para ContactDynamicForm (componente pesado)
 const ContactDynamicForm = dynamic(() => import("@/components/ContactDynamicForm").then(mod => ({ default: mod.ContactDynamicForm })), {
@@ -58,7 +59,7 @@ export const metadata: Metadata = {
 export default function ContactoPage() {
   return (
     <>
-      {/* ── HEADER INMERSIVO INDUSTRIAL DINÁMICO ── */}
+      {/* ── HEADER INMERSIVO INDUSTRIAL DINÁMICO CON TABLERO DE SEDES ── */}
       <DynamicPageHero
         badgeText="Atención Inmediata & Guardia Metrológica"
         title="Centro de Contacto, Despacho"
@@ -76,9 +77,7 @@ export default function ContactoPage() {
         primaryCtaWhatsappMessage="Hola Dialka, requiero cotización formal y asesoría técnica de pesaje"
         secondaryCtaText="Ver Sedes & Teléfonos"
         secondaryCtaHref="#sedes"
-        statNumber="< 15 min"
-        statLabel="Respuesta Promedio"
-        statSubtext="Ingenieros metrólogos activos para cotizaciones y emergencias"
+        rightContent={<ContactHeroMockup whatsappNumber={SITE_CONFIG.contact.whatsappNumber} />}
       />
 
       {/* ── 2. ENRUTADOR POR DEPARTAMENTOS (ACCESO DIRECTO) ── */}
