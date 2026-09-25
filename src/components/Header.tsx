@@ -51,6 +51,7 @@ export function Header() {
 
   const ccsPhone = SITE_CONFIG.contact.phones.caracas;
   const mcyPhone = SITE_CONFIG.contact.phones.maracay;
+  const whatsappDisplay = SITE_CONFIG.contact.whatsappDisplay;
 
   return (
     <>
@@ -60,29 +61,29 @@ export function Header() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Vista Móvil (md:hidden): Caracas, Maracay y WhatsApp colapsables con el scroll para maximizar pantalla */}
           <div
-            className={`flex md:hidden flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-[10px] sm:text-[11px] font-bold transition-all duration-300 ease-in-out ${
+            className={`flex md:hidden flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-[11px] font-bold transition-all duration-300 ease-in-out ${
               isScrolled
                 ? "max-h-0 opacity-0 -translate-y-1 pointer-events-none py-0 overflow-hidden"
                 : "max-h-24 opacity-100 translate-y-0 py-0.5"
             }`}
           >
-            {/* Caracas */}
+            {/* Caracas Central */}
             <a
               href={`tel:${ccsPhone.replace(/\s+/g, "").replace(/[()]/g, "")}`}
-              className="inline-flex items-center gap-1 text-white hover:text-red-200 active:scale-95 transition-all py-0.5 px-2 rounded-md bg-black/20 shrink-0"
-              title={`Llamar a Caracas: ${ccsPhone}`}
+              className="inline-flex items-center gap-1 text-white hover:text-red-200 active:scale-95 transition-all py-1 px-2.5 rounded-md bg-black/20 shrink-0 min-h-[32px]"
+              title={`Llamar a Caracas Central: ${ccsPhone}`}
             >
-              <Phone size={10} className="text-red-300 shrink-0" />
+              <Phone size={11} className="text-red-300 shrink-0" />
               <span>CCS: {ccsPhone}</span>
             </a>
 
             {/* Maracay */}
             <a
               href="tel:+582432343360"
-              className="inline-flex items-center gap-1 text-white hover:text-red-200 active:scale-95 transition-all py-0.5 px-2 rounded-md bg-black/20 shrink-0"
+              className="inline-flex items-center gap-1 text-white hover:text-red-200 active:scale-95 transition-all py-1 px-2.5 rounded-md bg-black/20 shrink-0 min-h-[32px]"
               title="Llamar a Maracay: 0243-234.33.60 / 234.33.72"
             >
-              <Phone size={10} className="text-red-300 shrink-0" />
+              <Phone size={11} className="text-red-300 shrink-0" />
               <span>MCY: 0243-234.33.60</span>
             </a>
 
@@ -91,11 +92,11 @@ export function Header() {
               href={`https://wa.me/${SITE_CONFIG.contact.whatsappNumber}`}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1 text-emerald-200 hover:text-white active:scale-95 transition-all py-0.5 px-2 rounded-md bg-emerald-950/40 border border-emerald-500/30 shrink-0"
-              title="Atención inmediata vía WhatsApp"
+              className="inline-flex items-center gap-1 text-emerald-200 hover:text-white active:scale-95 transition-all py-1 px-2.5 rounded-md bg-emerald-950/50 border border-emerald-500/40 shrink-0 min-h-[32px]"
+              title={`Atención inmediata vía WhatsApp (${whatsappDisplay})`}
             >
-              <MessageSquare size={10} className="text-emerald-300 shrink-0" />
-              <span>WhatsApp Directo</span>
+              <MessageSquare size={11} className="text-emerald-300 shrink-0" />
+              <span>WhatsApp: {whatsappDisplay}</span>
             </a>
           </div>
 
@@ -103,11 +104,11 @@ export function Header() {
           <div className="hidden md:flex justify-between items-center gap-2">
             {/* Lado Izquierdo: Teléfonos como enlaces directos tel: */}
             <div className="flex flex-wrap items-center gap-2.5 lg:gap-3.5 text-[11px] sm:text-xs">
-              {/* Caracas */}
+              {/* Caracas Central */}
               <a
                 href={`tel:${ccsPhone.replace(/\s+/g, "").replace(/[()]/g, "")}`}
                 className="inline-flex items-center gap-1.5 hover:text-red-200 transition-colors py-0.5 group"
-                title="Clic para llamar a Caracas"
+                title="Central Telefónica Caracas"
               >
                 <Phone size={11} className="text-red-300 shrink-0" />
                 <span className="font-semibold">CCS: {ccsPhone}</span>
@@ -119,7 +120,7 @@ export function Header() {
               <a
                 href="tel:+582432343360"
                 className="inline-flex items-center gap-1.5 hover:text-red-200 transition-colors py-0.5 group"
-                title="Clic para llamar a Maracay"
+                title="Sede y Talleres Maracay"
               >
                 <Phone size={11} className="text-red-300 shrink-0" />
                 <span className="font-semibold">MCY: {mcyPhone}</span>
@@ -136,7 +137,7 @@ export function Header() {
                 title="WhatsApp Directo Atención Comercial"
               >
                 <MessageSquare size={11} className="text-emerald-400 shrink-0" />
-                <span>WhatsApp: {ccsPhone}</span>
+                <span>WhatsApp: {whatsappDisplay}</span>
               </a>
             </div>
 

@@ -98,15 +98,15 @@ function ProductCardImage({
 
       {/* Insignia Flotante de Categoría */}
       <div className="absolute top-2 left-2 z-10">
-        <span className="inline-flex items-center gap-1 bg-white/95 backdrop-blur-md text-[#7f1d1d] text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full shadow-2xs border border-slate-200/70">
+        <span className="inline-flex items-center gap-1.5 bg-white/95 backdrop-blur-md text-[#7f1d1d] text-[11px] sm:text-xs font-bold px-2.5 py-1 rounded-full shadow-2xs border border-slate-200/80">
           <span>{categoryIcon}</span>
-          <span className="truncate max-w-[70px] sm:max-w-none">{categoryName}</span>
+          <span className="truncate max-w-[85px] sm:max-w-none">{categoryName}</span>
         </span>
       </div>
 
       {/* Badge de garantía / norma */}
       <div className="absolute bottom-2 left-2 right-2 z-10">
-        <span className="inline-block text-[9px] sm:text-[10px] font-bold text-slate-700 bg-slate-100/95 backdrop-blur-xs px-2 py-0.5 rounded-md border border-slate-200/80 text-center w-full truncate shadow-2xs">
+        <span className="inline-block text-[11px] sm:text-xs font-semibold text-slate-800 bg-slate-100/95 backdrop-blur-xs px-2.5 py-0.5 rounded-md border border-slate-200/90 text-center w-full truncate shadow-2xs">
           {badge}
         </span>
       </div>
@@ -405,17 +405,17 @@ export function ProductsCatalog({
 
                       {/* Especificaciones técnicas clave como etiqueta limpia */}
                       <div className="flex items-center gap-1.5 mb-2 flex-wrap">
-                        <span className="inline-flex items-center gap-1 bg-slate-100 group-hover:bg-red-50 text-slate-700 group-hover:text-[#991b1b] text-[10px] sm:text-[11px] font-semibold px-2 py-0.5 rounded-md leading-tight line-clamp-1 border border-slate-200/60 group-hover:border-red-100 transition-colors">
+                        <span className="inline-flex items-center gap-1 bg-slate-100 group-hover:bg-red-50 text-slate-800 group-hover:text-[#991b1b] text-[11px] sm:text-xs font-semibold px-2 py-0.5 rounded-md leading-tight line-clamp-1 border border-slate-200/60 group-hover:border-red-100 transition-colors">
                           {product.specs}
                         </span>
-                        <span className="inline-flex items-center gap-0.5 text-[9px] font-bold uppercase text-slate-500 bg-slate-50 px-1.5 py-0.5 rounded border border-slate-200/50">
-                          <Tag size={9} className="text-[#991b1b]" />
+                        <span className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-bold uppercase text-slate-600 bg-slate-100 px-2 py-0.5 rounded border border-slate-200/70">
+                          <Tag size={10} className="text-[#991b1b]" />
                           <span>{product.featureTag}</span>
                         </span>
                       </div>
 
                       {/* Reseña de aplicación comercial */}
-                      <p className="text-[10px] sm:text-[11px] text-slate-500 leading-snug line-clamp-1 mb-3">
+                      <p className="text-[11px] sm:text-xs text-slate-500 leading-snug line-clamp-1 mb-3">
                         {product.highlight}
                       </p>
                     </div>

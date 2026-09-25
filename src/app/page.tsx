@@ -214,23 +214,6 @@ export default function HomePage() {
         initialLimit={8}
       />
 
-      {/* ── FASE 3: SECCIONES DE IDENTIDAD (MISIÓN Y VISIÓN EN PESTAÑAS INTERACTIVAS) ── */}
-      <section className="bg-slate-50/70 border-b border-slate-200 py-8 sm:py-12 md:py-14">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <RevealOnScroll>
-            <div className="text-center max-w-xl mx-auto mb-5 sm:mb-7">
-              <span className="inline-block text-xs font-bold uppercase tracking-widest text-[#991b1b] bg-red-50 border border-red-200/80 px-3 py-1 rounded-full mb-2">
-                Identidad y Valores
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-                Misión y Visión Dialka
-              </h2>
-            </div>
-            <MissionVisionTabs />
-          </RevealOnScroll>
-        </div>
-      </section>
-
       {/* ── SIMULADOR DE PESAJE INTERACTIVO (DIAL Y DISPLAY VIVO) ── */}
       <section className="bg-slate-950 py-10 sm:py-16 md:py-20 border-b border-slate-850 text-white relative overflow-hidden">
         {/* Ambient lighting effect */}
@@ -266,6 +249,23 @@ export default function HomePage() {
           isFeatured={true}
         />
       </RevealOnScroll>
+
+      {/* ── SECCIÓN DE IDENTIDAD: MISIÓN Y VISIÓN EN PESTAÑAS INTERACTIVAS ── */}
+      <section className="bg-slate-50/70 border-y border-slate-200 py-10 sm:py-14 md:py-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <RevealOnScroll>
+            <div className="text-center max-w-xl mx-auto mb-6 sm:mb-8">
+              <span className="inline-block text-xs font-bold uppercase tracking-widest text-[#991b1b] bg-red-50 border border-red-200/80 px-3 py-1 rounded-full mb-2">
+                Identidad y Valores
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                Misión y Visión Dialka
+              </h2>
+            </div>
+            <MissionVisionTabs />
+          </RevealOnScroll>
+        </div>
+      </section>
 
       {/* ── SOCIAL PROOF: CLIENTES AUDITADOS Y MARCAS OFICIALES UNIFICADOS ── */}
       <RevealOnScroll>

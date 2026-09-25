@@ -319,16 +319,18 @@ export function ProductDetailsModal({
             </Button>
           </a>
 
-          <Button
-            type="button"
-            variant="outline"
-            size="md"
-            onClick={handlePrint}
-            leftIcon={<Printer size={16} className="text-[#991b1b]" />}
-            title="Imprimir o guardar ficha técnica oficial en PDF"
-          >
-            Imprimir / Guardar PDF
-          </Button>
+          <div className="hidden sm:block">
+            <Button
+              type="button"
+              variant="outline"
+              size="md"
+              onClick={handlePrint}
+              leftIcon={<Printer size={16} className="text-[#991b1b]" />}
+              title="Imprimir o guardar ficha técnica oficial en PDF"
+            >
+              Imprimir / Guardar PDF
+            </Button>
+          </div>
 
           <button
             type="button"

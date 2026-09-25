@@ -77,30 +77,30 @@ export function WizardEquipmentCard({
         </div>
       </div>
 
-      {/* Selector de Cantidad Bounded */}
+      {/* Selector de Cantidad Bounded con Botones Táctiles Cómodos */}
       <div className="pt-2.5 mt-2 border-t border-slate-800 flex items-center justify-between text-xs">
-        <span className="text-slate-400 text-[11px]">Unidades requeridas:</span>
-        <div className="flex items-center gap-2 bg-slate-800 border border-slate-700 px-2 py-1 rounded-xl">
+        <span className="text-slate-400 text-xs">Unidades requeridas:</span>
+        <div className="flex items-center gap-1.5 bg-slate-800 border border-slate-700 p-1 rounded-xl">
           <button
             type="button"
             onClick={() => onChangeQty(-1)}
-            className="text-slate-400 hover:text-white p-0.5 cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
+            className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-slate-300 hover:text-white hover:bg-slate-700/80 rounded-lg cursor-pointer active:scale-90 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
             disabled={!isChecked || qty <= MIN_EQUIPMENT_QTY}
             title="Disminuir cantidad"
             aria-label={`Disminuir cantidad de ${equipment.name}`}
           >
-            <Minus size={12} />
+            <Minus size={14} />
           </button>
-          <span className="font-bold text-white px-1 tabular-nums">{qty}</span>
+          <span className="font-bold text-white px-2 tabular-nums text-xs sm:text-sm">{qty}</span>
           <button
             type="button"
             onClick={() => onChangeQty(1)}
-            className="text-slate-400 hover:text-white p-0.5 cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
+            className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-slate-300 hover:text-white hover:bg-slate-700/80 rounded-lg cursor-pointer active:scale-90 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
             disabled={!isChecked || qty >= MAX_EQUIPMENT_QTY}
             title="Aumentar cantidad"
             aria-label={`Aumentar cantidad de ${equipment.name}`}
           >
-            <Plus size={12} />
+            <Plus size={14} />
           </button>
         </div>
       </div>

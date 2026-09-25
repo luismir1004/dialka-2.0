@@ -8,6 +8,23 @@ import { trackEvent, ANALYTICS_EVENTS } from "@/lib/analytics";
 export function FloatingWhatsApp() {
   const [isVisible, setIsVisible] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
+  const [isBlockedByModal, setIsBlockedByModal] = useState(false);
+
+  // Ocultar botón automáticamente si hay un modal o menú fullscreen abierto
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const checkModalState = () => {
+      const isLocked = document.body.style.overflow === "hidden";
+      setIsBlockedByModal(isLocked);
+    };
+
+    checkModalState();
+    const observer = new MutationObserver(checkModalState);
+    observer.observe(document.body, { attributes: true, attributeFilter: ["style"] });
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     // Show after scrolling past 200px or after 3s on page
@@ -31,7 +48,7 @@ export function FloatingWhatsApp() {
     };
   }, []);
 
-  if (!isVisible) return null;
+  if (!isVisible || isBlockedByModal) return null;
 
   return (
     <div className="fixed bottom-5 right-5 z-40 flex items-center gap-2.5 animate-in fade-in slide-in-from-bottom-5 duration-300">

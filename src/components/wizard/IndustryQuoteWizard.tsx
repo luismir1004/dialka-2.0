@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Sparkles, Package } from "lucide-react";
+import { Sparkles, Package, ArrowRight, Phone } from "lucide-react";
 import { CONTACT } from "@/lib/data";
 import { useToast } from "@/context/ToastContext";
 import {
@@ -228,6 +228,32 @@ export function IndustryQuoteWizard() {
             whatsappUrl={generateWhatsAppUrl()}
           />
         </div>
+
+        {/* ── 4. STICKY ACTION BAR EN MÓVILES (ACCESO RÁPIDO A WHATSAPP) ── */}
+        {selectedItems.length > 0 && (
+          <div className="lg:hidden fixed bottom-0 left-0 right-0 z-30 bg-slate-950/95 backdrop-blur-md border-t border-slate-800 p-3 px-4 shadow-2xl flex items-center justify-between gap-3 animate-in fade-in slide-in-from-bottom-3 duration-200">
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5">
+                <span className="text-base">{currentRubro.emoji}</span>
+                <span className="text-xs font-bold text-white truncate max-w-[130px] sm:max-w-none">{currentRubro.title}</span>
+              </div>
+              <p className="text-[11px] text-slate-400">
+                <strong className="text-red-400">{selectedItems.length}</strong> {selectedItems.length === 1 ? "equipo marcado" : "equipos marcados"}
+              </p>
+            </div>
+
+            <a
+              href={generateWhatsAppUrl()}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 bg-[#991b1b] hover:bg-[#7f1d1d] active:scale-95 text-white font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl shadow-md shrink-0 transition-all"
+            >
+              <Phone size={13} />
+              <span>Cotizar WhatsApp</span>
+              <ArrowRight size={13} />
+            </a>
+          </div>
+        )}
       </div>
     </section>
   );

@@ -14,8 +14,10 @@ export const SITE_CONFIG = {
   contact: {
     whatsappNumber: "584142770024", // WhatsApp Comercial Oficial (Ventas, Presupuestos y Fichas Técnicas)
     whatsappSupport: "584142320610", // WhatsApp Soporte Técnico y Emergencias en Planta
+    whatsappDisplay: "(+58 414) 277.00.24",
     phones: {
-      caracas: "(+58 414) 277.00.24",
+      caracasLandline: "(0212) 381.18.23 / 381.10.88",
+      caracas: "(0212) 381.18.23",
       maracay: "0243-234.33.60 / 234.33.72",
       ventas: ["+58 (414) 171.81.50", "+58 (414) 247.68.13"],
       soporte: ["+58 (412) 232.06.09", "+58 (412) 232.06.10"],

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -90,9 +90,45 @@ export function ProjectsGallery({
     setIsLightboxOpen(true);
   };
 
+  // Sincronizar filtros con query params de la URL
+  useEffect(() => {
+    if (typeof window === "undefined" || !showFilters) return;
+    const params = new URLSearchParams(window.location.search);
+    const cat = params.get("rubro");
+    const st = params.get("estado");
+    if (cat && categories.includes(cat)) setSelectedCategory(cat);
+    if (st && states.includes(st)) setSelectedState(st);
+  }, [showFilters, categories, states]);
+
+  const handleCategoryChange = (cat: string) => {
+    setSelectedCategory(cat);
+    if (typeof window !== "undefined" && showFilters) {
+      const url = new URL(window.location.href);
+      if (cat === "all") url.searchParams.delete("rubro");
+      else url.searchParams.set("rubro", cat);
+      window.history.replaceState({}, "", url.toString());
+    }
+  };
+
+  const handleStateChange = (st: string) => {
+    setSelectedState(st);
+    if (typeof window !== "undefined" && showFilters) {
+      const url = new URL(window.location.href);
+      if (st === "all") url.searchParams.delete("estado");
+      else url.searchParams.set("estado", st);
+      window.history.replaceState({}, "", url.toString());
+    }
+  };
+
   const handleResetFilters = () => {
     setSelectedCategory("all");
     setSelectedState("all");
+    if (typeof window !== "undefined" && showFilters) {
+      const url = new URL(window.location.href);
+      url.searchParams.delete("rubro");
+      url.searchParams.delete("estado");
+      window.history.replaceState({}, "", url.toString());
+    }
   };
 
   return (
@@ -136,7 +172,7 @@ export function ProjectsGallery({
               {categories.map((cat) => (
                 <button
                   key={cat}
-                  onClick={() => setSelectedCategory(cat)}
+                  onClick={() => handleCategoryChange(cat)}
                   className={`text-xs font-bold px-3.5 py-2 rounded-xl transition-all duration-200 cursor-pointer ${
                     selectedCategory === cat
                       ? "bg-[#991b1b] text-white shadow-xs"
@@ -157,7 +193,7 @@ export function ProjectsGallery({
               {states.map((st) => (
                 <button
                   key={st}
-                  onClick={() => setSelectedState(st)}
+                  onClick={() => handleStateChange(st)}
                   className={`text-xs font-semibold px-3 py-1.5 rounded-lg transition-all duration-200 cursor-pointer ${
                     selectedState === st
                       ? "bg-slate-900 text-white shadow-xs"
