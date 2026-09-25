@@ -39,8 +39,24 @@ export function ProjectsGallery({
   isFeatured = false,
   showFilters = false,
 }: ProjectsGalleryProps) {
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
-  const [selectedState, setSelectedState] = useState<string>("all");
+  const [selectedCategory, setSelectedCategory] = useState<string>(() => {
+    if (typeof window !== "undefined" && showFilters) {
+      const params = new URLSearchParams(window.location.search);
+      const cat = params.get("rubro");
+      if (cat) return cat;
+    }
+    return "all";
+  });
+
+  const [selectedState, setSelectedState] = useState<string>(() => {
+    if (typeof window !== "undefined" && showFilters) {
+      const params = new URLSearchParams(window.location.search);
+      const st = params.get("estado");
+      if (st) return st;
+    }
+    return "all";
+  });
+
   const [isLightboxOpen, setIsLightboxOpen] = useState<boolean>(false);
   const [lightboxIndex, setLightboxIndex] = useState<number>(0);
 
@@ -90,14 +106,20 @@ export function ProjectsGallery({
     setIsLightboxOpen(true);
   };
 
-  // Sincronizar filtros con query params de la URL
+  // Sincronizar filtros ante navegación hacia atrás / adelante (popstate)
   useEffect(() => {
     if (typeof window === "undefined" || !showFilters) return;
-    const params = new URLSearchParams(window.location.search);
-    const cat = params.get("rubro");
-    const st = params.get("estado");
-    if (cat && categories.includes(cat)) setSelectedCategory(cat);
-    if (st && states.includes(st)) setSelectedState(st);
+
+    const handlePopState = () => {
+      const params = new URLSearchParams(window.location.search);
+      const cat = params.get("rubro");
+      const st = params.get("estado");
+      setSelectedCategory(cat && categories.includes(cat) ? cat : "all");
+      setSelectedState(st && states.includes(st) ? st : "all");
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
   }, [showFilters, categories, states]);
 
   const handleCategoryChange = (cat: string) => {

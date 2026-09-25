@@ -52,7 +52,6 @@ const INDUSTRIAL_SYNONYMS: Record<string, string[]> = {
 };
 
 interface ProductsCatalogProps {
-  categories?: { id: string; name: string }[];
   whatsappNumber?: string;
   showHeading?: boolean;
   title?: string;

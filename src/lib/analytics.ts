@@ -48,13 +48,3 @@ export const trackEvent = (
     window.gtag("event", eventName, parameters);
   }
 };
-
-// Helper function para enviar parámetros de página
-export const trackPageView = (pageName: string, pageLocation: string) => {
-  if (typeof window !== "undefined" && window.gtag) {
-    window.gtag("event", "page_view", {
-      page_title: pageName,
-      page_location: pageLocation,
-    });
-  }
-};

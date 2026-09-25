@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { PRODUCT_CATEGORIES, CONTACT } from "@/lib/data";
+import { CONTACT } from "@/lib/data";
 import { Package, ChevronRight, Phone, ArrowRight, Scale, Sparkles } from "lucide-react";
 import { ProductsCatalog } from "@/components/ProductsCatalog";
 import { AuthorizedBrands } from "@/components/AuthorizedBrands";
 
 // Dynamic import para IndustryQuoteWizard (componente pesado)
-const IndustryQuoteWizard = dynamic(() => import("@/components/IndustryQuoteWizard").then(mod => ({ default: mod.IndustryQuoteWizard })), {
+const IndustryQuoteWizard = dynamic(() => import("@/components/wizard/IndustryQuoteWizard").then(mod => ({ default: mod.IndustryQuoteWizard })), {
   loading: () => (
     <div className="bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 rounded-3xl p-8 text-center">
       <div className="animate-pulse flex flex-col items-center gap-4">
@@ -133,7 +133,6 @@ export default function ProductosPage() {
 
       {/* ── CATÁLOGO INTERACTIVO CON BÚSQUEDA Y FILTROS EN TIEMPO REAL ── */}
       <ProductsCatalog
-        categories={PRODUCT_CATEGORIES}
         whatsappNumber={CONTACT.whatsapp}
       />
 
