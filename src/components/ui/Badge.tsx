@@ -30,7 +30,7 @@ const variantStyles: Record<BadgeVariant, string> = {
   warning:
     "bg-amber-50 text-amber-800 border-amber-200/80 font-semibold",
   info:
-    "bg-blue-50 text-blue-800 border-blue-200/80 font-semibold",
+    "bg-slate-100 text-slate-800 border-slate-300 font-semibold",
   neutral:
     "bg-slate-50 text-slate-600 border-slate-200/80 font-medium",
 };
@@ -40,7 +40,7 @@ const dotColors: Record<BadgeVariant, string> = {
   stock: "bg-emerald-500",
   brand: "bg-[#991b1b]",
   warning: "bg-amber-500",
-  info: "bg-blue-500",
+  info: "bg-slate-600",
   neutral: "bg-slate-400",
 };
 

@@ -30,17 +30,18 @@ export default function HomePage() {
   return (
     <>
       {/* ── HERO INDUSTRIAL CON DUAL-COLUMN LAYOUT & FOTOGRAFÍA INDUSTRIAL ── */}
-      <section className="relative bg-gradient-to-b from-slate-50 via-white to-slate-50/50 border-b border-slate-200 overflow-hidden py-6 sm:py-10 md:py-16 lg:py-20">
-        {/* Subtle grid background */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-40 pointer-events-none" />
+      <section className="relative bg-gradient-to-b from-slate-50 via-white to-slate-50/50 border-b border-slate-200 overflow-hidden py-8 sm:py-12 md:py-16 lg:py-20">
+        {/* Modern Industrial Blueprint Grid Pattern */}
+        <div className="absolute inset-0 industrial-grid-light [mask-image:radial-gradient(ellipse_70%_60%_at_50%_0%,#000_70%,transparent_100%)] opacity-70 pointer-events-none" />
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-red-100/40 rounded-full blur-3xl pointer-events-none -z-10" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-12 gap-6 lg:gap-12 items-center">
             {/* Columna Izquierda: Mensaje Central y CTAs */}
             <div className="lg:col-span-7">
               <div>
-                {/* Status Badge Oficial con Antigüedad Exacta - Mejorado contraste */}
-                <div className="inline-flex items-center gap-2 bg-red-50 border border-red-200/80 text-[#7f1d1d] text-xs font-semibold px-3.5 sm:px-4 py-1.5 rounded-full mb-3 sm:mb-5 shadow-2xs max-w-full">
+                {/* Status Badge Oficial con Antigüedad Exacta y Shimmer */}
+                <div className="inline-flex items-center gap-2 bg-red-50 border border-red-200/90 text-[#7f1d1d] text-xs font-semibold px-3.5 sm:px-4 py-1.5 rounded-full mb-3 sm:mb-5 shadow-2xs max-w-full badge-shimmer">
                   <span className="relative flex h-2 w-2 shrink-0">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-red-700"></span>
@@ -94,7 +95,7 @@ export default function HomePage() {
 
             {/* Columna Derecha: Tarjeta Fotográfica de Unidad Móvil / Camión Calibrador */}
             <div className="lg:col-span-5">
-              <div className="relative group rounded-2xl bg-white p-2.5 sm:p-3 border border-slate-200/90 shadow-xl shadow-slate-200/50 hover:border-red-200 transition-all duration-300">
+              <div className="relative group rounded-2xl bg-white p-2.5 sm:p-3 border border-slate-200/90 shadow-xl shadow-slate-200/50 laser-glow-card transition-all duration-300">
                 {/* Contenedor de la Imagen */}
                 <div className="relative aspect-16/10 sm:aspect-4/3 w-full rounded-xl overflow-hidden bg-slate-100 border border-slate-200/60">
                   <Image

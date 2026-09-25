@@ -95,8 +95,8 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                 </div>
               )}
               {t.type === "info" && (
-                <div className="w-7 h-7 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center">
-                  <Info size={16} className="text-blue-600" />
+                <div className="w-7 h-7 rounded-full bg-red-50 border border-red-200 flex items-center justify-center">
+                  <Info size={16} className="text-[#991b1b]" />
                 </div>
               )}
               {t.type === "warning" && (

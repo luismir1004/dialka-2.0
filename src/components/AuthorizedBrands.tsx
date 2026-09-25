@@ -42,32 +42,12 @@ export function AuthorizedBrands({
         {/* ── CUADRÍCULA DE TARJETAS DE MARCAS (2 COLUMNAS EN MÓVIL, 3 EN TABLET, 4 EN ESCRITORIO) ── */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5 mb-6 sm:mb-8">
           {BRANDS.map((brand) => {
-            // Estilos de badge por categoría de marca
+            // Estilos de badge normalizados bajo la identidad técnica Dialka
             const getBrandBadge = (name: string) => {
-              switch (name.toLowerCase()) {
-                case "ohaus":
-                  return "bg-red-50 text-red-700 border-red-200/80";
-                case "keli sensing":
-                  return "bg-blue-50 text-blue-700 border-blue-200/80";
-                case "cas corporation":
-                  return "bg-indigo-50 text-indigo-700 border-indigo-200/80";
-                case "sipel":
-                  return "bg-cyan-50 text-cyan-800 border-cyan-200/80";
-                case "grupo epelsa":
-                  return "bg-amber-50 text-amber-800 border-amber-200/80";
-                case "sky":
-                  return "bg-purple-50 text-purple-700 border-purple-200/80";
-                case "rongta":
-                  return "bg-sky-50 text-sky-700 border-sky-200/80";
-                case "techfood":
-                  return "bg-rose-50 text-rose-800 border-rose-200/80";
-                case "abm":
-                  return "bg-emerald-50 text-emerald-800 border-emerald-200/80";
-                case "lucky":
-                  return "bg-slate-100 text-slate-800 border-slate-300";
-                default:
-                  return "bg-red-50 text-[#991b1b] border-red-300";
+              if (name.toLowerCase() === "ohaus") {
+                return "bg-red-50 text-[#991b1b] border-red-200/90 font-bold";
               }
+              return "bg-slate-100 text-slate-800 border-slate-200/90 font-semibold";
             };
 
             return (
