@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SENCAMER_MODELS, CONTACT } from "@/lib/data";
-import { ShieldCheck, Info, Phone, ArrowRight, CheckCircle2, Scale, FileCheck2 } from "lucide-react";
+import { ShieldCheck, Phone, ArrowRight, CheckCircle2, Scale, FileCheck2 } from "lucide-react";
 import { SencamerCatalog } from "@/components/SencamerCatalog";
-import { SencamerMockupCard } from "@/components/SencamerMockupCard";
 import { DynamicPageHero } from "@/components/DynamicPageHero";
+import { SencamerHeroMockup } from "@/components/SencamerHeroMockup";
+import { SencamerLegalRouteFlow } from "@/components/SencamerLegalRouteFlow";
 
 export const metadata: Metadata = {
   title: "Equipos con Aprobación SENCAMER",
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
 export default function SencamerPage() {
   return (
     <>
-      {/* ── HEADER INMERSIVO INDUSTRIAL DINÁMICO ── */}
+      {/* ── HEADER INMERSIVO INDUSTRIAL DINÁMICO CON MOCKUP DE CERTIFICACIÓN SENCAMER ── */}
       <DynamicPageHero
         badgeText="Metrología Legal & Fiscalización"
         title="Equipos con Aprobación Oficial"
@@ -33,57 +34,11 @@ export default function SencamerPage() {
         primaryCtaWhatsappMessage="Hola Dialka, requiero cotización de una balanza certificada con aprobación de modelo SENCAMER"
         secondaryCtaText="Ver Modelos Homologados"
         secondaryCtaHref="#modelos-sencamer"
-        statNumber="100%"
-        statLabel="Conformidad Jurídica"
-        statSubtext="Evite multas y sanciones en auditorías de comercio y distribución"
+        rightContent={<SencamerHeroMockup whatsappNumber={CONTACT.whatsapp} />}
       />
 
-      {/* ── MARCO LEGAL Y MOCKUP DE BALANZA CERTIFICADA ── */}
-      <div className="bg-white pt-10 pb-4">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-12 gap-8 items-stretch">
-            {/* Lado Izquierdo: Marco Legal */}
-            <div className="lg:col-span-7 bg-red-50/80 border border-red-200/90 rounded-2xl p-7 sm:p-8 flex flex-col justify-between shadow-2xs">
-              <div>
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-xl bg-red-100 flex items-center justify-center shrink-0">
-                    <Info size={20} className="text-[#991b1b]" />
-                  </div>
-                  <div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#991b1b]">
-                      Normativa Nacional Vigente
-                    </span>
-                    <h3 className="text-lg font-bold text-slate-900 leading-tight">
-                      Marco Metrológico Obligatorio SENCAMER
-                    </h3>
-                  </div>
-                </div>
-                <p className="text-sm text-slate-700 leading-relaxed mt-3">
-                  La <strong className="text-slate-900">Aprobación de Modelo SENCAMER</strong> es el requisito legal indispensable en Venezuela que certifica que un instrumento de medición cumple con las tolerancias técnicas para su uso en transacciones comerciales que involucren precio por peso. Los equipos suministrados por Dialka cuentan con placa de identificación, precinto de inviolabilidad y homologación oficial.
-                </p>
-              </div>
-
-              <div className="mt-6 pt-4 border-t border-red-200/80 grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs font-semibold text-slate-700">
-                <span className="flex items-center gap-1.5">
-                  <ShieldCheck size={14} className="text-[#991b1b]" />
-                  Precinto Oficial
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <ShieldCheck size={14} className="text-[#991b1b]" />
-                  Placa Serial
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <ShieldCheck size={14} className="text-[#991b1b]" />
-                  Tolerancia Legal
-                </span>
-              </div>
-            </div>
-
-            {/* Lado Derecho: Mockup Fotográfico Interactivo con Lightbox */}
-            <SencamerMockupCard whatsappNumber={CONTACT.whatsapp} />
-          </div>
-        </div>
-      </div>
+      {/* ── RUTA LEGAL DE HOMOLOGACIÓN METROLÓGICA ── */}
+      <SencamerLegalRouteFlow />
 
       {/* ── TABLA INTERACTIVA CON FILTROS Y BÚSQUEDA EN TIEMPO REAL ── */}
       <SencamerCatalog

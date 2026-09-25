@@ -5,6 +5,8 @@ import { Wrench, Phone, ArrowRight, ShieldCheck, Sparkles, CheckCircle2, Truck }
 import { ServiciosShowcase } from "@/components/ServiciosShowcase";
 import { InteractiveServicesList } from "@/components/InteractiveServicesList";
 import { DynamicPageHero } from "@/components/DynamicPageHero";
+import { ServiceHeroMockup } from "@/components/ServiceHeroMockup";
+import { ServiceProtocolFlow } from "@/components/ServiceProtocolFlow";
 
 export const metadata: Metadata = {
   title: "Servicio Técnico y Calibración SENCAMER",
@@ -24,7 +26,7 @@ const HIGHLIGHTS = [
 export default function ServiciosPage() {
   return (
     <>
-      {/* ── HEADER INMERSIVO INDUSTRIAL DINÁMICO ── */}
+      {/* ── HEADER INMERSIVO INDUSTRIAL DINÁMICO CON MOCKUP DE SERVICIO TÉCNICO ── */}
       <DynamicPageHero
         badgeText="Metrología & Soporte Especializado"
         title="Servicio Técnico & Calibración"
@@ -42,10 +44,11 @@ export default function ServiciosPage() {
         primaryCtaWhatsappMessage="Hola Dialka, requiero cotización de servicio técnico / calibración metrológica para mi planta"
         secondaryCtaText="Ver Fichas de Servicios"
         secondaryCtaHref="#fichas-servicios"
-        statNumber="100%"
-        statLabel="Trazabilidad Nacional"
-        statSubtext="Protocolos de prueba metrológica para auditorías y fiscalizaciones"
+        rightContent={<ServiceHeroMockup whatsappNumber={CONTACT.whatsapp} />}
       />
+
+      {/* ── PROTOCOLO DE INTERVENCIÓN METROLÓGICA ── */}
+      <ServiceProtocolFlow />
 
       {/* ── FICHAS DE SERVICIOS TÉCNICOS INTERACTIVOS ── */}
       <section id="fichas-servicios" className="bg-white py-10 md:py-14 scroll-mt-24">
