@@ -3,12 +3,11 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import {
-  Maximize2,
-  ShieldCheck,
-  Truck,
   CheckCircle2,
+  Maximize2,
   Clock,
-  Award,
+  ShieldCheck,
+  ClipboardList,
 } from "lucide-react";
 import { ImageLightbox, type LightboxItem } from "@/components/ImageLightbox";
 
@@ -19,10 +18,10 @@ interface ServiceHeroMockupProps {
 const LIGHTBOX_ITEM: LightboxItem = {
   id: "servicio-calibracion-masas",
   image: "/images/servicios/calibracion-masas.jpg",
-  title: "Servicio Técnico de Calibración Metrológica con Masas Patrón",
+  title: "Orden de Servicio Técnico y Calibración Metrológica In Situ",
   subtitle: "Trazabilidad Nacional e Internacional · SENCAMER / COVENIN",
   description:
-    "Intervención de ingeniería y calibración metrológica en planta. Empleo de masas patrón certificadas de acero inoxidable y hierro fundido clase M1/F1, garantizando linealidad, repetibilidad e inmunidad contra errores en transacciones comerciales.",
+    "Reporte de intervención metrológica en campo. Empleo de masas patrón certificadas de acero inoxidable y hierro fundido clase M1/F1, garantizando linealidad, repetibilidad e inmunidad contra errores en transacciones comerciales.",
   specs: [
     "Patrones de masa con trazabilidad a patrones primarios nacionales (SENCAMER)",
     "Ensayos de excentricidad de carga, repetibilidad y cero metrológico",
@@ -31,7 +30,7 @@ const LIGHTBOX_ITEM: LightboxItem = {
     "Cuadrillas de respuesta rápida con base operativa en Caracas y Maracay",
   ],
   location: "Servicio disponible para industrias en toda Venezuela",
-  tag: "Metrología de Campo Dialka",
+  tag: "Orden de Trabajo de Campo",
   ctaText: "Solicitar Calibración para mi Báscula",
 };
 
@@ -41,112 +40,138 @@ export function ServiceHeroMockup({ whatsappNumber }: ServiceHeroMockupProps) {
   return (
     <>
       <div className="relative w-full">
-        {/* Glow de fondo rojizo Dialka */}
-        <div className="absolute -inset-1 bg-gradient-to-r from-[#991b1b]/20 via-[#7f1d1d]/15 to-transparent rounded-3xl blur-xl -z-10" />
+        {/* Glow de taller */}
+        <div className="absolute -inset-2 bg-gradient-to-br from-slate-400/20 via-red-900/10 to-slate-200/30 rounded-3xl blur-xl -z-10" />
 
-        {/* Marco de Orden de Servicio / Consola Metrológica */}
+        {/* ── PORTAPAPELES / CLIPBOARD METÁLICO DE INGENIERO DE CAMPO ── */}
         <div
           onClick={() => setIsLightboxOpen(true)}
-          className="group relative rounded-2xl overflow-hidden border border-slate-700/60 bg-slate-950 shadow-2xl shadow-slate-950/40 hover:border-red-400/80 transition-all duration-300 cursor-pointer"
-          title="Haz clic para ver el protocolo de calibración en alta definición"
+          className="group relative bg-slate-200 rounded-2xl border-4 border-slate-400/80 p-3 sm:p-4 shadow-2xl shadow-slate-900/30 hover:border-[#991b1b] transition-all duration-300 cursor-pointer select-none"
+          title="Haz clic para inspeccionar la orden de servicio técnico en alta definición"
         >
-          {/* Barra Superior de Orden de Servicio */}
-          <div className="flex items-center justify-between px-3.5 py-2.5 bg-slate-900 border-b border-slate-800 text-xs select-none">
-            <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-red-500/80 inline-block" />
-              <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80 inline-block" />
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80 inline-block" />
-              <span className="ml-2 text-slate-300 font-mono text-[11px] font-semibold tracking-tight hidden sm:inline">
-                Dialka Metrology Center · Orden #ST-2024-892
-              </span>
+          {/* Clip Metálico Superior de Acero Inoxidable */}
+          <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center">
+            {/* Cuerpo del clip */}
+            <div className="w-28 h-7 bg-gradient-to-b from-slate-300 via-slate-100 to-slate-400 rounded-t-lg border-2 border-slate-500 shadow-md flex items-center justify-center">
+              {/* Remache central */}
+              <div className="w-3 h-3 rounded-full bg-slate-600 border border-slate-400 shadow-inner" />
             </div>
-
-            <div className="flex items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 bg-emerald-950/70 border border-emerald-500/40 text-emerald-400 font-mono text-[10px] font-bold px-2 py-0.5 rounded-full shadow-inner">
-                <span className="relative flex h-1.5 w-1.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
-                </span>
-                GUARDIA ACTIVA
-              </span>
-              <span className="p-1 rounded bg-slate-800 text-slate-400 group-hover:text-white group-hover:bg-[#991b1b] transition-all">
-                <Maximize2 size={12} />
-              </span>
-            </div>
+            {/* Prensador negro */}
+            <div className="w-20 h-2 bg-slate-800 rounded-b shadow-xs" />
           </div>
 
-          {/* Contenedor de la Imagen Real */}
-          <div className="relative aspect-[16/10] sm:aspect-[16/9] w-full overflow-hidden bg-slate-950">
-            <Image
-              src="/images/servicios/calibracion-masas.jpg"
-              alt="Calibración Metrológica de Báscula con Masas Patrón Certificadas Dialka"
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-              className="object-cover object-center opacity-95 group-hover:scale-[1.03] transition-transform duration-700 ease-out"
-              priority
-            />
-
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent pointer-events-none" />
-            <div className="absolute inset-0 bg-gradient-to-r from-slate-950/40 via-transparent to-slate-950/30 pointer-events-none" />
-
-            {/* Badge de Hover */}
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none bg-slate-950/40 backdrop-blur-[2px]">
-              <span className="inline-flex items-center gap-2 bg-[#991b1b] text-white text-xs font-bold px-4 py-2 rounded-xl shadow-xl shadow-red-950/50 transform translate-y-2 group-hover:translate-y-0 transition-transform">
-                <Maximize2 size={14} />
-                <span>Ver Protocolo de Calibración HD</span>
-              </span>
+          {/* Hoja Cuadriculada / Formato Técnico Prensado */}
+          <div className="relative bg-white rounded-xl p-4 sm:p-5 border border-slate-300 shadow-sm mt-2 industrial-grid-light">
+            {/* Cabecera del Formato Técnico */}
+            <div className="flex items-center justify-between pb-3 border-b-2 border-slate-900/80 mb-3">
+              <div>
+                <span className="text-[10px] font-mono uppercase font-black tracking-widest text-[#991b1b] block">
+                  DIALKA · SERVICIOS INDUSTRIALES
+                </span>
+                <h3 className="text-xs sm:text-sm font-black text-slate-900 uppercase tracking-tight flex items-center gap-1.5">
+                  <ClipboardList size={14} className="text-slate-700" />
+                  Orden de Calibración In Situ
+                </h3>
+              </div>
+              <div className="text-right">
+                <span className="text-[9px] font-mono text-slate-500 block">N° REPORTE</span>
+                <span className="font-mono font-black text-xs text-[#991b1b]">
+                  #OT-2024-892
+                </span>
+              </div>
             </div>
 
-            {/* HUD Flotante de Telemetría Técnica */}
-            <div className="absolute bottom-2.5 left-2.5 right-2.5 p-3 rounded-xl bg-slate-900/90 backdrop-blur-md border border-slate-700/80 shadow-lg text-slate-200">
-              <div className="flex items-center justify-between gap-3">
-                <div className="min-w-0">
-                  <div className="flex items-center gap-1.5 text-[10px] uppercase font-mono tracking-wider text-slate-400">
-                    <ShieldCheck size={11} className="text-emerald-400" />
-                    <span>Masas Patrón Clase M1 / F1</span>
-                  </div>
-                  <div className="text-xs font-semibold text-white truncate pt-0.5">
-                    Certificación: <span className="font-mono text-emerald-400 font-bold">OIML R111-1</span> · Trazable
-                  </div>
-                </div>
+            {/* Foto de Campo Fijada con Cinta Técnica */}
+            <div className="relative aspect-[16/10] rounded-lg overflow-hidden border-2 border-slate-300 bg-slate-900 shadow-inner group/photo mb-3">
+              <Image
+                src="/images/servicios/calibracion-masas.jpg"
+                alt="Registro de Calibración de Báscula en Planta con Masas Patrón"
+                fill
+                sizes="(max-width: 768px) 100vw, 400px"
+                className="object-cover group-hover/photo:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
 
-                <div className="text-right shrink-0 bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-800">
-                  <span className="text-[10px] font-mono text-slate-400 uppercase block leading-none">
-                    Tolerancia
+              {/* Tag de Registro Fotográfico de Campo */}
+              <div className="absolute top-2 left-2">
+                <span className="inline-flex items-center gap-1 bg-white/95 text-slate-900 font-mono font-bold text-[9px] px-2 py-0.5 rounded shadow-xs">
+                  EVIDENCIA TÉCNICA · PLANTA
+                </span>
+              </div>
+
+              <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between text-[10px] text-white font-mono">
+                <span className="text-amber-300 font-bold">Patrón: Masas Clase M1/F1</span>
+                <span className="p-1 rounded bg-[#991b1b] text-white shadow-xs">
+                  <Maximize2 size={11} />
+                </span>
+              </div>
+            </div>
+
+            {/* Checklist de Verificación Metrológica */}
+            <div className="space-y-1.5 text-xs font-mono">
+              <div className="flex items-center justify-between p-1.5 bg-slate-50 rounded border border-slate-200">
+                <span className="text-[11px] text-slate-700 font-semibold flex items-center gap-1.5">
+                  <CheckCircle2 size={13} className="text-emerald-600" />
+                  Nivelación & Cero Mecánico
+                </span>
+                <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">
+                  PASSED
+                </span>
+              </div>
+
+              <div className="flex items-center justify-between p-1.5 bg-slate-50 rounded border border-slate-200">
+                <span className="text-[11px] text-slate-700 font-semibold flex items-center gap-1.5">
+                  <CheckCircle2 size={13} className="text-emerald-600" />
+                  Excentricidad (4 Cuadrantes)
+                </span>
+                <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">
+                  PASSED
+                </span>
+              </div>
+
+              <div className="flex items-center justify-between p-1.5 bg-slate-50 rounded border border-slate-200">
+                <span className="text-[11px] text-slate-700 font-semibold flex items-center gap-1.5">
+                  <CheckCircle2 size={13} className="text-emerald-600" />
+                  Linealidad & Span
+                </span>
+                <span className="text-[10px] font-bold text-slate-900 bg-amber-100 px-1.5 py-0.5 rounded border border-amber-300">
+                  ±0.01% OK
+                </span>
+              </div>
+            </div>
+
+            {/* Sello de Tinta de Calibración al Pie */}
+            <div className="mt-3 pt-2.5 border-t border-dashed border-slate-300 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full border-2 border-red-700 border-dashed flex items-center justify-center text-[#991b1b] -rotate-12">
+                  <ShieldCheck size={16} />
+                </div>
+                <div>
+                  <span className="text-[9px] font-mono font-bold text-slate-500 uppercase block">
+                    DICTAMEN FINAL
                   </span>
-                  <span className="text-sm sm:text-base font-mono font-bold text-emerald-400 tracking-tight">
-                    ±0.01% <span className="text-[10px] text-emerald-300/80 font-sans">COVENIN</span>
+                  <span className="text-[11px] font-black text-[#991b1b] uppercase">
+                    CALIBRACIÓN APTA
                   </span>
                 </div>
               </div>
-            </div>
-          </div>
 
-          {/* Barra Inferior de Métricas de Servicio */}
-          <div className="grid grid-cols-3 divide-x divide-slate-800/80 bg-slate-950 text-slate-400 text-[11px] py-2 px-3 border-t border-slate-800">
-            <div className="flex items-center justify-center gap-1.5">
-              <Clock size={12} className="text-red-400" />
-              <span className="font-mono font-medium text-slate-300">Respuesta &lt;24h</span>
-            </div>
-            <div className="flex items-center justify-center gap-1.5">
-              <Truck size={12} className="text-amber-400" />
-              <span className="font-mono font-medium text-slate-300">Camión Propio</span>
-            </div>
-            <div className="flex items-center justify-center gap-1.5">
-              <Award size={12} className="text-emerald-400" />
-              <span className="font-mono font-medium text-slate-300">12m Garantía</span>
+              <div className="text-right text-[10px] font-mono text-slate-600">
+                <span className="block font-bold text-slate-900">GARANTÍA 12M</span>
+                <span>COVENIN / OIML</span>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Sub-tarjetas de Respaldo */}
+        {/* Sub-texto */}
         <div className="mt-3 flex items-center justify-between text-xs text-slate-600 px-1 font-medium">
           <span className="inline-flex items-center gap-1 text-slate-500">
-            <CheckCircle2 size={13} className="text-[#991b1b]" />
-            Técnicos certificados e ingenieros en Caracas y Maracay
+            <Clock size={13} className="text-[#991b1b]" />
+            Cuadrilla de guardia técnica disponible en Caracas y Maracay
           </span>
           <span className="text-[#991b1b] font-bold hidden sm:inline">
-            100% Cobertura Nacional
+            Respuesta &lt;24h
           </span>
         </div>
       </div>
