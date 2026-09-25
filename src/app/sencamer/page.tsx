@@ -7,7 +7,7 @@ import { SencamerCatalog } from "@/components/SencamerCatalog";
 import { SencamerMockupCard } from "@/components/SencamerMockupCard";
 
 export const metadata: Metadata = {
-  title: "Equipos con Aprobación SENCAMER | Balanzas y Servicios Dialka",
+  title: "Equipos con Aprobación SENCAMER",
   description:
     "Balanzas y básculas con Aprobación de Modelo SENCAMER para uso comercial legal en Venezuela. Modelos certificados desde 30 kg hasta 6.000 kg.",
 };

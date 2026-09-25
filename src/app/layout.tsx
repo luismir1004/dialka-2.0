@@ -85,23 +85,25 @@ const jsonLd = {
   "address": [
     {
       "@type": "PostalAddress",
-      "streetAddress": "Av. Ppal de Boleita Norte, Edif. Centro Industrial",
+      "streetAddress": "Av. Los Próceres, San Bernardino, Qta. Los Juanes No. 46",
       "addressLocality": "Caracas",
-      "addressRegion": "Distrito Capital / Miranda",
+      "addressRegion": "Distrito Capital",
+      "postalCode": "1011",
       "addressCountry": "VE",
     },
     {
       "@type": "PostalAddress",
-      "streetAddress": "Zona Industrial San Vicente, Calle G",
+      "streetAddress": "Av. Intercomunal Turmero, C.C. Coche Aragua, P.B. Local 52, La Morita",
       "addressLocality": "Maracay",
       "addressRegion": "Aragua",
+      "postalCode": "2101",
       "addressCountry": "VE",
     },
   ],
   "geo": {
     "@type": "GeoCoordinates",
-    "latitude": 10.4958,
-    "longitude": -66.8329,
+    "latitude": 10.5173,
+    "longitude": -66.8967,
   },
   "openingHoursSpecification": [
     {

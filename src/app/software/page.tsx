@@ -7,7 +7,7 @@ import { SoftwareScreenshotsShowcase } from "@/components/SoftwareScreenshotsSho
 import { SoftwareBannerLightbox } from "@/components/SoftwareBannerLightbox";
 
 export const metadata: Metadata = {
-  title: "Software de Pesaje Industrial | Balanzas y Servicios Dialka",
+  title: "Software de Pesaje Industrial",
   description:
     "Sistemas de software propios para pesaje: control de camiones, bobinas, etiquetas, silos, tanques y tableros PLC a medida. Desarrollo venezolano.",
 };

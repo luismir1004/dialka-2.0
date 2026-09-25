@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { CONTACT, NAV_LINKS, BRANDS } from "@/lib/data";
 import { FooterSedes } from "./FooterSedes";
+import { cleanTelHref } from "@/lib/utils";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -43,7 +44,7 @@ export function Footer() {
               <span>WhatsApp Directo</span>
             </a>
             <a
-              href={`tel:${caracas.phones.main}`}
+              href={cleanTelHref(caracas.phones.main)}
               className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 hover:text-white font-semibold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl border border-slate-700 transition-all"
             >
               <Phone size={14} />

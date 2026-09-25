@@ -7,7 +7,7 @@ import { ServiciosShowcase } from "@/components/ServiciosShowcase";
 import { InteractiveServicesList } from "@/components/InteractiveServicesList";
 
 export const metadata: Metadata = {
-  title: "Servicio Técnico | Balanzas y Servicios Dialka",
+  title: "Servicio Técnico y Calibración SENCAMER",
   description:
     "Calibración con masas patrón trazables, mantenimiento preventivo y correctivo de equipos de pesaje. Normas COVENIN y SENCAMER. Atención en Venezuela.",
 };

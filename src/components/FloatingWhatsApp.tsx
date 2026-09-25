@@ -80,7 +80,7 @@ export function FloatingWhatsApp() {
         })}
         className="group relative flex items-center justify-center w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white shadow-xl shadow-emerald-950/30 transition-all duration-200 border-2 border-white/80 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-400"
         aria-label="Chatear por WhatsApp con Balanzas Dialka"
-        title={`Atención directa por WhatsApp (${SITE_CONFIG.contact.phones.caracas})`}
+        title={`Atención directa por WhatsApp (${SITE_CONFIG.contact.whatsappDisplay})`}
       >
         {/* Pulse ring */}
         <span className="absolute -inset-1 rounded-full bg-emerald-500/30 animate-ping pointer-events-none" />

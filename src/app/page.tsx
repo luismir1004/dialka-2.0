@@ -19,7 +19,9 @@ import { ProductsCatalog } from "@/components/ProductsCatalog";
 
 
 export const metadata: Metadata = {
-  title: "Inicio | Balanzas y Servicios Dialka",
+  title: {
+    absolute: "Balanzas y Servicios Dialka | Pesaje Industrial en Venezuela",
+  },
   description:
     "25 años siendo líderes en Venezuela en venta, alquiler y servicio técnico de equipos de pesaje industriales, comerciales y agropecuarios.",
 };

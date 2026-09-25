@@ -6,7 +6,7 @@ import { CalendarDays, ChevronRight, Phone, ArrowRight, Truck, ShieldCheck, Cloc
 import { RentalCatalog } from "@/components/RentalCatalog";
 
 export const metadata: Metadata = {
-  title: "Alquiler de Equipos de Pesaje | Balanzas y Servicios Dialka",
+  title: "Alquiler de Equipos de Pesaje",
   description:
     "Alquiler de básculas camioneras por eje (20T y 40T), básculas ganaderas y plataformas industriales. Disponibles en Venezuela con servicio técnico incluido.",
 };

@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { CONTACT } from "@/lib/data";
 import { useToast } from "@/context/ToastContext";
+import { cleanTelHref } from "@/lib/utils";
 
 interface SedeStatus {
   isOpen: boolean;
@@ -204,7 +205,7 @@ export function ContactSedesDashboard({ onCopy }: ContactSedesDashboardProps = {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             {/* Llamar Directo */}
             <a
-              href={`tel:${("main" in hq.phones ? hq.phones.main : "").replace(/\s+/g, "").replace(/[()]/g, "")}`}
+              href={cleanTelHref(hq.phones.main)}
               className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-slate-50 hover:bg-red-50 text-slate-700 hover:text-[#991b1b] border border-slate-200 hover:border-red-200 text-xs font-bold transition-all active:scale-95"
               title="Llamar a central telefónica"
             >
@@ -293,7 +294,7 @@ export function ContactSedesDashboard({ onCopy }: ContactSedesDashboardProps = {
                 {hq.phones.ventas.map((vPhone) => (
                   <div key={vPhone} className="flex items-center justify-between text-xs">
                     <a
-                      href={`tel:${vPhone.replace(/\s+/g, "").replace(/[()]/g, "")}`}
+                      href={cleanTelHref(vPhone)}
                       className="font-bold text-slate-800 hover:text-[#991b1b] transition-colors"
                     >
                       {vPhone}
@@ -324,7 +325,7 @@ export function ContactSedesDashboard({ onCopy }: ContactSedesDashboardProps = {
                 {hq.phones.soporte.map((sPhone) => (
                   <div key={sPhone} className="flex items-center justify-between text-xs">
                     <a
-                      href={`tel:${sPhone.replace(/\s+/g, "").replace(/[()]/g, "")}`}
+                      href={cleanTelHref(sPhone)}
                       className="font-bold text-slate-800 hover:text-[#991b1b] transition-colors"
                     >
                       {sPhone}

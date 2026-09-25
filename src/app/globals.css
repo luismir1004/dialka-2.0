@@ -177,54 +177,6 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 2px;
 }
 
-/* ---- Custom Touch-Friendly Range Slider ---- */
-input[type="range"].touch-slider {
-  touch-action: pan-y;
-  -webkit-appearance: none;
-  appearance: none;
-  background: transparent;
-  cursor: grab;
-}
-input[type="range"].touch-slider::-webkit-slider-runnable-track {
-  height: 14px;
-  border-radius: 7px;
-  background: #1e293b;
-  border: 1px solid #334155;
-}
-input[type="range"].touch-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  margin-top: -8px;
-  height: 30px;
-  width: 30px;
-  border-radius: 50%;
-  background: #dc2626;
-  border: 3px solid #ffffff;
-  box-shadow: 0 0 14px rgba(220, 38, 38, 0.75);
-  cursor: grab;
-  transition: transform 0.15s ease, background-color 0.15s ease;
-}
-input[type="range"].touch-slider:active::-webkit-slider-thumb {
-  transform: scale(1.2);
-  cursor: grabbing;
-  background: #ef4444;
-  box-shadow: 0 0 20px rgba(239, 68, 68, 0.95);
-}
-input[type="range"].touch-slider::-moz-range-track {
-  height: 14px;
-  border-radius: 7px;
-  background: #1e293b;
-  border: 1px solid #334155;
-}
-input[type="range"].touch-slider::-moz-range-thumb {
-  height: 30px;
-  width: 30px;
-  border-radius: 50%;
-  background: #dc2626;
-  border: 3px solid #ffffff;
-  box-shadow: 0 0 14px rgba(220, 38, 38, 0.75);
-  cursor: grab;
-}
 
 /* ---- Universal Accessible Keyboard Focus (WCAG 2.1) ---- */
 a:focus-visible,

@@ -28,7 +28,7 @@ const ContactDynamicForm = dynamic(() => import("@/components/ContactDynamicForm
 });
 
 export const metadata: Metadata = {
-  title: "Contacto, Sedes y Asistencia Técnica | Balanzas y Servicios Dialka",
+  title: "Contacto, Sedes y Asistencia Técnica",
   description:
     "Centro oficial de atención y servicio técnico en Caracas y Maracay. Cotizaciones en menos de 15 minutos, calibración SENCAMER, mantenimiento preventivo y emergencias en planta en toda Venezuela.",
   alternates: {

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Home, Search, ArrowRight } from "lucide-react";
+import { SITE_CONFIG } from "@/lib/config";
 
 export default function NotFound() {
   return (
@@ -41,13 +42,13 @@ export default function NotFound() {
             ¿Necesitas ayuda? Contáctanos:
           </p>
           <a
-            href="https://wa.me/584142770024"
+            href={`https://wa.me/${SITE_CONFIG.contact.whatsappNumber}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1 text-[#991b1b] hover:text-[#7f1d1d] font-semibold text-sm mt-2 transition-colors"
           >
             <ArrowRight size={14} />
-            <span>WhatsApp: +58 414 277.00.24</span>
+            <span>WhatsApp: {SITE_CONFIG.contact.whatsappDisplay}</span>
           </a>
         </div>
       </div>

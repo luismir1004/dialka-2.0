@@ -358,6 +358,35 @@ export function ProductsCatalog({
           </div>
         </div>
 
+        {/* ── BARRA DE ESTATUS DE RESULTADOS Y CONTADOR EN VIVO ── */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4 px-1 text-xs text-slate-600">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="font-semibold text-slate-900">
+              Mostrando {displayedProducts.length} de {filteredProducts.length} equipos
+            </span>
+            {selectedCategory !== "all" && (
+              <span className="bg-red-50 text-[#991b1b] border border-red-200/60 font-bold px-2 py-0.5 rounded-full text-[11px]">
+                {CATALOG_CATEGORIES.find((c) => c.id === selectedCategory)?.name}
+              </span>
+            )}
+            {searchQuery && (
+              <span className="bg-slate-100 text-slate-700 font-medium px-2 py-0.5 rounded-full text-[11px] truncate max-w-[180px]">
+                Búsqueda: &ldquo;{searchQuery}&rdquo;
+              </span>
+            )}
+          </div>
+          {(selectedCategory !== "all" || searchQuery) && (
+            <button
+              type="button"
+              onClick={handleReset}
+              className="text-[#991b1b] hover:text-[#7f1d1d] font-semibold text-xs flex items-center gap-1 hover:underline cursor-pointer self-start sm:self-auto"
+            >
+              <RotateCcw size={12} />
+              <span>Limpiar filtros</span>
+            </button>
+          )}
+        </div>
+
         {/* ── FASE 2: CUADRÍCULA DE TARJETAS ESTILO E-COMMERCE (GRID 2 COLS EN MÓVIL) ── */}
         {displayedProducts.length > 0 ? (
           <>

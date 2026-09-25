@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { NAV_LINKS } from "@/lib/data";
 import { SITE_CONFIG } from "@/lib/config";
+import { cleanTelHref } from "@/lib/utils";
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -210,7 +211,7 @@ export function MobileMenu({
         {/* Accesos Rápidos a Teléfonos Oficiales (CCS y MCY) en Tarjetas Táctiles */}
         <div className="grid grid-cols-2 gap-2 text-xs font-bold">
           <a
-            href={`tel:${ccsPhone.replace(/\s+/g, "").replace(/[()]/g, "")}`}
+            href={cleanTelHref(ccsPhone)}
             className="inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-white border border-slate-200/90 hover:border-red-300 text-slate-800 hover:text-[#991b1b] active:scale-95 transition-all truncate shadow-2xs"
             title={`Llamar a Caracas: ${ccsPhone}`}
           >
@@ -219,7 +220,7 @@ export function MobileMenu({
           </a>
 
           <a
-            href={`tel:${mcyPhone.split("/")[0].replace(/\s+/g, "").replace(/-/g, "").replace(/\./g, "")}`}
+            href={cleanTelHref(mcyPhone)}
             className="inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-white border border-slate-200/90 hover:border-red-300 text-slate-800 hover:text-[#991b1b] active:scale-95 transition-all truncate shadow-2xs"
             title={`Llamar a Maracay: ${mcyPhone}`}
           >

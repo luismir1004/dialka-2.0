@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import type { HeadquarterInfo } from "@/lib/data";
+import { cleanTelHref } from "@/lib/utils";
 
 interface FooterSedesProps {
   caracas: HeadquarterInfo;
@@ -71,7 +72,7 @@ export function FooterSedes({ caracas, maracay }: FooterSedesProps) {
           </p>
           <div className="pt-1.5 border-t border-slate-800/80 flex flex-col gap-1 text-[11px]">
             <a
-              href={`tel:${caracas.phones.main}`}
+              href={cleanTelHref(caracas.phones.main)}
               className="flex items-center gap-1.5 text-slate-300 hover:text-red-400 transition-colors"
             >
               <Phone size={11} className="text-red-400 shrink-0" />
@@ -109,7 +110,7 @@ export function FooterSedes({ caracas, maracay }: FooterSedesProps) {
           </p>
           <div className="pt-1.5 border-t border-slate-800/80 flex flex-col gap-1 text-[11px]">
             <a
-              href={`tel:${maracay.phones.ventas[0]}`}
+              href={cleanTelHref(maracay.phones.ventas[0])}
               className="flex items-center gap-1.5 text-slate-300 hover:text-red-400 transition-colors"
             >
               <Phone size={11} className="text-red-400 shrink-0" />

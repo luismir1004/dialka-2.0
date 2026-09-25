@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState, useId } from "react";
-import { Send, ShieldCheck } from "lucide-react";
+import { Send, ShieldCheck, Mail } from "lucide-react";
 import { CONTACT } from "@/lib/data";
+import { SITE_CONFIG } from "@/lib/config";
 import { useToast } from "@/context/ToastContext";
 import { ContactPresetChips, type PresetChip } from "./contact/ContactPresetChips";
 import { WhatsAppLivePreview, type ContactFormState } from "./contact/WhatsAppLivePreview";
@@ -160,6 +161,31 @@ export function ContactDynamicForm() {
       description: "Se abrió la ventana con el asesor de Dialka.",
       type: "success",
     });
+  };
+
+  const handleEmailSubmit = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    const sanitizedNombre = sanitizeInput(form.nombre);
+    const sanitizedEmpresa = sanitizeInput(form.empresa);
+    const sanitizedCiudad = sanitizeInput(form.ciudad);
+    const sanitizedAsunto = sanitizeInput(form.asunto);
+    const sanitizedMensaje = sanitizeInput(form.mensaje);
+
+    const subject = encodeURIComponent(`Consulta Web Dialka: ${sanitizedAsunto || "Requerimiento Técnico"} - ${sanitizedNombre}`);
+    const body = encodeURIComponent(
+      `Consulta Web - Balanzas y Servicios Dialka\n` +
+      `Nivel de Urgencia: ${form.urgencia}\n\n` +
+      `Nombre y Apellido: ${sanitizedNombre}\n` +
+      `Empresa: ${sanitizedEmpresa || "Particular / No especificado"}\n` +
+      `Teléfono: ${form.telefono}\n` +
+      `Email: ${form.email}\n` +
+      `Ubicación: ${sanitizedCiudad}\n` +
+      `Asunto: ${sanitizedAsunto}\n\n` +
+      `Detalle del Requerimiento Técnico:\n${sanitizedMensaje}`
+    );
+
+    window.location.href = `mailto:${SITE_CONFIG.contact.email}?subject=${subject}&body=${body}`;
   };
 
   const resetForm = () => {
@@ -439,14 +465,26 @@ export function ContactDynamicForm() {
                 )}
               </div>
 
-              {/* Botón Principal de Envío */}
-              <button
-                type="submit"
-                className="w-full flex items-center justify-center gap-2.5 bg-gradient-to-r from-[#991b1b] via-[#b91c1c] to-[#991b1b] hover:from-[#7f1d1d] hover:to-[#7f1d1d] active:scale-[0.99] text-white font-bold py-3.5 px-6 rounded-xl shadow-md shadow-red-950/20 text-sm sm:text-base transition-all duration-200 cursor-pointer"
-              >
-                <Send size={18} />
-                <span>Generar y Enviar vía WhatsApp Oficial</span>
-              </button>
+              {/* Botones de Envío: WhatsApp Principal + Correo Corporativo Alternativo */}
+              <div className="flex flex-col sm:flex-row gap-2.5">
+                <button
+                  type="submit"
+                  className="flex-1 flex items-center justify-center gap-2.5 bg-gradient-to-r from-[#991b1b] via-[#b91c1c] to-[#991b1b] hover:from-[#7f1d1d] hover:to-[#7f1d1d] active:scale-[0.99] text-white font-bold py-3.5 px-6 rounded-xl shadow-md shadow-red-950/20 text-sm sm:text-base transition-all duration-200 cursor-pointer"
+                >
+                  <Send size={18} />
+                  <span>Enviar vía WhatsApp</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleEmailSubmit}
+                  className="inline-flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 active:scale-[0.99] text-slate-700 font-bold py-3.5 px-4 rounded-xl border border-slate-300 text-xs sm:text-sm transition-all duration-200 cursor-pointer"
+                  title="Enviar por correo electrónico corporativo si no utiliza WhatsApp Web"
+                >
+                  <Mail size={16} className="text-slate-600" />
+                  <span>Por Correo</span>
+                </button>
+              </div>
 
               <div className="flex items-center justify-center gap-2 text-slate-500 text-xs text-center pt-1">
                 <ShieldCheck size={14} className="text-emerald-600" />

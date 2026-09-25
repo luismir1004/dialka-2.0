@@ -20,7 +20,7 @@ const IndustryQuoteWizard = dynamic(() => import("@/components/wizard/IndustryQu
 });
 
 export const metadata: Metadata = {
-  title: "Nuestros Productos | Balanzas y Servicios Dialka",
+  title: "Catálogo de Productos",
   description:
     "Catálogo completo de equipos de pesaje: básculas agropecuarias, analíticas, comerciales, industriales y vehiculares. Venta y soporte técnico en Venezuela.",
 };

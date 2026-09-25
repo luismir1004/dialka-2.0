@@ -18,7 +18,7 @@ import { ProjectsGallery } from "@/components/ProjectsGallery";
 import { ProjectsVideoGallery } from "@/components/ProjectsVideoGallery";
 
 export const metadata: Metadata = {
-  title: "Proyectos y Obras en Campo | Balanzas y Servicios Dialka",
+  title: "Proyectos y Obras en Campo",
   description:
     "Galería fotográfica y videos reales de proyectos ejecutados en Venezuela: calibración con camión patrón en silos, obra civil y montaje de básculas camioneras de 80TN, salas limpias farmacéuticas y pesaje pecuario.",
 };

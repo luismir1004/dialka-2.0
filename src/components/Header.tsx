@@ -14,12 +14,22 @@ import {
 import { NAV_LINKS } from "@/lib/data";
 import { SITE_CONFIG } from "@/lib/config";
 import { MobileMenu } from "@/components/MobileMenu";
+import { cleanTelHref, getBusinessStatusVenezuela } from "@/lib/utils";
 
 export function Header() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [businessStatus, setBusinessStatus] = useState(() => getBusinessStatusVenezuela());
+
+  // Actualizar estatus de sedes cada minuto
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setBusinessStatus(getBusinessStatusVenezuela());
+    }, 60000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Detección de scroll para Smart Header
   useEffect(() => {
@@ -69,7 +79,7 @@ export function Header() {
           >
             {/* Caracas Central */}
             <a
-              href={`tel:${ccsPhone.replace(/\s+/g, "").replace(/[()]/g, "")}`}
+              href={cleanTelHref(ccsPhone)}
               className="inline-flex items-center gap-1 text-white hover:text-red-200 active:scale-95 transition-all py-1 px-2.5 rounded-md bg-black/20 shrink-0 min-h-[32px]"
               title={`Llamar a Caracas Central: ${ccsPhone}`}
             >
@@ -79,9 +89,9 @@ export function Header() {
 
             {/* Maracay */}
             <a
-              href="tel:+582432343360"
+              href={cleanTelHref(mcyPhone)}
               className="inline-flex items-center gap-1 text-white hover:text-red-200 active:scale-95 transition-all py-1 px-2.5 rounded-md bg-black/20 shrink-0 min-h-[32px]"
-              title="Llamar a Maracay: 0243-234.33.60 / 234.33.72"
+              title={`Llamar a Maracay: ${mcyPhone}`}
             >
               <Phone size={11} className="text-red-300 shrink-0" />
               <span>MCY: 0243-234.33.60</span>
@@ -106,7 +116,7 @@ export function Header() {
             <div className="flex flex-wrap items-center gap-2.5 lg:gap-3.5 text-[11px] sm:text-xs">
               {/* Caracas Central */}
               <a
-                href={`tel:${ccsPhone.replace(/\s+/g, "").replace(/[()]/g, "")}`}
+                href={cleanTelHref(ccsPhone)}
                 className="inline-flex items-center gap-1.5 hover:text-red-200 transition-colors py-0.5 group"
                 title="Central Telefónica Caracas"
               >
@@ -118,7 +128,7 @@ export function Header() {
 
               {/* Maracay */}
               <a
-                href="tel:+582432343360"
+                href={cleanTelHref(mcyPhone)}
                 className="inline-flex items-center gap-1.5 hover:text-red-200 transition-colors py-0.5 group"
                 title="Sede y Talleres Maracay"
               >
@@ -143,16 +153,24 @@ export function Header() {
 
             {/* Lado Derecho: Estatus Operativo de Sedes + Enlace a Redes / SENCAMER */}
             <div className="flex items-center gap-2.5 sm:gap-3 text-[11px]">
-              {/* Widget Estatus Sedes */}
+              {/* Widget Estatus Sedes Inteligente */}
               <div className="inline-flex items-center gap-1.5 bg-black/25 px-2.5 py-0.5 rounded-full text-red-100 font-medium border border-white/10">
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                  {businessStatus.isOpen ? (
+                    <>
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    </>
+                  ) : (
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-400"></span>
+                  )}
                 </span>
                 <span className="hidden sm:inline">Sedes:</span>
-                <span className="text-white font-semibold">Abiertas</span>
+                <span className={`font-semibold ${businessStatus.isOpen ? "text-white" : "text-amber-200"}`}>
+                  {businessStatus.statusText}
+                </span>
                 <span className="text-red-200 text-[10px] hidden md:inline">
-                  (08:00–17:00)
+                  {businessStatus.detailText}
                 </span>
               </div>
 
