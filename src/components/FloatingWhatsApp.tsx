@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { MessageCircle, X } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/config";
 import { trackEvent, ANALYTICS_EVENTS } from "@/lib/analytics";

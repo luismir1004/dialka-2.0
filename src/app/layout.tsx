@@ -118,7 +118,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="es" className={inter.variable}>
+    <html lang="es" className={inter.variable} data-scroll-behavior="smooth">
       <head>
         <script
           type="application/ld+json"
@@ -126,6 +126,7 @@ export default function RootLayout({
         />
         <link rel="manifest" href={manifestUrl} />
         <meta name="theme-color" content="#991b1b" />
+        <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Dialka" />
