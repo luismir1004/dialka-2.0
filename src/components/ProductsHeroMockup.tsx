@@ -3,13 +3,10 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import {
-  Maximize2,
-  ShieldCheck,
-  Scale,
-  Layers,
-  Zap,
-  CheckCircle2,
   Compass,
+  Maximize2,
+  CheckCircle2,
+  Ruler,
 } from "lucide-react";
 import { ImageLightbox, type LightboxItem } from "@/components/ImageLightbox";
 
@@ -20,10 +17,10 @@ interface ProductsHeroMockupProps {
 const LIGHTBOX_ITEM: LightboxItem = {
   id: "balanza-camionera-dialka-80t",
   image: "/images/proyectos/bascula-camionera-sobresuelo-1.jpg",
-  title: "Balanza Camionera Industrial Dialka 80T - Fabricación Nacional",
-  subtitle: "Estructura en Acero ASTM A36 · Celdas Digitales IP68",
+  title: "Plano Estructural de Balanza Camionera Dialka 80T",
+  subtitle: "Fabricación Nacional en Acero ASTM A36 · Celdas IP68",
   description:
-    "Plataforma de pesaje continuo para transporte de carga pesada y gandolas. Fabricada en módulos de vigas IPE de acero estructural de alta resistencia a la fatiga cíclica. Equipada con celdas de compresión autocentrantes y caja de compensación hermética contra agua y polvo.",
+    "Plano de ingeniería y especificaciones de fabricación para básculas camioneras de alto tonelaje. Diseñada con vigas maestras IPE de perfil pesado capaces de soportar tráfico continuo de gandolas de hasta 80 Toneladas sin deformación plástica.",
   specs: [
     "Capacidad nominal de 80 Toneladas (dimensiones estándar: 21m x 3.2m)",
     "Módulos prefabricados para montaje rápido en fosa o sobre suelo con rampas",
@@ -32,119 +29,136 @@ const LIGHTBOX_ITEM: LightboxItem = {
     "Homologada para uso comercial legal con precinto SENCAMER",
   ],
   location: "Fabricación e instalación en toda Venezuela",
-  tag: "Ingeniería Estructural Dialka",
+  tag: "Plano de Ingeniería Mecánica",
   ctaText: "Cotizar Balanza Camionera a Medida",
 };
 
 export function ProductsHeroMockup({ whatsappNumber }: ProductsHeroMockupProps) {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [selectedCapacity, setSelectedCapacity] = useState<"60T" | "80T" | "100T">("80T");
+
+  const specsByCapacity = {
+    "60T": { length: "18.00m", width: "3.10m", cells: "6 Celdas", maxKg: "60.000 kg" },
+    "80T": { length: "21.00m", width: "3.20m", cells: "8 Celdas", maxKg: "80.000 kg" },
+    "100T": { length: "24.00m", width: "3.40m", cells: "10 Celdas", maxKg: "100.000 kg" },
+  };
+
+  const currentSpec = specsByCapacity[selectedCapacity];
 
   return (
     <>
       <div className="relative w-full">
-        {/* Glow corporativo Dialka */}
-        <div className="absolute -inset-1 bg-gradient-to-r from-[#991b1b]/20 via-[#7f1d1d]/15 to-transparent rounded-3xl blur-xl -z-10" />
+        {/* Glow de plano técnico */}
+        <div className="absolute -inset-2 bg-gradient-to-br from-blue-600/15 via-red-900/10 to-cyan-500/20 rounded-3xl blur-xl -z-10" />
 
-        {/* Marco de Banco de Ensayo de Balanzas */}
+        {/* ── PLANO BLUEPRINT DE TALLER & ESPECIFICACIÓN MECÁNICA ── */}
         <div
-          onClick={() => setIsLightboxOpen(true)}
-          className="group relative rounded-2xl overflow-hidden border border-slate-700/60 bg-slate-950 shadow-2xl shadow-slate-950/40 hover:border-red-400/80 transition-all duration-300 cursor-pointer"
-          title="Haz clic para ver la ficha técnica y despiece estructural en alta definición"
+          className="group relative bg-[#09182b] text-slate-100 rounded-2xl border-2 border-blue-500/40 p-4 sm:p-5 shadow-2xl shadow-blue-950/40 hover:border-blue-400 transition-all duration-300 select-none"
         >
-          {/* Barra Superior de Ingeniería */}
-          <div className="flex items-center justify-between px-3.5 py-2.5 bg-slate-900 border-b border-slate-800 text-xs select-none">
-            <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-red-500/80 inline-block" />
-              <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80 inline-block" />
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80 inline-block" />
-              <span className="ml-2 text-slate-300 font-mono text-[11px] font-semibold tracking-tight hidden sm:inline">
-                Dialka Engineering Lab · Balanza Camionera 80T
-              </span>
+          {/* Malla milimetrada de dibujo técnico en el fondo */}
+          <div className="absolute inset-0 bg-[radial-gradient(#1e3a8a_1px,transparent_1px)] [background-size:16px_16px] opacity-40 pointer-events-none rounded-2xl" />
+
+          {/* Cabecera del Plano */}
+          <div className="relative flex items-center justify-between pb-3 border-b border-blue-500/30 mb-3">
+            <div className="flex items-center gap-2">
+              <Compass size={18} className="text-cyan-400" />
+              <div>
+                <span className="text-[9px] font-mono tracking-widest text-cyan-400 font-bold uppercase block">
+                  DIALKA · DEPARTAMENTO DE INGENIERÍA MECÁNICA
+                </span>
+                <h3 className="text-xs sm:text-sm font-mono font-bold text-white uppercase tracking-tight">
+                  Plano Estructural · Balanza Camionera
+                </h3>
+              </div>
             </div>
 
-            <div className="flex items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 bg-emerald-950/70 border border-emerald-500/40 text-emerald-400 font-mono text-[10px] font-bold px-2 py-0.5 rounded-full shadow-inner">
-                <Compass size={11} className="text-emerald-400" />
-                ASTM A36 · IP68
+            {/* Selector de Tonelaje Rápido */}
+            <div className="flex items-center gap-1 bg-slate-900/90 p-1 rounded-lg border border-blue-500/40">
+              {(["60T", "80T", "100T"] as const).map((cap) => (
+                <button
+                  key={cap}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedCapacity(cap);
+                  }}
+                  className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded transition-all cursor-pointer ${
+                    selectedCapacity === cap
+                      ? "bg-[#991b1b] text-white shadow-xs"
+                      : "text-slate-400 hover:text-white"
+                  }`}
+                >
+                  {cap}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Vista Isométrica / Fotografía con Cotas Milimétricas Superpuestas */}
+          <div
+            onClick={() => setIsLightboxOpen(true)}
+            className="relative aspect-[16/10] rounded-lg overflow-hidden border border-blue-500/30 bg-slate-950 shadow-inner group/photo cursor-pointer mb-3"
+            title="Haz clic para ver el plano en alta definición"
+          >
+            <Image
+              src="/images/proyectos/bascula-camionera-sobresuelo-1.jpg"
+              alt="Plataforma de Balanza Camionera Dialka de Acero Estructural"
+              fill
+              sizes="(max-width: 768px) 100vw, 400px"
+              className="object-cover group-hover/photo:scale-105 transition-transform duration-500 opacity-90"
+            />
+            <div className="absolute inset-0 bg-blue-950/25 pointer-events-none" />
+
+            {/* Líneas de Cota de Ingeniería Superpuestas */}
+            <div className="absolute top-2 left-2 right-2 flex items-center justify-between text-[10px] font-mono bg-slate-900/90 backdrop-blur-xs px-2.5 py-1 rounded border border-blue-400/40 text-cyan-300">
+              <span className="flex items-center gap-1">
+                <Ruler size={12} />
+                <span>LONGITUD: {currentSpec.length}</span>
               </span>
-              <span className="p-1 rounded bg-slate-800 text-slate-400 group-hover:text-white group-hover:bg-[#991b1b] transition-all">
+              <span>ANCHO: {currentSpec.width}</span>
+            </div>
+
+            <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between text-[10px] font-mono text-white">
+              <span className="bg-[#991b1b] text-white px-2 py-0.5 rounded font-bold">
+                CAP: {currentSpec.maxKg}
+              </span>
+              <span className="p-1 rounded bg-black/60 text-cyan-300 group-hover:bg-[#991b1b] group-hover:text-white transition-colors">
                 <Maximize2 size={12} />
               </span>
             </div>
           </div>
 
-          {/* Imagen de la Balanza Camionera */}
-          <div className="relative aspect-[16/10] sm:aspect-[16/9] w-full overflow-hidden bg-slate-950">
-            <Image
-              src="/images/proyectos/bascula-camionera-sobresuelo-1.jpg"
-              alt="Plataforma de Balanza Camionera Industrial de Acero Dialka"
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-              className="object-cover object-center opacity-95 group-hover:scale-[1.03] transition-transform duration-700 ease-out"
-              priority
-            />
-
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent pointer-events-none" />
-            <div className="absolute inset-0 bg-gradient-to-r from-slate-950/40 via-transparent to-slate-950/30 pointer-events-none" />
-
-            {/* Badge de Hover */}
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none bg-slate-950/40 backdrop-blur-[2px]">
-              <span className="inline-flex items-center gap-2 bg-[#991b1b] text-white text-xs font-bold px-4 py-2 rounded-xl shadow-xl shadow-red-950/50 transform translate-y-2 group-hover:translate-y-0 transition-transform">
-                <Maximize2 size={14} />
-                <span>Explorar Ficha de Balanza Camionera HD</span>
-              </span>
-            </div>
-
-            {/* HUD Flotante de Despiece Técnico */}
-            <div className="absolute bottom-2.5 left-2.5 right-2.5 p-3 rounded-xl bg-slate-900/90 backdrop-blur-md border border-slate-700/80 shadow-lg text-slate-200">
-              <div className="flex items-center justify-between gap-3">
-                <div className="min-w-0">
-                  <div className="flex items-center gap-1.5 text-[10px] uppercase font-mono tracking-wider text-slate-400">
-                    <Scale size={11} className="text-emerald-400" />
-                    <span>Configuración Pesaje Pesado</span>
-                  </div>
-                  <div className="text-xs font-semibold text-white truncate pt-0.5">
-                    Modelo: <span className="font-mono text-amber-300 font-bold">DK-CAM-80T</span> (21m x 3.2m)
-                  </div>
-                </div>
-
-                <div className="text-right shrink-0 bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-800">
-                  <span className="text-[10px] font-mono text-slate-400 uppercase block leading-none">
-                    Capacidad
-                  </span>
-                  <span className="text-sm sm:text-base font-mono font-bold text-emerald-400 tracking-tight">
-                    80.000 <span className="text-[10px] text-emerald-300/80 font-sans">kg</span>
-                  </span>
-                </div>
+          {/* Cajetín de Rotulación de Ingeniería al Pie (Title Block) */}
+          <div className="relative bg-slate-900/90 rounded-lg p-3 border border-blue-500/30 font-mono text-[10px]">
+            <div className="grid grid-cols-3 gap-2 pb-2 mb-2 border-b border-blue-500/20">
+              <div>
+                <span className="text-slate-500 text-[8px] uppercase block">MATERIAL BASE:</span>
+                <span className="text-cyan-300 font-bold">Acero ASTM A36</span>
+              </div>
+              <div>
+                <span className="text-slate-500 text-[8px] uppercase block">INSTRUMENTACIÓN:</span>
+                <span className="text-cyan-300 font-bold">{currentSpec.cells} IP68</span>
+              </div>
+              <div>
+                <span className="text-slate-500 text-[8px] uppercase block">GARANTÍA EST.:</span>
+                <span className="text-emerald-400 font-bold">5 AÑOS ESCRITA</span>
               </div>
             </div>
-          </div>
 
-          {/* Barra Inferior de Garantías Estructurales */}
-          <div className="grid grid-cols-3 divide-x divide-slate-800/80 bg-slate-950 text-slate-400 text-[11px] py-2 px-3 border-t border-slate-800">
-            <div className="flex items-center justify-center gap-1.5">
-              <Layers size={12} className="text-red-400" />
-              <span className="font-mono font-medium text-slate-300">Vigas IPE Pesadas</span>
-            </div>
-            <div className="flex items-center justify-center gap-1.5">
-              <Zap size={12} className="text-amber-400" />
-              <span className="font-mono font-medium text-slate-300">Celdas IP68</span>
-            </div>
-            <div className="flex items-center justify-center gap-1.5">
-              <ShieldCheck size={12} className="text-emerald-400" />
-              <span className="font-mono font-medium text-slate-300">5 Años Garantía</span>
+            <div className="flex items-center justify-between text-slate-400 text-[9px]">
+              <span>PLANO N° DK-DWG-{selectedCapacity}-REV2</span>
+              <span className="text-slate-300 font-bold">HOMOLOGADA SENCAMER</span>
             </div>
           </div>
         </div>
 
-        {/* Sub-tarjetas de Respaldo */}
+        {/* Sub-texto */}
         <div className="mt-3 flex items-center justify-between text-xs text-slate-600 px-1 font-medium">
           <span className="inline-flex items-center gap-1 text-slate-500">
             <CheckCircle2 size={13} className="text-[#991b1b]" />
-            Diseño e instalación llave en mano en toda Venezuela
+            Diseño, cálculo estructural y montaje llave en mano
           </span>
           <span className="text-[#991b1b] font-bold hidden sm:inline">
-            53+ Modelos en Catálogo
+            53+ Modelos Disponibles
           </span>
         </div>
       </div>

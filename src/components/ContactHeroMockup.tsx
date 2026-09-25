@@ -3,18 +3,41 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import {
-  Maximize2,
+  Phone,
   Building2,
   CheckCircle2,
   MapPin,
   Clock,
-  Zap,
+  Maximize2,
 } from "lucide-react";
 import { ImageLightbox, type LightboxItem } from "@/components/ImageLightbox";
 
 interface ContactHeroMockupProps {
   whatsappNumber?: string;
 }
+
+const SEDES_DATA = [
+  {
+    id: "caracas",
+    city: "Caracas",
+    name: "Sede Principal Caracas",
+    address: "Av. Principal Los Ruices, Edif. Centro Industrial, PB",
+    phone: "(0212) 381.18.23",
+    phoneRaw: "+582123811823",
+    role: "Administración, Proyectos & Metrología Central",
+    hours: "Lun - Vie: 08:00 - 17:00",
+  },
+  {
+    id: "maracay",
+    city: "Maracay",
+    name: "Sede Operativa Maracay",
+    address: "Zona Industrial La Candelaria, Galpón Dialka Metrología",
+    phone: "(0243) 234.33.60",
+    phoneRaw: "+582432343360",
+    role: "Taller Central, Celdas & Base Camión Calibrador",
+    hours: "Lun - Vie: 08:00 - 17:00",
+  },
+];
 
 const LIGHTBOX_ITEM: LightboxItem = {
   id: "sede-central-contacto-dialka",
@@ -36,117 +59,130 @@ const LIGHTBOX_ITEM: LightboxItem = {
 };
 
 export function ContactHeroMockup({ whatsappNumber }: ContactHeroMockupProps) {
+  const [activeSede, setActiveSede] = useState(SEDES_DATA[0]);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
   return (
     <>
       <div className="relative w-full">
         {/* Glow corporativo Dialka */}
-        <div className="absolute -inset-1 bg-gradient-to-r from-[#991b1b]/20 via-[#7f1d1d]/15 to-transparent rounded-3xl blur-xl -z-10" />
+        <div className="absolute -inset-2 bg-gradient-to-br from-red-600/15 via-slate-900/10 to-amber-500/20 rounded-3xl blur-xl -z-10" />
 
-        {/* Marco de Tablero de Central Telefónica y Despacho */}
-        <div
-          onClick={() => setIsLightboxOpen(true)}
-          className="group relative rounded-2xl overflow-hidden border border-slate-700/60 bg-slate-950 shadow-2xl shadow-slate-950/40 hover:border-red-400/80 transition-all duration-300 cursor-pointer"
-          title="Haz clic para ver las instalaciones y cuadrilla técnica en alta definición"
-        >
-          {/* Barra Superior del Switchboard */}
-          <div className="flex items-center justify-between px-3.5 py-2.5 bg-slate-900 border-b border-slate-800 text-xs select-none">
-            <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-red-500/80 inline-block" />
-              <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80 inline-block" />
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80 inline-block" />
-              <span className="ml-2 text-slate-300 font-mono text-[11px] font-semibold tracking-tight hidden sm:inline">
-                Dialka Dispatch Center · Switchboard Activo
+        {/* ── CONSOLA CONMUTADOR DE SEDES & DIRECTORIO DIRECTO ── */}
+        <div className="group relative bg-white text-slate-900 rounded-2xl border-2 border-slate-300 p-4 sm:p-5 shadow-2xl shadow-slate-400/20 hover:border-[#991b1b] transition-all duration-300 select-none">
+          {/* Cabecera del Conmutador */}
+          <div className="flex items-center justify-between pb-3 border-b border-slate-200 mb-3">
+            <div className="flex items-center gap-2">
+              <Building2 size={18} className="text-[#991b1b]" />
+              <div>
+                <span className="text-[9px] font-mono tracking-widest text-[#991b1b] font-bold uppercase block">
+                  DIALKA · CONMUTADOR METROLÓGICO
+                </span>
+                <h3 className="text-xs sm:text-sm font-bold text-slate-900 uppercase tracking-tight">
+                  Directorio de Sedes Oficiales
+                </h3>
+              </div>
+            </div>
+
+            <span className="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-800 border border-emerald-300 text-[10px] font-mono font-bold px-2 py-0.5 rounded shadow-2xs">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+              </span>
+              LÍNEA EN DIRECTO
+            </span>
+          </div>
+
+          {/* Selector de Sede Caracas vs Maracay */}
+          <div className="grid grid-cols-2 gap-1.5 p-1 bg-slate-100 rounded-xl border border-slate-200 mb-3">
+            {SEDES_DATA.map((sede) => (
+              <button
+                key={sede.id}
+                onClick={() => setActiveSede(sede)}
+                className={`py-1.5 px-2.5 rounded-lg text-left transition-all cursor-pointer ${
+                  activeSede.id === sede.id
+                    ? "bg-[#991b1b] text-white shadow-xs"
+                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/60"
+                }`}
+              >
+                <span className="text-[11px] font-bold block leading-tight">
+                  {sede.city}
+                </span>
+                <span className={`text-[9px] font-mono block ${activeSede.id === sede.id ? "text-red-100" : "text-slate-500"}`}>
+                  {sede.phone}
+                </span>
+              </button>
+            ))}
+          </div>
+
+          {/* Foto de la Cuadrilla de Ingenieros en Planta */}
+          <div
+            onClick={() => setIsLightboxOpen(true)}
+            className="relative aspect-[16/10] rounded-xl overflow-hidden border-2 border-slate-200 bg-slate-950 shadow-inner group/photo cursor-pointer mb-3"
+            title="Haz clic para ver las instalaciones y cuadrilla técnica en alta definición"
+          >
+            <Image
+              src="/images/servicios/inspeccion-planta.jpg"
+              alt="Ingenieros de Dialka en Inspección y Despacho Técnico"
+              fill
+              sizes="(max-width: 768px) 100vw, 400px"
+              className="object-cover group-hover/photo:scale-105 transition-transform duration-500"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
+
+            <div className="absolute top-2 left-2">
+              <span className="inline-flex items-center gap-1 bg-black/80 backdrop-blur-xs text-white font-mono font-bold text-[9px] px-2 py-0.5 rounded shadow-xs">
+                <MapPin size={10} className="text-[#991b1b]" />
+                {activeSede.name}
               </span>
             </div>
 
-            <div className="flex items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 bg-emerald-950/70 border border-emerald-500/40 text-emerald-400 font-mono text-[10px] font-bold px-2 py-0.5 rounded-full shadow-inner">
-                <span className="relative flex h-1.5 w-1.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
-                </span>
-                LÍNEA EN DIRECTO
-              </span>
-              <span className="p-1 rounded bg-slate-800 text-slate-400 group-hover:text-white group-hover:bg-[#991b1b] transition-all">
+            <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between text-[10px] font-mono text-white">
+              <span className="text-amber-300 font-bold">Tel: {activeSede.phone}</span>
+              <span className="p-1 rounded bg-[#991b1b] text-white shadow-xs">
                 <Maximize2 size={12} />
               </span>
             </div>
           </div>
 
-          {/* Imagen del Ingeniero / Taller */}
-          <div className="relative aspect-[16/10] sm:aspect-[16/9] w-full overflow-hidden bg-slate-950">
-            <Image
-              src="/images/servicios/inspeccion-planta.jpg"
-              alt="Ingenieros Especialistas de Dialka en Inspección y Despacho Metrológico"
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-              className="object-cover object-center opacity-95 group-hover:scale-[1.03] transition-transform duration-700 ease-out"
-              priority
-            />
-
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent pointer-events-none" />
-            <div className="absolute inset-0 bg-gradient-to-r from-slate-950/40 via-transparent to-slate-950/30 pointer-events-none" />
-
-            {/* Badge de Hover */}
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none bg-slate-950/40 backdrop-blur-[2px]">
-              <span className="inline-flex items-center gap-2 bg-[#991b1b] text-white text-xs font-bold px-4 py-2 rounded-xl shadow-xl shadow-red-950/50 transform translate-y-2 group-hover:translate-y-0 transition-transform">
-                <Maximize2 size={14} />
-                <span>Explorar Sedes y Guardia Técnica HD</span>
+          {/* Ficha de la Sede con Llamada Directa */}
+          <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs">
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-slate-900 font-bold">
+                {activeSede.role}
+              </span>
+              <span className="text-[10px] font-mono text-slate-500 flex items-center gap-1">
+                <Clock size={11} />
+                {activeSede.hours}
               </span>
             </div>
+            <p className="text-[11px] text-slate-500 mb-2 truncate">
+              {activeSede.address}
+            </p>
 
-            {/* HUD Flotante de Conexión Directa */}
-            <div className="absolute bottom-2.5 left-2.5 right-2.5 p-3 rounded-xl bg-slate-900/90 backdrop-blur-md border border-slate-700/80 shadow-lg text-slate-200">
-              <div className="flex items-center justify-between gap-3">
-                <div className="min-w-0">
-                  <div className="flex items-center gap-1.5 text-[10px] uppercase font-mono tracking-wider text-slate-400">
-                    <Building2 size={11} className="text-emerald-400" />
-                    <span>Caracas & Maracay</span>
-                  </div>
-                  <div className="text-xs font-semibold text-white truncate pt-0.5">
-                    WhatsApp: <span className="font-mono text-emerald-400 font-bold">(+58 414) 277.00.24</span>
-                  </div>
-                </div>
-
-                <div className="text-right shrink-0 bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-800">
-                  <span className="text-[10px] font-mono text-slate-400 uppercase block leading-none">
-                    Respuesta
-                  </span>
-                  <span className="text-sm sm:text-base font-mono font-bold text-amber-400 tracking-tight">
-                    &lt; 15 <span className="text-[10px] text-amber-300/80 font-sans">min</span>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Barra Inferior de Métricas de Sedes */}
-          <div className="grid grid-cols-3 divide-x divide-slate-800/80 bg-slate-950 text-slate-400 text-[11px] py-2 px-3 border-t border-slate-800">
-            <div className="flex items-center justify-center gap-1.5">
-              <MapPin size={12} className="text-red-400" />
-              <span className="font-mono font-medium text-slate-300">2 Sedes Físicas</span>
-            </div>
-            <div className="flex items-center justify-center gap-1.5">
-              <Zap size={12} className="text-amber-400" />
-              <span className="font-mono font-medium text-slate-300">Guardia 24/7</span>
-            </div>
-            <div className="flex items-center justify-center gap-1.5">
-              <Clock size={12} className="text-emerald-400" />
-              <span className="font-mono font-medium text-slate-300">Visitas &lt;24h</span>
+            <div className="flex items-center gap-2 pt-2 border-t border-slate-200">
+              <a
+                href={`tel:${activeSede.phoneRaw}`}
+                className="flex-1 inline-flex items-center justify-center gap-1.5 bg-[#991b1b] hover:bg-[#7f1d1d] text-white font-bold py-1.5 px-3 rounded-lg transition-colors text-[11px]"
+              >
+                <Phone size={12} />
+                <span>Llamar Directo ({activeSede.city})</span>
+              </a>
+              <span className="text-[10px] font-mono text-slate-500">
+                Respuesta: <strong className="text-slate-900">&lt;15m</strong>
+              </span>
             </div>
           </div>
         </div>
 
-        {/* Sub-tarjetas de Respaldo */}
+        {/* Sub-texto */}
         <div className="mt-3 flex items-center justify-between text-xs text-slate-600 px-1 font-medium">
           <span className="inline-flex items-center gap-1 text-slate-500">
             <CheckCircle2 size={13} className="text-[#991b1b]" />
-            Atención directa con ingenieros metrólogos sin intermediarios
+            Atención telefónica directa sin conmutadores automáticos
           </span>
           <span className="text-[#991b1b] font-bold hidden sm:inline">
-            Horario: Lun-Vie 08:00 - 17:00
+            2 Sedes Físicas
           </span>
         </div>
       </div>

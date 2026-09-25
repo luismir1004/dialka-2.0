@@ -3,12 +3,9 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import {
-  Maximize2,
   Truck,
-  ShieldCheck,
+  Maximize2,
   CheckCircle2,
-  CalendarDays,
-  Zap,
 } from "lucide-react";
 import { ImageLightbox, type LightboxItem } from "@/components/ImageLightbox";
 
@@ -19,131 +16,127 @@ interface RentalHeroMockupProps {
 const LIGHTBOX_ITEM: LightboxItem = {
   id: "camion-calibrador-alquiler-dialka",
   image: "/images/proyectos/camion-calibrador.jpg",
-  title: "Unidad Móvil de Calibración y Alquiler de Básculas Dialka",
-  subtitle: "Flota Propia con Grúa Telescópica y Masas Patrón M1",
+  title: "Hoja de Ruta y Despacho de Flota de Alquiler Dialka",
+  subtitle: "Camión Calibrador con Grúa Telescópica y Báscula Móvil",
   description:
-    "Vehículo especializado para pruebas metrológicas de gran tonelaje y traslado de sistemas de pesaje temporal por eje. Equipado con grúa hidráulica de izamiento, generador auxiliar autónomo y masas patrón clase M1 certificadas para zafras y obras civiles.",
+    "Orden de movilización logística para sistemas de pesaje temporal y pruebas de carga. Unidad móvil equipada con grúa de izamiento, masas patrón certificadas M1 y plataformas por ejes de 20T a 40T listas para instalación rápida en campo.",
   specs: [
-    "Capacidad de pruebas de carga de hasta 100 Toneladas",
-    "Básculas móviles por ejes de 20T y 40T de instalación rápida en 2 horas",
-    "Grúa telescópica propia para manipulación segura de masas y plataformas",
-    "Disponibilidad con operador metrólogo calificado en sitio",
-    "Despacho urgente a cualquier punto del país sin intermediarios",
+    "Capacidad de pesaje por ejes: 20 Toneladas y 40 Toneladas",
+    "Montaje ultra rápido en menos de 2 horas sin obras civiles",
+    "Camión con grúa propia para descarga y posicionamiento seguro",
+    "Disponibilidad con o sin operador metrólogo calificado en sitio",
+    "Contratos flexibles por semana, mes completo o temporada de zafra",
   ],
-  location: "Despacho desde bases operativas en Caracas y Maracay",
-  tag: "Flota Logística Dialka",
-  ctaText: "Reservar Equipo en Alquiler",
+  location: "Despacho inmediato a cualquier estado de Venezuela",
+  tag: "Despacho Logístico",
+  ctaText: "Reservar Despacho de Báscula Móvil",
 };
 
 export function RentalHeroMockup({ whatsappNumber }: RentalHeroMockupProps) {
+  const [selectedPlan, setSelectedPlan] = useState<"Zafra" | "Mensual" | "Semanal">("Zafra");
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
   return (
     <>
       <div className="relative w-full">
-        {/* Glow corporativo Dialka */}
-        <div className="absolute -inset-1 bg-gradient-to-r from-[#991b1b]/20 via-[#7f1d1d]/15 to-transparent rounded-3xl blur-xl -z-10" />
+        {/* Glow de logística */}
+        <div className="absolute -inset-2 bg-gradient-to-br from-amber-500/15 via-red-900/10 to-emerald-500/20 rounded-3xl blur-xl -z-10" />
 
-        {/* Marco de Consola Logística de Despacho */}
-        <div
-          onClick={() => setIsLightboxOpen(true)}
-          className="group relative rounded-2xl overflow-hidden border border-slate-700/60 bg-slate-950 shadow-2xl shadow-slate-950/40 hover:border-red-400/80 transition-all duration-300 cursor-pointer"
-          title="Haz clic para ver el camión calibrador y equipos en alta definición"
-        >
-          {/* Barra Superior de Despacho Logístico */}
-          <div className="flex items-center justify-between px-3.5 py-2.5 bg-slate-900 border-b border-slate-800 text-xs select-none">
-            <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-red-500/80 inline-block" />
-              <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80 inline-block" />
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80 inline-block" />
-              <span className="ml-2 text-slate-300 font-mono text-[11px] font-semibold tracking-tight hidden sm:inline">
-                Dialka Logistics Center · Unidad Móvil #01
+        {/* ── TICKET DE DESPACHO LOGÍSTICO & ORDEN DE FLETE ── */}
+        <div className="group relative bg-[#f8fafc] text-slate-900 rounded-2xl border-2 border-slate-300 p-4 sm:p-5 shadow-2xl shadow-slate-900/20 hover:border-[#991b1b] transition-all duration-300 select-none">
+          {/* Cabecera del Ticket con Código de Barras */}
+          <div className="flex items-center justify-between pb-3 border-b-2 border-dashed border-slate-300 mb-3">
+            <div>
+              <span className="text-[9px] font-mono tracking-widest text-[#991b1b] font-bold uppercase block">
+                DIALKA LOGÍSTICA & TRANSPORTE
+              </span>
+              <h3 className="text-xs sm:text-sm font-black text-slate-900 uppercase tracking-tight flex items-center gap-1.5">
+                <Truck size={15} className="text-[#991b1b]" />
+                Orden de Despacho Inmediato
+              </h3>
+            </div>
+
+            <div className="text-right">
+              <span className="font-mono text-[9px] text-slate-400 block tracking-widest">
+                ||| | |||| | ||
+              </span>
+              <span className="text-[10px] font-mono font-bold text-slate-700">
+                #FLETE-2024-ALQ
+              </span>
+            </div>
+          </div>
+
+          {/* Selector de Modalidad de Alquiler */}
+          <div className="flex items-center justify-between gap-1 p-1 bg-slate-200/80 rounded-lg mb-3">
+            {(["Zafra", "Mensual", "Semanal"] as const).map((plan) => (
+              <button
+                key={plan}
+                onClick={() => setSelectedPlan(plan)}
+                className={`flex-1 py-1 text-center font-mono text-[10px] font-bold rounded transition-all cursor-pointer ${
+                  selectedPlan === plan
+                    ? "bg-[#991b1b] text-white shadow-xs"
+                    : "text-slate-600 hover:text-slate-900"
+                }`}
+              >
+                Plan {plan}
+              </button>
+            ))}
+          </div>
+
+          {/* Fotografía de la Unidad Móvil con Grúa y Masas Patrón */}
+          <div
+            onClick={() => setIsLightboxOpen(true)}
+            className="relative aspect-[16/10] rounded-xl overflow-hidden border-2 border-slate-300 bg-slate-900 shadow-inner group/photo cursor-pointer mb-3"
+            title="Haz clic para ver la unidad móvil en alta definición"
+          >
+            <Image
+              src="/images/proyectos/camion-calibrador.jpg"
+              alt="Camión Calibrador con Grúa Telescópica y Masas Patrón Dialka"
+              fill
+              sizes="(max-width: 768px) 100vw, 400px"
+              className="object-cover group-hover/photo:scale-105 transition-transform duration-500"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
+
+            <div className="absolute top-2 left-2">
+              <span className="inline-flex items-center gap-1 bg-emerald-600 text-white font-mono font-bold text-[9px] px-2 py-0.5 rounded shadow-xs">
+                UNIDAD ASIGNADA · GRÚA PROPIA
               </span>
             </div>
 
-            <div className="flex items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 bg-emerald-950/70 border border-emerald-500/40 text-emerald-400 font-mono text-[10px] font-bold px-2 py-0.5 rounded-full shadow-inner">
-                <Truck size={11} className="text-emerald-400" />
-                DISPONIBLE
-              </span>
-              <span className="p-1 rounded bg-slate-800 text-slate-400 group-hover:text-white group-hover:bg-[#991b1b] transition-all">
+            <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between text-[10px] font-mono text-white">
+              <span className="text-amber-300 font-bold">Básculas por Ejes 20T / 40T</span>
+              <span className="p-1 rounded bg-[#991b1b] text-white shadow-xs">
                 <Maximize2 size={12} />
               </span>
             </div>
           </div>
 
-          {/* Imagen Real del Camión Calibrador / Equipo Móvil */}
-          <div className="relative aspect-[16/10] sm:aspect-[16/9] w-full overflow-hidden bg-slate-950">
-            <Image
-              src="/images/proyectos/camion-calibrador.jpg"
-              alt="Camión Calibrador con Grúa Telescópica y Masas Patrón Dialka"
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-              className="object-cover object-center opacity-95 group-hover:scale-[1.03] transition-transform duration-700 ease-out"
-              priority
-            />
-
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent pointer-events-none" />
-            <div className="absolute inset-0 bg-gradient-to-r from-slate-950/40 via-transparent to-slate-950/30 pointer-events-none" />
-
-            {/* Badge de Hover */}
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none bg-slate-950/40 backdrop-blur-[2px]">
-              <span className="inline-flex items-center gap-2 bg-[#991b1b] text-white text-xs font-bold px-4 py-2 rounded-xl shadow-xl shadow-red-950/50 transform translate-y-2 group-hover:translate-y-0 transition-transform">
-                <Maximize2 size={14} />
-                <span>Ver Flota Móvil y Equipos en HD</span>
+          {/* Datos Logísticos de Entrega al Pie */}
+          <div className="p-2.5 rounded-xl bg-slate-100 border border-slate-200 text-xs font-mono">
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-slate-700 font-bold">
+                Tiempo Montaje: <strong className="text-emerald-700">&lt; 2 Horas</strong>
+              </span>
+              <span className="text-[10px] text-slate-500 font-bold">
+                OPERADOR EN CAMPO INCLUIDO
               </span>
             </div>
-
-            {/* HUD Flotante de Disponibilidad Inmediata */}
-            <div className="absolute bottom-2.5 left-2.5 right-2.5 p-3 rounded-xl bg-slate-900/90 backdrop-blur-md border border-slate-700/80 shadow-lg text-slate-200">
-              <div className="flex items-center justify-between gap-3">
-                <div className="min-w-0">
-                  <div className="flex items-center gap-1.5 text-[10px] uppercase font-mono tracking-wider text-slate-400">
-                    <CalendarDays size={11} className="text-emerald-400" />
-                    <span>Zafras & Obras Temporales</span>
-                  </div>
-                  <div className="text-xs font-semibold text-white truncate pt-0.5">
-                    Pesaje por Ejes: <span className="font-mono text-amber-300 font-bold">20T / 40T</span> con Grúa Propia
-                  </div>
-                </div>
-
-                <div className="text-right shrink-0 bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-800">
-                  <span className="text-[10px] font-mono text-slate-400 uppercase block leading-none">
-                    Instalación
-                  </span>
-                  <span className="text-sm sm:text-base font-mono font-bold text-emerald-400 tracking-tight">
-                    &lt; 2 <span className="text-[10px] text-emerald-300/80 font-sans">Horas</span>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Barra Inferior de Ventajas Operativas */}
-          <div className="grid grid-cols-3 divide-x divide-slate-800/80 bg-slate-950 text-slate-400 text-[11px] py-2 px-3 border-t border-slate-800">
-            <div className="flex items-center justify-center gap-1.5">
-              <Zap size={12} className="text-red-400" />
-              <span className="font-mono font-medium text-slate-300">Cero CAPEX</span>
-            </div>
-            <div className="flex items-center justify-center gap-1.5">
-              <ShieldCheck size={12} className="text-amber-400" />
-              <span className="font-mono font-medium text-slate-300">Calibración Incl.</span>
-            </div>
-            <div className="flex items-center justify-center gap-1.5">
-              <Truck size={12} className="text-emerald-400" />
-              <span className="font-mono font-medium text-slate-300">Operador Opcional</span>
+            <div className="flex items-center justify-between text-[11px] text-slate-600 pt-1 border-t border-slate-200">
+              <span>Despacho: <strong className="text-slate-900">&lt; 48h en Sitio</strong></span>
+              <span className="text-[#991b1b] font-bold">CERO INVERSIÓN CAPEX</span>
             </div>
           </div>
         </div>
 
-        {/* Sub-tarjetas de Respaldo */}
+        {/* Sub-texto */}
         <div className="mt-3 flex items-center justify-between text-xs text-slate-600 px-1 font-medium">
           <span className="inline-flex items-center gap-1 text-slate-500">
             <CheckCircle2 size={13} className="text-[#991b1b]" />
-            Despacho inmediato a obras, puertos y centrales azucareros
+            Ideal para zafras de caña, maíz, silos y obras civiles
           </span>
           <span className="text-[#991b1b] font-bold hidden sm:inline">
-            100% Cobertura País
+            100% Despacho Nacional
           </span>
         </div>
       </div>

@@ -3,12 +3,10 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import {
-  Maximize2,
-  HardHat,
-  Truck,
-  Award,
-  CheckCircle2,
   MapPin,
+  Maximize2,
+  CheckCircle2,
+  HardHat,
 } from "lucide-react";
 import { ImageLightbox, type LightboxItem } from "@/components/ImageLightbox";
 
@@ -16,134 +14,168 @@ interface ProjectsHeroMockupProps {
   whatsappNumber?: string;
 }
 
-const LIGHTBOX_ITEM: LightboxItem = {
-  id: "proyecto-bascula-volvo-80t",
-  image: "/images/proyectos/bascula-camionera-volvo-plataforma.jpg",
-  title: "Montaje y Puesta en Marcha de Báscula Camionera de 80T",
-  subtitle: "Silos de Cereales y Granos · Acarigua, Portuguesa",
-  description:
-    "Proyecto integral de ingeniería civil, montaje mecánico y calibración metrológica con camión patrón. Instalación de plataforma de 21 metros de longitud sobre zapatas de concreto reforzado, equipada con celdas de compresión de alta capacidad y software de despacho continuo.",
-  specs: [
-    "Capacidad: 80 Toneladas nominales (división d = 10 kg / e = 20 kg)",
-    "Obra civil ejecutada en 10 días continuos con curado acelerado de concreto",
-    "Pruebas de carga dinámica con gandola de 45T y verificación de excentricidad",
-    "Enlace en tiempo real con terminal de pesaje e impresora fiscal de tickets",
-    "Aprobación técnica favorable y precintado metrológico",
-  ],
-  location: "Acarigua, Estado Portuguesa, Venezuela",
-  tag: "Obra Llave en Mano",
-  ctaText: "Cotizar Proyecto Similar para mi Empresa",
-};
+const PROJECTS_DATA = [
+  {
+    id: "portuguesa",
+    state: "Portuguesa",
+    place: "Acarigua",
+    sector: "Agroindustria & Silos",
+    image: "/images/proyectos/bascula-camionera-volvo-plataforma.jpg",
+    title: "Báscula Camionera 80T - Silos de Maíz",
+    time: "14 Días",
+    trucks: "+120 Gandolas/Día",
+  },
+  {
+    id: "caracas",
+    state: "Caracas",
+    place: "Los Ruices",
+    sector: "Planta Farmacéutica",
+    image: "/images/proyectos/planta-farmaceutica-tanque-dosificacion.jpg",
+    title: "Tanques de Dosificación & Celdas Inox",
+    time: "8 Días",
+    trucks: "Grado Sanitario BPM",
+  },
+  {
+    id: "maracay",
+    state: "Aragua",
+    place: "Cagua",
+    sector: "Molinos y Alimentos",
+    image: "/images/proyectos/bascula-camionera-sobresuelo-2.jpg",
+    title: "Báscula Sobresuelo 60T con Rampas",
+    time: "10 Días",
+    trucks: "Pesaje Continuo",
+  },
+];
 
 export function ProjectsHeroMockup({ whatsappNumber }: ProjectsHeroMockupProps) {
+  const [activeProject, setActiveProject] = useState(PROJECTS_DATA[0]);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+
+  const lightboxItem: LightboxItem = {
+    id: activeProject.id,
+    image: activeProject.image,
+    title: `${activeProject.title} · ${activeProject.place}, Edo. ${activeProject.state}`,
+    subtitle: `${activeProject.sector} · Obra Llave en Mano Dialka`,
+    description: `Proyecto ejecutado en tiempo récord de ${activeProject.time}. Incluyó ingeniería civil especializada, izamiento estructural, instalación de celdas de carga y calibración metrológica con camión patrón propio.`,
+    specs: [
+      `Ubicación: ${activeProject.place}, Estado ${activeProject.state}`,
+      `Plazo de ejecución: ${activeProject.time} de corrido`,
+      `Operatividad: ${activeProject.trucks}`,
+      "Certificación SENCAMER y pruebas dinámicas con carga real",
+      "Garantía total de 5 años en estructura de acero",
+    ],
+    location: `${activeProject.place}, Venezuela`,
+    tag: "Bitácora de Campo Dialka",
+    ctaText: "Cotizar Proyecto Similar",
+  };
 
   return (
     <>
       <div className="relative w-full">
-        {/* Glow corporativo Dialka */}
-        <div className="absolute -inset-1 bg-gradient-to-r from-[#991b1b]/20 via-[#7f1d1d]/15 to-transparent rounded-3xl blur-xl -z-10" />
+        {/* Glow de bitácora */}
+        <div className="absolute -inset-2 bg-gradient-to-br from-amber-600/15 via-red-900/10 to-orange-500/20 rounded-3xl blur-xl -z-10" />
 
-        {/* Marco de Consola de Obras en Campo */}
-        <div
-          onClick={() => setIsLightboxOpen(true)}
-          className="group relative rounded-2xl overflow-hidden border border-slate-700/60 bg-slate-950 shadow-2xl shadow-slate-950/40 hover:border-red-400/80 transition-all duration-300 cursor-pointer"
-          title="Haz clic para ver el registro fotográfico de la obra en alta definición"
-        >
-          {/* Barra Superior de Operaciones */}
-          <div className="flex items-center justify-between px-3.5 py-2.5 bg-slate-900 border-b border-slate-800 text-xs select-none">
-            <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-red-500/80 inline-block" />
-              <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80 inline-block" />
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80 inline-block" />
-              <span className="ml-2 text-slate-300 font-mono text-[11px] font-semibold tracking-tight hidden sm:inline">
-                Dialka Field Ops · Proyecto #OB-2024-PORT
+        {/* ── BITÁCORA DE OBRAS & DESPLIEGUE GEOGRÁFICO EN VENEZUELA ── */}
+        <div className="group relative bg-slate-900 text-slate-100 rounded-2xl border-2 border-amber-600/30 p-4 sm:p-5 shadow-2xl shadow-slate-950/50 hover:border-amber-500/60 transition-all duration-300 select-none">
+          {/* Cabecera de la Bitácora */}
+          <div className="flex items-center justify-between pb-3 border-b border-slate-800 mb-3">
+            <div className="flex items-center gap-2">
+              <HardHat size={18} className="text-amber-400" />
+              <div>
+                <span className="text-[9px] font-mono tracking-widest text-amber-400 font-bold uppercase block">
+                  DIALKA · REGISTRO DE OBRAS EN VENEZUELA
+                </span>
+                <h3 className="text-xs sm:text-sm font-bold text-white uppercase tracking-tight">
+                  Bitácora de Obras Llave en Mano
+                </h3>
+              </div>
+            </div>
+
+            <span className="inline-flex items-center gap-1 bg-amber-950/80 text-amber-300 border border-amber-500/40 text-[10px] font-mono font-bold px-2 py-0.5 rounded shadow-2xs">
+              <MapPin size={11} />
+              14 ESTADOS
+            </span>
+          </div>
+
+          {/* Selector de Obras por Estado */}
+          <div className="grid grid-cols-3 gap-1.5 p-1 bg-slate-950 rounded-xl border border-slate-800 mb-3">
+            {PROJECTS_DATA.map((proj) => (
+              <button
+                key={proj.id}
+                onClick={() => setActiveProject(proj)}
+                className={`py-1.5 px-2 rounded-lg text-left transition-all cursor-pointer ${
+                  activeProject.id === proj.id
+                    ? "bg-[#991b1b] text-white shadow-xs"
+                    : "text-slate-400 hover:text-white hover:bg-slate-900"
+                }`}
+              >
+                <span className="text-[10px] font-bold block leading-tight truncate">
+                  {proj.state}
+                </span>
+                <span className="text-[9px] text-slate-300/80 font-mono block truncate">
+                  {proj.place}
+                </span>
+              </button>
+            ))}
+          </div>
+
+          {/* Ficha Fotográfica de la Obra Seleccionada */}
+          <div
+            onClick={() => setIsLightboxOpen(true)}
+            className="relative aspect-[16/10] rounded-xl overflow-hidden border-2 border-slate-800 bg-slate-950 shadow-inner group/photo cursor-pointer mb-3"
+            title="Haz clic para ver el registro fotográfico en alta definición"
+          >
+            <Image
+              src={activeProject.image}
+              alt={activeProject.title}
+              fill
+              sizes="(max-width: 768px) 100vw, 400px"
+              className="object-cover group-hover/photo:scale-105 transition-transform duration-500"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent pointer-events-none" />
+
+            {/* Tag de Obra Activa */}
+            <div className="absolute top-2 left-2">
+              <span className="inline-flex items-center gap-1 bg-black/80 backdrop-blur-xs text-amber-300 border border-amber-500/40 text-[9px] font-mono font-bold px-2 py-0.5 rounded">
+                <MapPin size={10} />
+                {activeProject.place}, Edo. {activeProject.state}
               </span>
             </div>
 
-            <div className="flex items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 bg-emerald-950/70 border border-emerald-500/40 text-emerald-400 font-mono text-[10px] font-bold px-2 py-0.5 rounded-full shadow-inner">
-                <MapPin size={11} className="text-emerald-400" />
-                PORTUGUESA · EN MARCHA
+            <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between text-[10px] font-mono text-white">
+              <span className="bg-amber-500/90 text-slate-950 font-bold px-2 py-0.5 rounded">
+                Montaje: {activeProject.time}
               </span>
-              <span className="p-1 rounded bg-slate-800 text-slate-400 group-hover:text-white group-hover:bg-[#991b1b] transition-all">
+              <span className="p-1 rounded bg-[#991b1b] text-white shadow-xs">
                 <Maximize2 size={12} />
               </span>
             </div>
           </div>
 
-          {/* Imagen Real del Proyecto en Campo */}
-          <div className="relative aspect-[16/10] sm:aspect-[16/9] w-full overflow-hidden bg-slate-950">
-            <Image
-              src="/images/proyectos/bascula-camionera-volvo-plataforma.jpg"
-              alt="Pruebas de Carga Real con Gandola en Báscula Camionera Dialka"
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-              className="object-cover object-center opacity-95 group-hover:scale-[1.03] transition-transform duration-700 ease-out"
-              priority
-            />
-
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent pointer-events-none" />
-            <div className="absolute inset-0 bg-gradient-to-r from-slate-950/40 via-transparent to-slate-950/30 pointer-events-none" />
-
-            {/* Badge de Hover */}
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none bg-slate-950/40 backdrop-blur-[2px]">
-              <span className="inline-flex items-center gap-2 bg-[#991b1b] text-white text-xs font-bold px-4 py-2 rounded-xl shadow-xl shadow-red-950/50 transform translate-y-2 group-hover:translate-y-0 transition-transform">
-                <Maximize2 size={14} />
-                <span>Explorar Obra y Pruebas de Carga HD</span>
+          {/* Datos de la Ficha al Pie */}
+          <div className="p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-white font-bold truncate">
+                {activeProject.title}
+              </span>
+              <span className="text-[10px] font-mono text-emerald-400 font-bold shrink-0">
+                100% OPERATIVA
               </span>
             </div>
-
-            {/* HUD Flotante de Datos de la Obra */}
-            <div className="absolute bottom-2.5 left-2.5 right-2.5 p-3 rounded-xl bg-slate-900/90 backdrop-blur-md border border-slate-700/80 shadow-lg text-slate-200">
-              <div className="flex items-center justify-between gap-3">
-                <div className="min-w-0">
-                  <div className="flex items-center gap-1.5 text-[10px] uppercase font-mono tracking-wider text-slate-400">
-                    <HardHat size={11} className="text-amber-400" />
-                    <span>Planta de Granos & Silos</span>
-                  </div>
-                  <div className="text-xs font-semibold text-white truncate pt-0.5">
-                    Báscula 80T · <span className="font-mono text-emerald-400 font-bold">Pruebas Dinámicas OK</span>
-                  </div>
-                </div>
-
-                <div className="text-right shrink-0 bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-800">
-                  <span className="text-[10px] font-mono text-slate-400 uppercase block leading-none">
-                    Tiempo Montaje
-                  </span>
-                  <span className="text-sm sm:text-base font-mono font-bold text-amber-400 tracking-tight">
-                    14 <span className="text-[10px] text-amber-300/80 font-sans">Días</span>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Barra Inferior de Métricas de Obra */}
-          <div className="grid grid-cols-3 divide-x divide-slate-800/80 bg-slate-950 text-slate-400 text-[11px] py-2 px-3 border-t border-slate-800">
-            <div className="flex items-center justify-center gap-1.5">
-              <Truck size={12} className="text-red-400" />
-              <span className="font-mono font-medium text-slate-300">+180 Básculas</span>
-            </div>
-            <div className="flex items-center justify-center gap-1.5">
-              <MapPin size={12} className="text-amber-400" />
-              <span className="font-mono font-medium text-slate-300">14 Estados</span>
-            </div>
-            <div className="flex items-center justify-center gap-1.5">
-              <Award size={12} className="text-emerald-400" />
-              <span className="font-mono font-medium text-slate-300">Llave en Mano</span>
-            </div>
+            <p className="text-[11px] text-slate-400">
+              Sector: <strong className="text-slate-200">{activeProject.sector}</strong> · Capacidad continua: <strong className="text-amber-300 font-mono">{activeProject.trucks}</strong>
+            </p>
           </div>
         </div>
 
-        {/* Sub-tarjetas de Respaldo */}
+        {/* Sub-texto */}
         <div className="mt-3 flex items-center justify-between text-xs text-slate-600 px-1 font-medium">
           <span className="inline-flex items-center gap-1 text-slate-500">
             <CheckCircle2 size={13} className="text-[#991b1b]" />
-            Ingeniería civil, estructural y calibración con camión propio
+            Obras civiles, montaje de acero y camión patrón propio
           </span>
           <span className="text-[#991b1b] font-bold hidden sm:inline">
-            +25 Años en Campo
+            +180 Básculas Instaladas
           </span>
         </div>
       </div>
@@ -151,7 +183,7 @@ export function ProjectsHeroMockup({ whatsappNumber }: ProjectsHeroMockupProps) 
       <ImageLightbox
         isOpen={isLightboxOpen}
         onClose={() => setIsLightboxOpen(false)}
-        items={[LIGHTBOX_ITEM]}
+        items={[lightboxItem]}
         currentIndex={0}
         onIndexChange={() => {}}
         whatsappNumber={whatsappNumber}
