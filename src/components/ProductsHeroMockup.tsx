@@ -103,6 +103,7 @@ export function ProductsHeroMockup({ whatsappNumber }: ProductsHeroMockupProps) 
               src="/images/proyectos/bascula-camionera-sobresuelo-1.jpg"
               alt="Plataforma de Balanza Camionera Dialka de Acero Estructural"
               fill
+              priority
               sizes="(max-width: 768px) 100vw, 400px"
               className="object-cover group-hover/photo:scale-105 transition-transform duration-500 opacity-90"
             />

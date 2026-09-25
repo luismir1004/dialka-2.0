@@ -91,6 +91,7 @@ export function SencamerHeroMockup({ whatsappNumber }: SencamerHeroMockupProps) 
                 src="/images/sencamer/balanza-certificada.jpg"
                 alt="Balanza Certificada con Precinto Oficial SENCAMER"
                 fill
+                priority
                 sizes="(max-width: 768px) 100vw, 300px"
                 className="object-cover group-hover/photo:scale-105 transition-transform duration-500"
               />

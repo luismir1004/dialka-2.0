@@ -93,6 +93,7 @@ export function RentalHeroMockup({ whatsappNumber }: RentalHeroMockupProps) {
               src="/images/proyectos/camion-calibrador.jpg"
               alt="Camión Calibrador con Grúa Telescópica y Masas Patrón Dialka"
               fill
+              priority
               sizes="(max-width: 768px) 100vw, 400px"
               className="object-cover group-hover/photo:scale-105 transition-transform duration-500"
             />

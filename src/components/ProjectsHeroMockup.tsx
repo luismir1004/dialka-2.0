@@ -129,6 +129,7 @@ export function ProjectsHeroMockup({ whatsappNumber }: ProjectsHeroMockupProps) 
               src={activeProject.image}
               alt={activeProject.title}
               fill
+              priority
               sizes="(max-width: 768px) 100vw, 400px"
               className="object-cover group-hover/photo:scale-105 transition-transform duration-500"
             />
